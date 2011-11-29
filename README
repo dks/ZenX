@@ -1,0 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////
+//           ZenX PHP Data Manipulation Library README                       //
+///////////////////////////////////////////////////////////////////////////////
+
+"zenx_etalon" folder contains master copy of all  library  files  required  for
+development. 
+
+If you only need to use the library you can download latest  release  from  the
+project home page at 
+
+                         http://dk-lab.org/zenx.php
+
+
+
+Basic library deployment is very  simple - just  copy  it  and  setup  database
+access. For detailed instructions see 
+
+        http://files.dk-lab.org/zenx/doc/ZenX/tutorial_Steps.pkg.html
+
+
+
+"zxrelmkr.sh"  is  a  shell  script   generating   release   files  (separately
+documentation and comments-stripped library package).
