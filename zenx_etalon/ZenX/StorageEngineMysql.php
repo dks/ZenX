@@ -269,6 +269,7 @@ class StorageEngineMysql extends MainEngineAbstract {
 	 * @todo Implement file storage process (or amend image storage to file storage).
 	 */
   function updateRecord($data){
+		$needCleanUp=false;
     $table=$this->getCurrentTable();
     $tabName=$table->getName();
     $key=$table->getKey()->getName();
@@ -283,6 +284,7 @@ class StorageEngineMysql extends MainEngineAbstract {
       if ($field->getProp("extendable")){
         $fn=$field->getName();
         if (in_array($fn."_nv",array_keys($data)) && trim($data[$fn."_nv"])!=""){  
+				    $needCleanUp=true;
             $ss="INSERT INTO ".$this->ops['mysqlPrefix'].$tabName.$this->ops['mysqlMultiSuffix'].
               $fn." VALUES(null,'".mysql_real_escape_string($data[$fn."_nv"])."');";
             mysql_query($ss) or die(mysql_error()); $ss=null;
@@ -301,7 +303,7 @@ class StorageEngineMysql extends MainEngineAbstract {
     $ss=substr($ss,0,strlen($ss)-1);
     $ss.=" WHERE $key='".$data[$key]."';";
     mysql_query($ss) or die(mysql_error());
-    $this->cleanupMultiValues();
+    if ($needCleanUp) $this->cleanupMultiValues();
     foreach($table->getFields() as $field){//image
       if ($field->getProp("isImage")){
         $last_id=$data[$key];

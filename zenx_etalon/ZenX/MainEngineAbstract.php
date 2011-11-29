@@ -1624,6 +1624,17 @@ abstract class MainEngineAbstract implements Signs{
         else if ($Lh<$H) $image->resizeToHeight($Lh);
       $image->save($imgfn);
   }}}//EOF
+	/**
+   * microtime_float() is a utility function that returns unix time with microseconds precision
+   * 
+   * Utility method used for scipts time profiling.
+   * 
+   * @return float Current timestamp
+   */
+  function microtime_float(){
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
+  }
 }
 /**
  * NoCurrentTableException is a custom exception that is thrown by
