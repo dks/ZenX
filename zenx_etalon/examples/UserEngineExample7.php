@@ -1,0 +1,19 @@
+<?php
+class UserEngineExample7 extends StorageEngineMysql{
+  function __construct(){
+    parent::__construct("localhost","user","pass","base");
+
+    $c = new Table("comments");
+    $c->createField("idno","_KEYS","ID");
+    $c->createField("date","_DATE","Date");
+    $c->createField("comm","_TEXT","Comment");
+    $c->createField("pref","_RINT","Reference to Parent");
+    $this->registerTable($c);
+
+    $t = new Table("fotolist");
+    $t->createField("idno","_KEYS","ID");
+    $t->createField("name","_WORD","Picture Description");
+    $t->createField("small","_ICON","Picture Preview");
+    $this->registerTable($t);
+  }
+}

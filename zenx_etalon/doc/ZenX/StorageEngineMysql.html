@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class StorageEngineMysql</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class StorageEngineMysql</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">StorageEngineMysql class extends MainEngineAbstract class and implements  data storage specific functions for MySQL database.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Konstatin Dvortsov</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_ZenX---StorageEngineMysql.php.html">/ZenX/StorageEngineMysql.php</a> (line <span class="field">18</span>)
+		</p>
+		
+				
+		<pre><a href="../ZenX/MainEngineAbstract.html">MainEngineAbstract</a>
+   |
+   --StorageEngineMysql</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																				<div class="var-title">
+					static <span class="var-type">Array</span>
+					<a href="#$storageDataTypes" title="details" class="var-name">$storageDataTypes</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">Array</span>
+					<a href="#$storageMultiTypes" title="details" class="var-name">$storageMultiTypes</a>
+				</div>
+																				<div class="var-title">
+					<span class="var-type">resource</span>
+					<a href="#$connection" title="details" class="var-name">$connection</a>
+				</div>
+																											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																				
+												<div class="method-definition">
+											<span class="method-result">StorageEngineMysql</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$host</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$user</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$pass</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$base</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">int</span>
+										<a href="#addNewRecord" title="details" class="method-name">addNewRecord</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#cleanupMultiValues" title="details" class="method-name">cleanupMultiValues</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#connect" title="details" class="method-name">connect</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$host</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$user</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$pass</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$base</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#createStorage" title="details" class="method-name">createStorage</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#customMysqlRequest" title="details" class="method-name">customMysqlRequest</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$ss</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#deleteRecords" title="details" class="method-name">deleteRecords</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$idList</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#destroyDataStorage" title="details" class="method-name">destroyDataStorage</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#fileUploadErrorHandler" title="details" class="method-name">fileUploadErrorHandler</a>
+											(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$errno</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$errstr</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$errfile</span>, <span class="var-type">Integer</span>&nbsp;<span class="var-name">$errline</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getData" title="details" class="method-name">getData</a>
+											([<span class="var-type">Integer</span>&nbsp;<span class="var-name">$rowLimit</span> = <span class="var-default">null</span>], [<span class="var-type">Integer</span>&nbsp;<span class="var-name">$startOffset</span> = <span class="var-default">null</span>], [<span class="var-type">String</span>&nbsp;<span class="var-name">$orderField</span> = <span class="var-default">null</span>], [<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$reverseOrder</span> = <span class="var-default">false</span>], [<span class="var-type">Array</span>&nbsp;<span class="var-name">$findParams</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Integer</span>
+										<a href="#getLastRequestTotalRecords" title="details" class="method-name">getLastRequestTotalRecords</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">String</span>
+										<a href="#getMultiCreationStatement" title="details" class="method-name">getMultiCreationStatement</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$type</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getMultiItems" title="details" class="method-name">getMultiItems</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$listName</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getRecordById" title="details" class="method-name">getRecordById</a>
+											(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Integer</span>
+										<a href="#getTotalRecords" title="details" class="method-name">getTotalRecords</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">String</span>
+										<a href="#getTypeCreationStatement" title="details" class="method-name">getTypeCreationStatement</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$type</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Boolean</span>
+										<a href="#isUnique" title="details" class="method-name">isUnique</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$fn</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$value</span>, <span class="var-type">Integer</span>&nbsp;<span class="var-name">$keyVal</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setEngineParameters" title="details" class="method-name">setEngineParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setFindParameters" title="details" class="method-name">setFindParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#updateRecord" title="details" class="method-name">updateRecord</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$storageDataTypes" id="$storageDataTypes"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">Array</span>
+			<span class="var-name">$storageDataTypes</span>
+			 = <span class="var-default">array(<br />    &quot;_KEYS&quot; =&gt; &quot;int unsigned NOT NULL auto_increment&quot;,<br />    &quot;_WORD&quot; =&gt; &quot;varchar(300)&quot;,<br />    &quot;_TEXT&quot; =&gt; &quot;text&quot;,<br />    &quot;_RINT&quot; =&gt; &quot;int&quot;,<br />    &quot;_RFLT&quot; =&gt; &quot;float&quot;,<br />    &quot;_LLST&quot; =&gt; &quot;int unsigned&quot;,<br />    &quot;_ELST&quot; =&gt; &quot;int unsigned&quot;,<br />    &quot;_RLST&quot; =&gt; &quot;int unsigned&quot;,<br />    &quot;_BOOL&quot; =&gt; &quot;tinyint(1)&quot;,<br />    &quot;_DATE&quot; =&gt; &quot;date&quot;,<br />    &quot;_IMGS&quot; =&gt; &quot;&quot;,<br />    &quot;_ICON&quot; =&gt; &quot;&quot;<br />	)</span>			(line <span class="line-number">36</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">$storageDataTypes array contains storage engine specific data types descriptions.</p>
+<p class="description"><p>If new data type description were added to the DataDefinition class they must also be added here.  It is basically key=&gt;value array where key is the data type and value is mysql table column description.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Array with engine specific data type descriptions.</li>
+				<li><span class="field">see:</span> <a href="../ZenX/DataDefiner.html">DataDefiner</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$storageMultiTypes">StorageEngineMysql::$storageMultiTypes</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#methodgetTypeCreationStatement">StorageEngineMysql::getTypeCreationStatement()</a></li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$storageMultiTypes" id="$storageMultiTypes"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">Array</span>
+			<span class="var-name">$storageMultiTypes</span>
+			 = <span class="var-default">array(<br />    &quot;_LLST&quot; =&gt; &quot;varchar(300)&quot;,<br />    &quot;_RLST&quot; =&gt; &quot;varchar(300)&quot;,<br />    &quot;_ELST&quot; =&gt; &quot;varchar(300)&quot;<br />  )</span>			(line <span class="line-number">61</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">$storageMultiTypes array contains storage engine specific data types descriptions for &quot;multi&quot; types.</p>
+<p class="description"><p>If new data type description were added to the DataDefinition class they must also be added here.  It is basically key=&gt;value array where key is the data type and value is mysql table column description.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Array with engine specific data &quot;multi&quot; type descriptions.</li>
+				<li><span class="field">see:</span> <a href="../ZenX/DataDefiner.html">DataDefiner</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$storageDataTypes">StorageEngineMysql::$storageDataTypes</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#methodgetMultiCreationStatement">StorageEngineMysql::getMultiCreationStatement()</a></li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$connection" id="$connection"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">resource</span>
+			<span class="var-name">$connection</span>
+						(line <span class="line-number">24</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">$connection variable stores active database connection resource.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Active connection to database</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../ZenX/MainEngineAbstract.html">MainEngineAbstract</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$curRec">MainEngineAbstract::$curRec</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$currentTable">MainEngineAbstract::$currentTable</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$deletedIds">MainEngineAbstract::$deletedIds</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$inputErrors">MainEngineAbstract::$inputErrors</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$inputNotifications">MainEngineAbstract::$inputNotifications</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">77</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class constructor.</p>
+<p class="description"><p>Invokes parent class constructor and creates database connection.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#methodconnect">StorageEngineMysql::connect()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">StorageEngineMysql</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$host</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$user</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$pass</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$base</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$host</span><span class="var-description">: Host name for database connection</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$user</span><span class="var-description">: User name for database connection</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$pass</span><span class="var-description">: Password for database connection</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$base</span><span class="var-description">: Name of the data base to connect to.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#method__construct">MainEngineAbstract::__construct()</a></dt>
+						<dd>__construct() is the main class constructor.</dd>
+					</dl>
+			
+	</div>
+<a name="methodaddNewRecord" id="addNewRecord"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">addNewRecord</span> (line <span class="line-number">219</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">addNewRecord() method stores data supplied as argument to database.</p>
+<p class="description"><p>This method is purely mysql database related, so any filtering / preprocessing is done  before this method is invoked. If image folder cannot be accessed <a href="../ZenX/StorageEngineMysql.html#methodfileUploadErrorHandler">fileUploadErrorHandler</a>  method is invoked, however it is set to WARNING level and does not stop script execution.  Currently only image storing (in addition to standard text, of course) is implemented.  This method does not check whether supplied parameters array is all empty since it is  done at the filtering stage. Supplying empty $data array will lead to mysql error.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Key (ID) of the record in data storage</li>
+				<li><span class="field">todo:</span> Implement file storage process (or amend image storage to file storage).</li>
+				<li><span class="field">throws:</span> fileUploadErrorHandler</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			addNewRecord
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$data</span><span class="var-description">: Associative array where keys are field names and values is data to be stored.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodaddNewRecord">MainEngineAbstract::addNewRecord()</a></dt>
+						<dd>addNewRecord() method adds a record to data storage.</dd>
+					</dl>
+			
+	</div>
+<a name="methodcleanupMultiValues" id="cleanupMultiValues"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">cleanupMultiValues</span> (line <span class="line-number">549</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">cleanupMultiValues() method deletes values from &quot;multi&quot; reference table that are not referenced  from the main &quot;multi&quot; field.</p>
+<p class="description"><p>This is utility method used by engine to clean up reference table from unused values.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			cleanupMultiValues
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodconnect" id="connect"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">connect</span> (line <span class="line-number">100</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">connect() method establishes connection to data base.</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$connection">StorageEngineMysql::$connection</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			connect
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$host</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$user</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$pass</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$base</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$host</span><span class="var-description">: Host name for database connection</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$user</span><span class="var-description">: User name for database connection</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$pass</span><span class="var-description">: Password for database connection</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$base</span><span class="var-description">: Name of the data base to connect to.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateStorage" id="createStorage"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">createStorage</span> (line <span class="line-number">166</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">createStorage() method performs all necessary routines to create tables from  <a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a> array.</p>
+<p class="description"><p>This is utility method for automatic creation of mysql tables. Tables are created  considering the following parameters:  'mysqlPrefix' parameter at <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a> is the string to prepend table name.  'imageFolder' parameter at <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a> is the name of folder storing images,  must have read/write access.  'fileFolder' parameter at <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a> is the name of folder storing files  (other than images), must have read/write access.  'mysqlMultiSuffix' parameter at <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a> is the suffix used to form  multiple values tables (referenced values).</p><p>Data charset is set to UTF-8. If image/file folder can not be accessed  <a href="../ZenX/MySqlNoFolderCreateRightsException.html">MySqlNoFolderCreateRightsException</a> is thrown.</p><p>Please note, that current implementation stores files/images externally in file system instead of  database, image tables contain only reference numbers for file names identification.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$storageMultiTypes">StorageEngineMysql::$storageMultiTypes</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$storageDataTypes">StorageEngineMysql::$storageDataTypes</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">throws:</span> MySqlNoFolderCreateRightsException</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			createStorage
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodcreateStorage">MainEngineAbstract::createStorage()</a></dt>
+						<dd>createStorage() method creates data storage.</dd>
+					</dl>
+			
+	</div>
+<a name="methodcustomMysqlRequest" id="customMysqlRequest"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">customMysqlRequest</span> (line <span class="line-number">395</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">customMysqlRequest() is a wrapper for any user-defined MySQL request.</p>
+<p class="description"><p>This is convenience method for custom MySQL request, to be used during user-defined  and/or user-overriden methods creation. If request did not matched any record null is returned.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Two layer array, where outer one is simple array where each cell contains  associative array with key=&gt;value pairs, where keys are field names.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			customMysqlRequest
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$ss</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$ss</span><span class="var-description">: MySQL request</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddeleteRecords" id="deleteRecords"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">deleteRecords</span> (line <span class="line-number">493</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">deleteRecords() method deletes records with the specified IDs from the current table.</p>
+<p class="description"><p>Additionaly to deletion of records from the current table this method invokes  <a href="../ZenX/StorageEngineMysql.html#methodcleanupMultiValues">cleanupMultiValues()</a> and deletes images from image folder.</p></p>
+	<ul class="tags">
+				<li><span class="field">todo:</span> Implement file storage process (or amend image storage to file storage).</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			deleteRecords
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$idList</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$idList</span><span class="var-description">: Comma separated list of ID's.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methoddeleteRecords">MainEngineAbstract::deleteRecords()</a></dt>
+						<dd>deleteRecords() method erases specified records at data storage.</dd>
+					</dl>
+			
+	</div>
+<a name="methoddestroyDataStorage" id="destroyDataStorage"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">destroyDataStorage</span> (line <span class="line-number">521</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">destroyDataStorage() method deletes all tables from database and images related to these  tables from image folder.</p>
+<p class="description"><p>This is convenience method to delete all data related to current class, mainly used for  debugging purposes, when class structure changes, not to trace all dependencies manually.</p></p>
+	<ul class="tags">
+				<li><span class="field">todo:</span> Implement file storage process (or amend image storage to file storage).</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			destroyDataStorage
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methoddestroyDataStorage">MainEngineAbstract::destroyDataStorage()</a></dt>
+						<dd>destroyDataStorage() method destroys (erases) all tables of the class instance at data storage.</dd>
+					</dl>
+			
+	</div>
+<a name="methodfileUploadErrorHandler" id="fileUploadErrorHandler"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">fileUploadErrorHandler</span> (line <span class="line-number">620</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">fileUploadErrorHandler() provides custom implementation of image folder access rights error.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			fileUploadErrorHandler
+		</span>
+					(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$errno</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$errstr</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$errfile</span>, <span class="var-type">Integer</span>&nbsp;<span class="var-name">$errline</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$errno</span><span class="var-description">: PHP error number</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$errstr</span><span class="var-description">: PHP error message</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$errfile</span><span class="var-description">: File where error occured</span>			</li>
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$errline</span><span class="var-description">: Error cause line number</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetData" id="getData"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getData</span> (line <span class="line-number">439</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getData() retrieves rows in accordance with the specified parameters.</p>
+<p class="description"><p>getData() is the core data retrieval method, that accepts multiple parameters and  returns rows matching them. Search is performed within the current table.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Two layer array where cells in outer array contain associative array with key=&gt;value pairs,  where keys are field names.</li>
+				<li><span class="field">todo:</span> Implement file storage process (or amend image storage to file storage).</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getData
+		</span>
+					([<span class="var-type">Integer</span>&nbsp;<span class="var-name">$rowLimit</span> = <span class="var-default">null</span>], [<span class="var-type">Integer</span>&nbsp;<span class="var-name">$startOffset</span> = <span class="var-default">null</span>], [<span class="var-type">String</span>&nbsp;<span class="var-name">$orderField</span> = <span class="var-default">null</span>], [<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$reverseOrder</span> = <span class="var-default">false</span>], [<span class="var-type">Array</span>&nbsp;<span class="var-name">$findParams</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$rowLimit</span><span class="var-description">: Maximum number of rows to be returned.</span>			</li>
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$startOffset</span><span class="var-description">: Returned rows index offset.</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$orderField</span><span class="var-description">: Name of the field to order by.</span>			</li>
+					<li>
+				<span class="var-type">Boolean</span>
+				<span class="var-name">$reverseOrder</span><span class="var-description">: Flag indicating whether to use descending results ordering</span>			</li>
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$findParams</span><span class="var-description">: Array of strings specifying MySQL search conditions. For example &quot;name=Jonh&quot;.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodgetData">MainEngineAbstract::getData()</a></dt>
+						<dd>getData() is one of the core methods; it retrieves records from the data storage confirming  specified parameters.</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetLastRequestTotalRecords" id="getLastRequestTotalRecords"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLastRequestTotalRecords</span> (line <span class="line-number">420</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getLastRequestTotalRecords() returns number of total records retrieved by last request.</p>
+<p class="description"><p>It is basically covenience method calling &quot;SELECT FOUND_ROWS()&quot;.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Number of total records retrieved by last request.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Integer</span>
+		<span class="method-name">
+			getLastRequestTotalRecords
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodgetLastRequestTotalRecords">MainEngineAbstract::getLastRequestTotalRecords()</a></dt>
+						<dd>getLastRequestTotalRecords() method returns total number of records matching filtering parameters.</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetMultiCreationStatement" id="getMultiCreationStatement"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getMultiCreationStatement</span> (line <span class="line-number">131</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getMultiCreationStatemen() method retrieves mysql data (row) creation statement from $storageMultiTypes.</p>
+<p class="description"><p>If the statments is missing <a href="../ZenX/MySqlMultiTypeUndefinedException.html">MySqlMultiTypeUndefinedException</a> is thrown.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> MySQL table field creation statement</li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$storageMultiTypes">StorageEngineMysql::$storageMultiTypes</a></li>
+				<li><span class="field">throws:</span> MySqlMultiTypeUndefinedException</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">String</span>
+		<span class="method-name">
+			getMultiCreationStatement
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$type</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$type</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetMultiItems" id="getMultiItems"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getMultiItems</span> (line <span class="line-number">372</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getMultiItems retrives referenced values of the &quot;multi&quot; field.</p>
+<p class="description"><p>This is utility method used only by the engine itself. It is basically selects  all available values from the referenced list (multi field), the numeric values from  the main &quot;multi&quot; list are replaced by actual values retrieved by this method during  form or list creation.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Array where keys are numeric indexes of the values at the reference table,  values are actual string values.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#datamulti">&quot;Omni&quot; Data Class</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getMultiItems
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$listName</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$listName</span><span class="var-description">: Name of the &quot;multi&quot; field.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodgetMultiItems">MainEngineAbstract::getMultiItems()</a></dt>
+						<dd>getMultiItems() method retrieves all records from the table linked to the field with the name  specified at the parameter.</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetRecordById" id="getRecordById"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRecordById</span> (line <span class="line-number">328</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getRecordById() retrieves record using the key supplied.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where keys are field names and values are actual data</li>
+				<li><span class="field">todo:</span> Implement file storage process (or amend image storage to file storage).</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getRecordById
+		</span>
+					(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$id</span><span class="var-description">: Identification number (Key) of the element</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodgetRecordById">MainEngineAbstract::getRecordById()</a></dt>
+						<dd>getRecordById() method returns specific record and must be overrided by storage engine class.</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetTotalRecords" id="getTotalRecords"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTotalRecords</span> (line <span class="line-number">408</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getTotalRecords() returns number of total records in current table.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Number of total records in the current table.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Integer</span>
+		<span class="method-name">
+			getTotalRecords
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodgetTotalRecords">MainEngineAbstract::getTotalRecords()</a></dt>
+						<dd>getTotalRecords() method returns total number of records at the current table at data storage.</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetTypeCreationStatement" id="getTypeCreationStatement"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTypeCreationStatement</span> (line <span class="line-number">113</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getTypeCreationStatemen() method retrieves mysql data (row) creation statement from $storageDataTypes.</p>
+<p class="description"><p>If the statments is missing <a href="../ZenX/MySqlDataTypeUndefinedException.html">MySqlDataTypeUndefinedException</a> is thrown.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> MySQL table field creation statement</li>
+				<li><span class="field">see:</span> <a href="../ZenX/StorageEngineMysql.html#var$storageDataTypes">StorageEngineMysql::$storageDataTypes</a></li>
+				<li><span class="field">throws:</span> MySqlDataTypeUndefinedException</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">String</span>
+		<span class="method-name">
+			getTypeCreationStatement
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$type</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$type</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisUnique" id="isUnique"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isUnique</span> (line <span class="line-number">604</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">isUnique() method determines whether the value supplied is unique.</p>
+<p class="description"><p>This is mysql specific implementation of the parent method.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Aswer to whether this record value would be unique</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Boolean</span>
+		<span class="method-name">
+			isUnique
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$fn</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$value</span>, <span class="var-type">Integer</span>&nbsp;<span class="var-name">$keyVal</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$fn</span><span class="var-description">: Name of the field to be checked</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$value</span><span class="var-description">: Value to be checked</span>			</li>
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$keyVal</span><span class="var-description">: Value of the Key field of the current Table</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodisUnique">MainEngineAbstract::isUnique()</a></dt>
+						<dd>isUnique() method determines whether value supplied to the field specified by parameter  at the current table would be unique.</dd>
+					</dl>
+			
+	</div>
+<a name="methodsetEngineParameters" id="setEngineParameters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setEngineParameters</span> (line <span class="line-number">85</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setEngineParameters() method adds engine specific settings using  <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a> method.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setEngineParameters
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodsetEngineParameters">MainEngineAbstract::setEngineParameters()</a></dt>
+						<dd>setEngineParameters() method implements storage engine specific variables setup.</dd>
+					</dl>
+			
+	</div>
+<a name="methodsetFindParameters" id="setFindParameters"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setFindParameters</span> (line <span class="line-number">571</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setFindParameters() method creates mysql search request using search/filter parameters.</p>
+<p class="description"><p>This method must iterates through session variables and if variable with the name matching  to the one of the field names of current table is found, method creates mysql search parameter  and pass it to <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a> method within the &quot;findParameters&quot; array.</p><p>Please note that user-defined search fields set by 'customSearchFields' option must be handled manually.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setFindParameters
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodsetFindParameters">MainEngineAbstract::setFindParameters()</a></dt>
+						<dd>setFindParameters() method retrieves search/filter parameters from the class instance and  creates data engine specific request.</dd>
+					</dl>
+			
+	</div>
+<a name="methodupdateRecord" id="updateRecord"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">updateRecord</span> (line <span class="line-number">271</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">updateRecord() method stores data supplied as argument to database, replacing the old values.</p>
+<p class="description"><p>This method is purely mysql database related, so any filtering / preprocessing is done  before this method is invoked. If image folder cannot be accessed <a href="../ZenX/StorageEngineMysql.html#methodfileUploadErrorHandler">fileUploadErrorHandler</a>  method is invoked, however it is set to WARNING level and does not stop script execution.  Currently only image storing is implemented. This method does not check whether supplied  parameters array is all empty since it is done at the filtering stage. Supplying empty  $data array will lead to mysql error.</p><p>If supplied data array does not contain table key <a href="../ZenX/NoUpdateKeySuppliedException.html">NoUpdateKeySuppliedException</a> is thrown.</p></p>
+	<ul class="tags">
+				<li><span class="field">todo:</span> Implement file storage process (or amend image storage to file storage).</li>
+				<li><span class="field">throws:</span> fileUploadErrorHandler</li>
+				<li><span class="field">throws:</span> NoUpdateKeySuppliedException</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			updateRecord
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$data</span><span class="var-description">: Associative array where keys are field names and values is data to be stored.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../ZenX/MainEngineAbstract.html#methodupdateRecord">MainEngineAbstract::updateRecord()</a></dt>
+						<dd>updateRecord() method changes values of the record fields at data storage.</dd>
+					</dl>
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../ZenX/MainEngineAbstract.html">MainEngineAbstract</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#method__construct">MainEngineAbstract::__construct()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodaddNewRecord">MainEngineAbstract::addNewRecord()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodcreateStorage">MainEngineAbstract::createStorage()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methoddeleteItems">MainEngineAbstract::deleteItems()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methoddeleteRecords">MainEngineAbstract::deleteRecords()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methoddestroyDataStorage">MainEngineAbstract::destroyDataStorage()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methoddumpParameters">MainEngineAbstract::dumpParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methoddumpTables">MainEngineAbstract::dumpTables()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetAllTables">MainEngineAbstract::getAllTables()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetClientInfo">MainEngineAbstract::getClientInfo()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetCurrentPhase">MainEngineAbstract::getCurrentPhase()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetCurrentRecord">MainEngineAbstract::getCurrentRecord()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetCurrentTable">MainEngineAbstract::getCurrentTable()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetData">MainEngineAbstract::getData()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetFilterName">MainEngineAbstract::getFilterName()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetHtmlForm">MainEngineAbstract::getHtmlForm()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetLastRequestTotalRecords">MainEngineAbstract::getLastRequestTotalRecords()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetMultiItems">MainEngineAbstract::getMultiItems()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetRecordById">MainEngineAbstract::getRecordById()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetSearchForm">MainEngineAbstract::getSearchForm()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetTableByName">MainEngineAbstract::getTableByName()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodgetTotalRecords">MainEngineAbstract::getTotalRecords()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodimageResize">MainEngineAbstract::imageResize()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodinitialize">MainEngineAbstract::initialize()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodisFieldEditable">MainEngineAbstract::isFieldEditable()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodisUnique">MainEngineAbstract::isUnique()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodprintCustomHtmlForm">MainEngineAbstract::printCustomHtmlForm()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodprintDefaultHtmlForm">MainEngineAbstract::printDefaultHtmlForm()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodprintHtmlForm">MainEngineAbstract::printHtmlForm()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodregisterTable">MainEngineAbstract::registerTable()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodreportErrors">MainEngineAbstract::reportErrors()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodreportNotifications">MainEngineAbstract::reportNotifications()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodresetParameters">MainEngineAbstract::resetParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodretrieveVars">MainEngineAbstract::retrieveVars()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">MainEngineAbstract::runFullCycle()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodrunInputCycle">MainEngineAbstract::runInputCycle()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodsetCurrentTable">MainEngineAbstract::setCurrentTable()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodsetEngineParameters">MainEngineAbstract::setEngineParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodsetFindParameters">MainEngineAbstract::setFindParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodsetNavigationParameters">MainEngineAbstract::setNavigationParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowAddRecordButton">MainEngineAbstract::showAddRecordButton()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowCustomList">MainEngineAbstract::showCustomList()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowDefaultList">MainEngineAbstract::showDefaultList()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowList">MainEngineAbstract::showList()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowPhaseFooters">MainEngineAbstract::showPhaseFooters()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowPhaseHeaders">MainEngineAbstract::showPhaseHeaders()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodshowSearchForm">MainEngineAbstract::showSearchForm()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodupdateRecord">MainEngineAbstract::updateRecord()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#methodverifyImageFields">MainEngineAbstract::verifyImageFields()</a></span><br>
+													<span class="method-name"><a href="../ZenX/MainEngineAbstract.html#method__destruct">MainEngineAbstract::__destruct()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 29 Nov 2011 09:55:30 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

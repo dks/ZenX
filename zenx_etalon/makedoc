@@ -1,0 +1,5 @@
+#!/bin/sh
+
+alias phpdoc='/usr/share/php/phpdoc/phpdoc'
+
+phpdoc -d ZenX,tutorials -t doc -dn ZenX -pp -ed examples -ti 'ZenX Documentation' 

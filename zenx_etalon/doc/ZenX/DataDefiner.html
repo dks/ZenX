@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class DataDefiner</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class DataDefiner</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">DataDefiner class contains purely data type definitions and data type filters.</p>
+<p class="description"><p>This class is set out separately specifically for easy extendability of data  types. In order to define your own data type you just need to add new values to  $dataTypes and optionally (however it is highly recommended for security/  reliability reasons) define data type filter.</p><p>Please note that general files/images input filter is hardcoded in  <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a> method, however you can create your own  data type specific detailed filters here.</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#datatypes">Data Types</a></li>
+				<li><span class="field">author:</span> Konstatin Dvortsov</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_ZenX---DataDefiner.php.html">/ZenX/DataDefiner.php</a> (line <span class="field">27</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+												<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$dataTypes" title="details" class="var-name">$dataTypes</a>
+				</div>
+																							</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																				
+												<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterBool" title="details" class="method-name">filterBool</a>
+											(<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterDate" title="details" class="method-name">filterDate</a>
+											(<span class="var-type">Date</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterElst" title="details" class="method-name">filterElst</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterKeys" title="details" class="method-name">filterKeys</a>
+											(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterLlst" title="details" class="method-name">filterLlst</a>
+											(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterRflt" title="details" class="method-name">filterRflt</a>
+											(<span class="var-type">Float</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterRint" title="details" class="method-name">filterRint</a>
+											(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterRlst" title="details" class="method-name">filterRlst</a>
+											(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterText" title="details" class="method-name">filterText</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#filterWord" title="details" class="method-name">filterWord</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$s</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$dataTypes" id="$dataTypes"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$dataTypes</span>
+			 = <span class="var-default">array(<br />    // _KEYS - is a numeric identifier of the record in database<br />    // _KEYS field is hardcoded in some classes and can not be removed or altered<br />    &quot;_KEYS&quot; =&gt; array(<br />      &quot;sTag&quot; =&gt; &quot;&lt;input type='hidden' name='&quot;,<br />      &quot;mTag&quot;=&gt;&quot;' value='&quot;, <br />      &quot;eTag&quot; =&gt; &quot;' /&gt;&quot;<br />    ),// _WORD - is a short text<br />&quot;_WORD&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='text' name='&quot;,&quot;mTag&quot;=&gt;&quot;' value='&quot;,&quot;eTag&quot;=&gt;&quot;' /&gt;&quot;),// _TEXT - is a long text of arbitrary length<br />&quot;_TEXT&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;textarea name='&quot;,&quot;mTag&quot;=&gt;&quot;' rows='4' cols='40'&gt;&quot;,&quot;eTag&quot;=&gt;&quot;&lt;/textarea&gt;&quot;),// _RINT - is a regular integer, values up to 2147483647 (PHP int limit<br />//  for 32 bit system, unsigned not supported).<br />&quot;_RINT&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='text' name='&quot;,&quot;mTag&quot;=&gt;&quot;' value='&quot;,&quot;eTag&quot;=&gt;&quot;' maxlegth='11' /&gt;&quot;),// _RFLT - is a regular float.<br />&quot;_RFLT&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='text' name='&quot;,&quot;mTag&quot;=&gt;&quot;' value='&quot;,&quot;eTag&quot;=&gt;&quot;' maxlegth='11' /&gt;&quot;),// _LLST - limited list<br />&quot;_LLST&quot;=&gt;array(&quot;omni&quot;=&gt;&quot;multiple1&quot;,&quot;prefix1&quot;=&gt;&quot;&lt;select name='&quot;,&quot;prefix2&quot;=&gt;&quot;'&gt;&quot;,&quot;postfix&quot;=&gt;&quot;&lt;/select&gt;&quot;,&quot;sTag&quot;=&gt;&quot;&lt;option value='&quot;,&quot;selected&quot;=&gt;&quot;' selected='selected&quot;,&quot;mTag&quot;=&gt;&quot;'&gt;&quot;,&quot;eTag&quot;=&gt;&quot;&lt;/option&gt;&quot;),// _RLST - radio buttons list<br />&quot;_RLST&quot;=&gt;array(&quot;omni&quot;=&gt;&quot;multiple2&quot;,&quot;sTag&quot;=&gt;&quot;&lt;input type='radio' name='&quot;,&quot;selected&quot;=&gt;&quot;' checked='checked&quot;,&quot;mTag&quot;=&gt;&quot;' value='&quot;,&quot;eTag&quot;=&gt;&quot;' /&gt;&quot;),// _ELST - extendable list<br />&quot;_ELST&quot;=&gt;array(&quot;omni&quot;=&gt;&quot;multiple1&quot;,&quot;prefix1&quot;=&gt;&quot;&lt;select name='&quot;,&quot;prefix2&quot;=&gt;&quot;'&gt;&quot;,&quot;postfix&quot;=&gt;&quot;&lt;/select&gt;&quot;,&quot;sTag&quot;=&gt;&quot;&lt;option value='&quot;,&quot;selected&quot;=&gt;&quot;' selected='selected&quot;,&quot;mTag&quot;=&gt;&quot;'&gt;&quot;,&quot;eTag&quot;=&gt;&quot;&lt;/option&gt;&quot;,&quot;extendable&quot;=&gt;true),// _DATE - a date<br />&quot;_DATE&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='text' name='&quot;,&quot;mTag&quot;=&gt;&quot;' value='&quot;,&quot;eTag&quot;=&gt;&quot;' /&gt;&quot;),// _BOOL - boolean value<br />&quot;_BOOL&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='checkbox' name='&quot;,&quot;mTag&quot;=&gt;&quot;'&quot;,&quot;selected&quot;=&gt;&quot; checked='checked'&quot;,&quot;eTag&quot;=&gt;&quot; class='zx_bul' /&gt;&quot;),//_IMGS - standard images<br />&quot;_IMGS&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='file' name='&quot;,&quot;mTag&quot;=&gt;&quot;' alt='image' /&gt;&quot;,&quot;eTag&quot;=&gt;&quot;&lt;input type='hidden' name='MAX_FILE_SIZE' value='1000000' /&gt;&quot;,&quot;isFile&quot;=&gt;true,&quot;maxBytes&quot;=&gt;1000000,&quot;isImage&quot;=&gt;true,&quot;mustResize&quot;=&gt;true,&quot;width&quot;=&gt;800,&quot;height&quot;=&gt;600),//_ICON - small icon image<br />&quot;_ICON&quot;=&gt;array(&quot;sTag&quot;=&gt;&quot;&lt;input type='file' name='&quot;,&quot;mTag&quot;=&gt;&quot;' alt='icon' /&gt;&quot;,&quot;eTag&quot;=&gt;&quot;&lt;input type='hidden' name='MAX_FILE_SIZE' value='300000' /&gt;&quot;,&quot;isFile&quot;=&gt;true,&quot;maxBytes&quot;=&gt;300000,&quot;isImage&quot;=&gt;true,&quot;mustResize&quot;=&gt;true,&quot;width&quot;=&gt;50,&quot;height&quot;=&gt;50))</span>			(line <span class="line-number">28</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodfilterBool" id="filterBool"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterBool</span> (line <span class="line-number">261</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterBool() method implements filter for boolean &quot;_BOOL&quot; field.</p>
+<p class="description"><p>The filter validates value as boolean. Empty input (since html forms do not send empty values)  will be turned to 0/false.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typebool">__BOOL</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterBool
+		</span>
+					(<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Boolean</span>
+				<span class="var-name">$s</span><span class="var-description">: Boolean value for filtering</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterDate" id="filterDate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterDate</span> (line <span class="line-number">281</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterDate() method implements filter for date &quot;_DATE&quot; field.</p>
+<p class="description"><p>The filter allows only values in YYYY-MM-DD format. Any of &quot;-&quot;,&quot; &quot;,&quot;\&quot;,&quot;/&quot;,&quot;.&quot; symbols can be  used as separator. Years must start from only 19 or 20 (19xx|20xx). Any other values will  result in validation error. Days are not checked for validity (i.e. Feb 31 will be a valid date).</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typedate">__DATE</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterDate
+		</span>
+					(<span class="var-type">Date</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Date</span>
+				<span class="var-name">$s</span><span class="var-description">: Date value for filtering</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterElst" id="filterElst"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterElst</span> (line <span class="line-number">330</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterElst() method implements filter for extendable list &quot;_ELST&quot; field.</p>
+<p class="description"><p>This method allows only for string values having length less than 61 byte.  Keep in mind that characters other than English consume from 2 to 4 bytes. Since value  is filtered through FILTER_SANITIZE_STRING it will strip tags.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typeelst">_ELST</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterElst
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$s</span><span class="var-description">: String list value for filtering</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterKeys" id="filterKeys"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterKeys</span> (line <span class="line-number">142</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterKeys() method implements filter for ID &quot;_KEYS&quot; field.</p>
+<p class="description"><p>This filter passes through only positive numbers or empty value (required to allow creation  of new record).</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typekeys">__KEYS</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterKeys
+		</span>
+					(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$s</span><span class="var-description">: Record ID number (key)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterLlst" id="filterLlst"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterLlst</span> (line <span class="line-number">316</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterLlst() method implements filter for limited list &quot;_LLST&quot; field.</p>
+<p class="description"><p>Since limited list contains only reference numbers this method is merely a wrapper for  <a href="../ZenX/DataDefiner.html#methodfilterKeys">filterKeys()</a> method.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typellst">_LLST</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterLlst
+		</span>
+					(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$s</span><span class="var-description">: Record ID number (key)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterRflt" id="filterRflt"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterRflt</span> (line <span class="line-number">236</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterRflt() method implements filter for regular float &quot;_RFLT&quot; field.</p>
+<p class="description"><p>This filter first sanitizes input value as float and then validates it. If value has been trimmed  during sanitization warning will be shown, if value can not be validated after sanitization error  is shown.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typerflt">_RFLT</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterRflt
+		</span>
+					(<span class="var-type">Float</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Float</span>
+				<span class="var-name">$s</span><span class="var-description">: Float value for filtering</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterRint" id="filterRint"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterRint</span> (line <span class="line-number">210</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterRint() method implements filter for regular integer &quot;_RINT&quot; field.</p>
+<p class="description"><p>This filter first sanitizes input value as integer and then validates it. If value has been trimmed  during sanitization warning will be shown, if value can not be validated after sanitization error  is shown.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typerint">_RINT</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterRint
+		</span>
+					(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$s</span><span class="var-description">: Integer value for filtering</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterRlst" id="filterRlst"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterRlst</span> (line <span class="line-number">303</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterRlst() method implements filter for radio buttons list &quot;_RLST&quot; field.</p>
+<p class="description"><p>Since regular list contains only reference numbers this method is merely a wrapper for  <a href="../ZenX/DataDefiner.html#methodfilterKeys">filterKeys()</a> method.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typerlst">_RLST</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterRlst
+		</span>
+					(<span class="var-type">Integer</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$s</span><span class="var-description">: Record ID number (key)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterText" id="filterText"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterText</span> (line <span class="line-number">191</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterText() method implements filter for long text &quot;_TEXT&quot; field.</p>
+<p class="description"><p>This filter passes through only String values having length shorter than 65535 bytes.  Keep in mind that characters other than English consume from 2 to 4 bytes.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typetext">__TEXT</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterText
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$s</span><span class="var-description">: String value to be filtered</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfilterWord" id="filterWord"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">filterWord</span> (line <span class="line-number">164</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">filterWord() method implements filter for short text &quot;_WORD&quot; field.</p>
+<p class="description"><p>This filter passes through only String values having length shorter than 300 bytes.  Keep in mind that characters other than English consume from 2 to 4 bytes. Since value  is filtered through FILTER_SANITIZE_STRING it will strip tags.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with three elements, &quot;VAL&quot; containing filtered value,  &quot;ERR&quot; and &quot;WARN&quot; containing error or warning messages respectively, if filtering resulted  in error or warning.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#typeword">__WORD</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			filterWord
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$s</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$s</span><span class="var-description">: String value to be filtered</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 29 Nov 2011 09:55:27 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>
