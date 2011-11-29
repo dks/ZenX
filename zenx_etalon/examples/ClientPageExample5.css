@@ -1,0 +1,9 @@
+.red { background: #ffc0cb; }
+.green { background: #90ee90; }
+.yellow { background: yellow; }
+.attn { background: #add8e6; }
+.attn td { border:1px solid red; }
+
+.zx_lst td + td + td + td + td { text-align: center; }
+.zx_c4 { width: 70%; } 
+.zx_c5, .zx_c6 { width: 5%; }

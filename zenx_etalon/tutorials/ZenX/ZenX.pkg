@@ -1,0 +1,907 @@
+<refentry id="{@id}">
+  <refnamediv>
+    <refname>ZenX Manual</refname>
+  </refnamediv>
+  <refsynopsisdiv>
+    <author>Konstantin Dvortsov <authorblurb>{@link http://dvortsov.tel dvortsov.tel}</authorblurb>
+    </author>
+  </refsynopsisdiv>
+    {@toc}
+  <refsect1 id="{@id intro}">
+    <title>What is ZenX?</title>
+    <para>
+      "ZenX" library is an object-oriented implementation of useful routines 
+      for data storage and manupulation. Though basics are quite simple and this
+      library can be used by a man with no background in programming, it is 
+      still aimed for professional programmers, since main advantages come from
+      overriding and/or extending methods provided herein. For those who is bothered 
+			reading this documentation - here is a link to {@tutorial Steps.pkg}.
+    </para>
+    <para>
+      "ZenX" automates several data processing steps: input, verification, 
+      storage and retrieval; and also provides handy methods for its visualization
+      and manipulation (like sorters, filters, table cell colorings etc).
+    </para>
+  </refsect1>
+
+  <refsect2 id="{@id sysreq}">
+    <title>ZenX System Requirements</title>
+    <para>It is implied that ZenX will be run under PHP 5.0 or higher. Correct library work is tested only
+			under Apache 2. In order to run ZenX you MUST have the following packages installed:</para>
+		<para>php-mysql</para>
+		<para>php-mbstring</para>
+		<para>php-gd</para>
+		<para>Pictures and files are stored externally (not in mysql), by default in "../img" and "../dat" folders
+			respectively. File paths are indicated relatively to user-defined ZenX classes. You must provide read/
+			write access to these folders for PHP. Default image/files folders paths can be changed by user settings.
+		</para>
+  </refsect2>
+
+  <refsect2 id="{@id xhtml}">
+    <title>XHTML Output</title>
+    <para>ZenX default implementation produces valid XHTML output. XHTML has many differences with
+			plain HTML, but in ZenX these differences are basically limited to following: 
+		</para>
+    <para> - Replacing &amp; with &amp;amp;	</para>
+    <para> - Closing all tags (example - printing &lt;br /> instead of &lt;br>)</para>
+    <para> - Not printing text within a "body" without wrapping elements</para>
+    <para>It may be arguable that XHTML is superior to others, but it is actually not so difficult to convert
+			ZenX output to plain HTML. There are many options: you can use "Tidy", buffer output and replace amps and
+			closed tags, or even use Sed to change the source code, as well as do this manually. Anyway, fixing it
+			to HTML is easier than maintain several versions, so only XHTML is supported.
+		</para>
+		<para>Just remember - one of the main reason to use XHTML is its XML validity. ZenX is a database engine
+			first of all, so it is likely to handle huge amount of data, thus it is always useful to make this 
+			output machine-readable. Basically you can load the result XHTML into XML parsers and do some nasty
+			tricks with data processing and automation. Do not forget it.
+		</para>
+  </refsect2>
+
+  <refsect2 id="{@id concepts}">
+    <title>Basic ZenX Concepts</title>
+    <desc>This section describes some of the basic ZenX concepts.</desc>
+    <para>Since ZenX engine was designed in a manner to simplify and automate routine
+      data manipulation operations, it is split in several parts. Let's call these parts 
+      "Phases" since they represent separate steps in data processing. Typically, data is sent from
+      one page to another, where it undergoes different manupulations. For ZenX, however, this is 
+      not the case. Since we want to keep it simple, we want to use only one page for all our 
+      activities. So the data is sent back to the same page it comes from. That means we need to 
+      distinguish cases when we show data from cases when we accept it. For this purpose different
+      blocks of code are activated on different phases. You can think of them as of "page inside the page".
+    </para>
+    <para>Though this reference relies heavily of MySQL terminology like records, tables etc. they
+      are not completely equal, since different storage engine may implement different ways to store and 
+      organize data. However, since currently ZenX implements only MySQL storage engine, the concepts are 
+      very close.
+    </para>
+  </refsect2>
+  <refsect3 id="{@id outphase}">
+    <title>Output Phase</title>
+    <desc>Output or "Listing" Phase activates a block of code that does data retrieval 
+      and rendering to the web-page.
+    </desc>
+    <para>On the Output Phase we access out data storage and retrieve set of records
+      matching some predefined criteria. This is phase is actually a result of operator 
+      job, whether it is a price list or internet shop goods listing. Settings for this phase
+      supplied to the setParameters() method are mainly starting from the "list" word, showing that
+      they will affect only behaviour and appearance of this phase.
+    </para>
+  </refsect3>
+  <refsect3 id="{@id inphase}">
+    <title>Input Phase</title>
+    <desc>Input Phase activates blocks of code that do data verification,rendering and saving.
+    </desc>
+    <para>The Input Phase is actually a group of smaller phases related to new data entry and editing.
+      Since data editing implies rendering of the old data to screen this phase also deals 
+      with data retrieval. However, this time we get only one specific record. Then, once editing or new
+      data input is completed, data is send to the script and again gets into the input phase, but
+      goes different way this time. First it is verified for correctness, and saved to data storage, if
+      no errors are found. Then it is rendered back to screen (this time it shows the new data) again.
+      This smaller cycle: ...->[show]->[get input]->[verify]->[save]->... is all Input Phase, and is
+      launched inside {@link MainEngineAbstract::runInputCycle() } method.
+    </para>
+  </refsect3>
+
+  <refsect2 id="{@id datatypes}">
+    <title>Data Types</title>
+    <desc>This section describes ZenX data types and classes.</desc>
+  </refsect2>
+  <refsect3 id="{@id datadefinitions}">
+    <title>Data Type Definitions</title>
+    <para>Class DataDefiner is a wrapper for {@link DataDefiner::$dataTypes} array that contains 
+			all data type definitions. Data type is basically a name that describing what type of data
+			can contain specific field in database table, like "String" or "Integer" etc. Data type
+			definition sets up the rules for the ZenX how to handle the specific data type.
+    </para>
+		<para>First of all we need to explain to the engine how to render the data input fields
+			to the screen. Since we use HTML we define the html tag wrapping the data itself. The simpliest
+			case is the text input: &lt;input type='text' name='name' value='value' /&gt;. This string is
+			split into tree pieces, allowing engine to stick here user defined name and value. So we have
+			"sTag" (start of tag): &lt;input type='text' name=' , after which we place actual name, then we add
+			"mTag" (middle of tag): ' value=' , after which we place the value, and then we add closing 
+			tag "eTag" (end of tag): ' /&gt; Note the quotes we use, so the name and value would be quoted to 
+			form valid HTML. Basically this is all for simple data types. Multiple-value or "omni" data types 
+			has some extra features.
+		</para>
+  </refsect3>
+  <refsect3 id="{@id datamulti}">
+    <title>"Omni" Data Class</title>
+    <para>Multiple data class is a data field that contains only numeric values that refer to the the
+      description of value in a separate "linked" table that has the same name as the field it is referred
+      from with a certain prefix. Prefixes for the table names are specified by the data storage engine
+      settings.
+    </para>
+  </refsect3>
+  <refsect3 id="{@id datadefinitions2}">
+    <title>Data Type Definitions for "Omni" Types</title>
+    <para>Multiple data type is defined by "omni" key. "omni" key can have several values: unset or false,
+			indicates that this is simple/ not multiple data type, "multiple1" denotes the list of values wrapped
+			by common tags (for example &lt;option&gt; list wrapped by &lt;select&gt; tag), "multiple2" denotes
+			plain list of values (for example set of radio buttons).
+    </para>
+		<para>For data types that have "omni" set to "multiple1" you need to define list wrappers by setting 
+			"prefix1", "prefix2" and "postfix" keys, as well as string indicating selected option at "selected"
+			keys. Additionally if you want to make list of values extendable by user, set "extendable" to true.
+		</para>
+		<para>
+			For details and examples please see the source code of {@link DataDefiner} class, it is quite 
+			straightforward.
+		</para>
+	</refsect3>
+
+  <refsect1 id="{@id options}">
+    <title>Possible Options for the ZenX engine</title>
+    <desc>This section lists possible options that can be supplied to ZenX engine in order to change its behavior and/or visual appearance.</desc>
+  </refsect1>
+
+  <refsect2 id="{@id formoptions}">
+    <title>List of the Data Entry Form (Data Input) Options</title>
+  </refsect2>
+  <refsect3 id="{@id acceptEmptyValues}">
+    <title>acceptEmptyValues</title>
+    <para>This option allows empty values to replace currently existing in data storage, i.e. erase it.
+			That key value is an array listing fields of the current table that must accept empty values.
+		</para>
+		<usage>EXAMPLE: "acceptEmptyValues"=>array("field1","field2")
+		</usage>
+  </refsect3>
+  <refsect3 id="{@id customFormBackLink}">
+    <title>customFormBackLink</title>
+    <para>This option prints user-defined "back" button at the data input form page instead of default one.
+		</para>
+		<usage>EXAMPLE:"customFormBackLink"=>"&lt;a href='sample.php?someparam=1'&gt;GO_BACK&lt;/a&gt;"
+		</usage>
+  </refsect3>
+  <refsect3 id="{@id formBackLinkModifier}">
+    <title>formBackLinkModifier</title>
+    <para>This option adds user-defined tail to the standard "back" button at the data input form page.
+			This allows to pass additional parameters to the script.
+		</para>
+		<usage>EXAMPLE:"formBackLinkModifier"=>"item=".$id
+		</usage>
+  </refsect3>
+	<refsect3 id="{@id formCustomPreprocessing}">
+		<title>formCustomPreprocessing</title>
+		<para>Specifies user defined method(s) for processing data retrieved by default 
+			{@link MainEngineAbstract::getHtmlForm()} method before it is passed for printing. More than one 
+			processing methods are implemented concequently. Data return format must be same as in
+			{@link MainEngineAbstract::getHtmlForm()}. This method applies to the form (data input) page. 
+			See also {@tutorial ZenX.pkg#listCustomPreprocessing}.
+		</para>
+		<usage>EXAMPLE: "formCustomPreprocessing"=>array("getItemUserListFPP","anotherFPP")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id formDefaults}">
+		<title>formDefaults</title>
+		<para>Specifies default values for the unfilled fields at the form (data input) page. Parameter
+			value is an array where keys are field names and values are default values for them.
+		</para>
+		<usage>EXAMPLE: "formDefaults"=>array("prdt"=>date('Y-m-d'),"stat"=>1)
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id formDefaultsWriteThrough}">
+		<title>formDefaultsWriteThrough</title>
+		<para>Specifies whether default values will be saved to database even if this field is write-protected
+			by parameter {@tutorial ZenX.pkg#restrictedFields}. A direct attempt to save default values in 
+			write-protected field without setting formDefaultsWriteThrough parameter will fail, values set by
+			"formDefaults" without "formDefaultsWriteThrough" will not be send, and thus not saved. Parameter
+			value is an array listing field names permitted for saving. This setting has no effect for 
+			common (non write-protected) fields.
+		</para>
+		<usage>EXAMPLE: "formDefaultsWriteThrough"=>array("stat","uref")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id formHiddenFields}">
+		<title>formHiddenFields</title>
+		<para>Specifies fields that must NOT be shown at the form (data input) page. Since this will lead
+			to missing input for relevant field, make sure they are not listed in 
+			{@tutorial ZenX.pkg#notNullFields} or specify default data with {@tutorial ZenX.pkg#formRelayParameters}.
+			Since this fields are not printed at all {@tutorial ZenX.pkg#formDefaults} will not take effect. 
+		</para>
+		<usage>EXAMPLE: "formHiddenFields"=>array("trgt","tref","uref","date")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id formRelayParameters}">
+		<title>formRelayParameters</title>
+		<para>Specifies values that transparently must be relayed to the page during input phase. Values 
+			passed with formRelayParameters can be any field not available within the current table, or fields
+			of the current table hidden with {@tutorial ZenX.pkg#formHiddenFields} option. 
+			Value passed to the script with key names that do not match any
+			field name within the engine tables and not listed within the
+			formRelayParameters will be blocked by engine filter. See also {@tutorial ZenX.pkg#formDefaults}.
+		</para>
+		<usage>EXAMPLE: "formRelayParameters"=>array("trgt"=>1,"uref"=>$author,"date"=>date("Y-m-d"))
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id formShowKeys}">
+		<title>formShowKeys</title>
+		<para>Specifies whether to show key field values at the form (data input) page. Default value is
+			TRUE.
+		</para>
+		<usage>EXAMPLE:"formShowKeys"=>false
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id formType}">
+		<title>formType</title>
+		<para>This setting determines which printHtmlForm method is called. Default value 0 implies use
+			of {@link MainEngineAbstract::printDefaultHtmlForm()}. Setting it to 1 switches engine to use
+			{@link MainEngineAbstract::printCustomHtmlForm()}. Since printCustomHtmlForm() default implementation
+			is empty, user must override this method when setting formType to 1.
+		</para>
+		<usage>EXAMPLE: "formType"=>1
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id hideFormBackLink}">
+		<title>hideFormBackLink</title>
+		<para>Specifies whether NOT to show "back" link at the form (data input) page. Default value is FALSE.
+		</para>
+		<usage>EXAMPLE: "hideFormBackLink"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id inPhaseFooter}">
+		<title>inPhaseFooter</title>
+		<para>Specifies arbitrary text to be printed after engine output at the form (data input) page.
+		</para>
+		<usage>EXAMPLE: "inPhaseFooter"=>"&lt;h1>DATA INPUT FOOTER!&lt;/h1>"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id inPhaseHeader}">
+		<title>inPhaseHeader</title>
+		<para>Specifies arbitrary text to be printed before engine output at the form (data input) page.
+		</para>
+		<usage>EXAMPLE: "inPhaseHeader"=>"<h1>DATA INPUT HEADER!</h1>"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id notNullFields}">
+		<title>notNullFields</title>
+		<para>This option allows to indicate which fields can not be empty/null. If user tries to save
+			record with empty value for field listed in "notNullFields" option, error message will be shown.
+		</para>
+		<usage>EXAMPLE: "notNullFields"=>array("money","men")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id restrictedFields}">
+		<title>restrictedFields</title>
+		<para>Specifies the names of fields that are restricted for editing (write-protected). 
+			See also {@tutorial ZenX.pkg#formDefaultsWriteThrough}. Parameter value is an array containing 
+			names of the fields to be write-protected.
+		</para>
+		<usage>EXAMPLE: "restrictedFields"=>array("stat","uref")
+		</usage>
+	</refsect3>
+
+  <refsect1 id="{@id options1}">
+    <title> </title>
+  </refsect1>
+
+  <refsect2 id="{@id listoptions}">
+    <title>List of the Data Listing Table (Data Output) Options</title>
+  </refsect2>
+	<refsect3 id="{@id conditionalCellClass}">
+		<title>conditionalCellClass</title>
+		<para>This option allows to assign custom CSS class names to table cells at the output listing.
+			This option value is a three layer nested array where external array keys are the names of 
+			the fields that need to be painted (assigned css class). Values of external array are arrays
+			containing the conditions which trigger this class on. Each condition is another array, having 
+			the following structure: first element is the name of CSS class that will be assigned in case 
+			of conditions match, after that key=>value pairs go where key is the name of field from which 
+			value for testing is taken and value is the condition to be evaluated to true or false. Inside
+			the evaluation condition you can use predefined value "$VAL" which is the current value of the 
+			cell/field with the name given in the key.
+		</para>
+		<para>In order to simulate "AND" behaviour you need to put all conditions at the third (deepest)
+			layer, since this triggers class on only when all conditions are met. To simulate "OR" behavior
+			put conditions at the second level, cell will be painted if any of the conditions is met.
+		</para>
+		<usage>EXAMPLE:
+			"conditionalCellClass"=>array(
+				"bala"=>array(
+					array("redtext","bala"=>"((int)strip_tags(\$VAL)) &lt;  0"),
+					array("greentext","bala"=>"((int)strip_tags(\$VAL)) &gt;  0")
+				),
+				"idno"=>array(
+					array("violet","comm"=>"\$VAL!=0")
+				)
+			)
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id conditionalDeleteDisable}">
+		<title>conditionalDeleteDisable</title>
+		<para>This option allows to block item (table line) deletion option (hide delete checkbox) only for
+			those items that meet conditions written inside the value.
+			This option value is a two layer nested array containing the trigger conditions. 
+			Each condition is another array, having the key=>value pairs where key is the name of field from which 
+			value for testing is taken and value is the condition to be evaluated to true or false. Inside
+			the evaluation condition you can use predefined value "$VAL" which is the current value of the 
+			cell/field with the name given in the key.
+		</para>
+		<para>In order to simulate "AND" behaviour you need to put all conditions at the second (deepest)
+			layer, since this triggers on only when all conditions are met. To simulate "OR" behavior
+			put conditions at the first level, line will be blocked for deletion if any of the conditions is met.
+		</para>
+		<usage>EXAMPLE: "conditionalDeleteDisable"=>array(array("stat"=>"\$VAL!='new';"))
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id conditionalRowClass}">
+		<title>conditionalRowClass</title>
+		<para>This option allows to assign custom CSS class names to table rows at the output listing.
+			This key value is two layer nested array containing the trigger conditions. Each condition is 
+			another array having the following structure: first element is the name of CSS 
+			class that will be assigned in case of conditions match, after that key=>value pairs go where 
+			key is the name of field from which value for testing is taken and value is the condition to be 
+			evaluated to true or false. Inside the evaluation condition you can use predefined value "$VAL" 
+			which is the current value of the cell/field with the name given in the key.
+		</para>
+		<para>In order to simulate "AND" behaviour you need to put all conditions at the second (deepest)
+			layer, since this triggers on only when all conditions are met. To simulate "OR" behavior
+			put conditions at the first level, line will be assigned CSS class if any of the conditions is met.
+		</para>
+		<usage>EXAMPLE:
+	  "conditionalRowClass"=>array(
+		  array("yell","pbnf"=>"!empty(\$VAL)","prdt"=>"strtotime('-2 weeks')>strtotime(\$VAL)")
+	  )
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id customGetData}">
+		<title>customGetData</title>
+		<para>This setting allows engine to use user-defined function to retrieve information from data base
+			instead of default implementation. In order this setting to take effect you must define function
+			supplied as parameter. Custom function must return result in the same format as the default one. 
+			See {@link MainEngineAbstract::getData()}. Note that function name is written without brackets.
+		</para>
+		<usage>EXAMPLE: "customGetData"=>"exampleRetrieval"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id customSearchFields}">
+		<title>customSearchFields</title>
+		<para>This parameter adds user-defined table field to be available for search, i.e. allows this 
+			field within REQUEST and COOKIE arrays to pass through engine filter. You must however manually
+			define implementation for this search (for example catch custom field value from REQUEST array,
+			do some operation over it, and based on its results set new find parameters, or if you use 
+			customGetData option you can implement it directly whithin the data getter method).
+		</para>
+		<para>This parameter value is an array with key => value pairs where key is the field name and
+			value is the description of this field (i.e. how this field would be called at the search form
+			during the output to user).
+		</para>
+		<usage>EXAMPLE: "customSearchFields"=>array("user"=>"User Name"),
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id eraseNotListedInReorder}">
+		<title>eraseNotListedInReorder</title>
+		<para>This parameter is used in conjunction with {@tutorial ZenX.pkg#fieldReorder} parameter. 
+			If set to true, only the fields listed in reorder array will be shown at the page, otherwise 
+			all fields are shown after the reordered ones.
+		</para>
+		<usage>EXAMPLE: "eraseNotListedInReorder"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id fieldReorder}">
+		<title>fieldReorder</title>
+		<para>By default on the output listing (table) fields are shown at the order they are initially added
+			at the class constructor. To reorder fields you must define "fieldReorder" parameter, which accepts
+			array containing fields in the desired order as parameter. See also 
+			{@tutorial ZenX.pkg#eraseNotListedInReorder}
+		</para>
+		<usage>EXAMPLE: "fieldReorder"=>array("idno","user","name")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id findHiddenFields}">
+		<title>findHiddenFields</title>
+		<para>Specifies fields that must NOT be shown at the find (search) section at the listing page.
+		</para>
+		<usage>EXAMPLE: "findHiddenFields"=>array("city","txt","pic")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id findParameters}">
+		<title>findParameters</title>
+		<para>Specifies parameters narrowing the search/filtering the data. Parameter value is an array of
+			strings, where each string is storage engine specific formula. Currently it is MySQL "WHERE" clause.
+		</para>
+		<usage>EXAMPLE: "findParameters"=>array("iref=$itemid","id>5")
+		</usage>
+	</refsect3>
+ 	<refsect3 id="{@id ignoreFindParameters}">
+		<title>ignoreFindParameters</title>
+		<para>Setting this option to true will cause table to ignore parameters listed in 
+			{@tutorial ZenX.pkg#findParameters} option (including the case when this option was set automatically
+			by engine itself in response to user interation. 
+			This may be required if you are using two tables at the same page. 
+			Without setting this parameter PHP parser will throw runtime error if fields listed in
+			findParameters are not existing in one of the tables. Alternatively if you are using several tables
+			on the same page, having fields with the same names, (that is not advisable though) you may want to
+			filter only one table and set ignoreFindParameters where it is not required. See also 
+			{@tutorial ZenX.pkg#ignoreSortParameters}.
+		</para>
+		<usage>EXAMPLE: "ignoreFindParameters"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id ignoreSortParameters}">
+		<title>ignoreSortParameters</title>
+		<para>Setting this option to true will cause table to ignore parameters listed in 
+			{@tutorial ZenX.pkg#orderBy} and {@tutorial ZenX.pkg#reverseOrder} options (including the case when
+			this options are set automatically by engine itself in response to user interation). 
+			This may be required if you are using two tables at the same page. 
+			Without setting this parameter PHP parser will throw runtime error if fields listed in
+			findParameters are not existing in one of the tables. Alternatively if you are using several tables
+			on the same page, having fields with the same names, (that is not advisable though) you may want to
+			sort only one table and set ignoreSortParameters where it is not required. See also
+			{@tutorial ZenX.pkg#ignoreFindParameters}.
+		</para>
+		<usage>EXAMPLE: "ignoreSortParameters"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id jumpOutPopups}">
+		<title>jumpOutPopups</title>
+		<para>This option specifies popup (hint) text that will be displayed when user points mouse onto
+			a "jumpOut" link. Parameter value is an array where key is field name that has jumpOuts specified
+			by {@tutorial ZenX.pkg#jumpOuts} option and value is either field name (in this case values of 
+			the relevant field will be displayed) or arbitrary text (static text is displayed then).
+		</para>
+		<usage>EXAMPLE: "jumpOutPopups"=>array("idn"=>"money")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id jumpOuts}">
+		<title>jumpOuts</title>
+		<para>This option for table listing (output phase) converts text values of the field specified in
+			option value array key into anchors (&lt;a> tags) linking to other (external) resources. Option
+			value is associative array where keys is the name of the field to be converted to link and value
+			is name of the field containing URL's of the external resources. See also
+			{@tutorial ZenX.pkg#linkOuts}, {@tutorial ZenX.pkg#jumpOutPopups}.
+		</para>
+		<usage>EXAMPLE: "jumpOuts"=>array("idn"=>"str","text"=>"link")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id jumpToSelf}">
+		<title>jumpToSelf</title>
+		<para>Specifies whether links created by {@tutorial ZenX.pkg#linkOuts} and {@tutorial ZenX.pkg#jumpOuts}
+			parameters will open in the same window. The default is false, so when this option is not set, links
+			will open in new windows.
+		</para>
+		<usage>EXAMPLE: "jumpToSelf"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id linkOuts}">
+		<title>linkOuts</title>
+		<para>This option for table listing (output phase) converts text values of the field specified in
+			option value array key into anchors (&lt;a> tags) linking to the same domain (internal) resources. 
+			Option value is two layer nested associative array, where keys of the external array are names of
+			the fields where text is to be converted to link and values are inner array containing the following
+			keys: "target" - specifies file withing the same domain to which values will be sent, "name" - name
+			of the variable to be sent to target, "value" - name of the table field that will be sourcing values 
+			for variable specified with name. One more optional key is "popup" that specifies popup (hint) text 
+			that will be displayed when user points mouse onto a link. "popup" value is either field name (in 
+			this case values of the relevant field will be displayed) or arbitrary text (static text is 
+			displayed then). See also {@tutorial ZenX.pkg#jumpOuts}, {@tutorial ZenX.pkg#jumpOutPopups}.
+		</para>
+		<usage>EXAMPLE:
+		"linkOuts"=>array(
+			"city"=>array(
+				"value"=>"str",
+				"target"=>"somefile.php",
+				"name"=>"somevar",
+				"popup"=>"txt"
+			),
+			"user"=>array(
+				"target"=>"userbalance.php",
+				"name"=>"FT&amp;user",
+				"value"=>"uref"
+				)
+			)
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listCustomPreprocessing}">
+		<title>listCustomPreprocessing</title>
+		<para>Specifies user defined method(s) for processing data retrieved by default 
+			{@link MainEngineAbstract::getData()} method before it is passed for printing. More than one 
+			processing methods are implemented concequently. Data return format must be same as in
+			{@link MainEngineAbstract::getData()}. This method applies to the listing (data output) page. 
+			See also {@tutorial ZenX.pkg#formCustomPreprocessing}.
+		</para>
+		<usage>EXAMPLE: "listCustomPreprocessing"=>array("multiShipPackPreprocessing","userNamesPreprocessing")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listDeletable}">
+		<title>listDeletable</title>
+		<para>Makes deletion impossible at listing (data output) page (e.i. hides "DELETE" column).
+		</para>
+		<usage>EXAMPLE: "listDeletable"=>false
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listHiddenFields}">
+		<title>listHiddenFields</title>
+		<para>Hides columns (fields) at the listing (data output) page. This option value is an array with 
+			the names of fields to be hidden.
+		</para>
+		<usage>EXAMPLE: "listHiddenFields"=>array("mtnm","link")
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listHidePagesWord}">
+		<title>listHidePagesWord</title>
+		<para>This option hides the word "PAGES" (can be localized at {@link Signs} interface} at the bottom
+			of listing (data output) page. Default is "false".
+		</para>
+		<usage>EXAMPLE: "listHidePagesWord"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listSearchable}">
+		<title>listSearchable</title>
+		<para>Setting this option to false hides search form at the listing (data output) page. Default is "true".
+		</para>
+		<usage>EXAMPLE: "listSearchable"=>false
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listShowKeys}">
+		<title>listShowKeys</title>
+		<para>Hides key field column at the listing (data output) page. Default is "true".
+		</para>
+		<usage>EXAMPLE: "listShowKeys"=>false
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listSortHeaders}">
+		<title>listSortHeaders</title>
+		<para>Specifies which field headers (titles) will be available for sorting (converted to sort links).
+			Parameter value is an array with field names.
+		</para>
+		<usage>EXAMPLE: "listSortHeaders"=>array("idno","prdt","name","user")
+		See also {@tutorial Steps.pkg#e02}.
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listSortPopups}">
+		<title>listSortPopups</title>
+		<para>This option specifies popup (hint) text that will be displayed when user points mouse onto
+			a sortable table header link. Parameter value is an array where key is field name that was 
+			specified	by {@tutorial ZenX.pkg#listSortHeaders} option and value is arbitrary text to be displayed.
+		</para>
+		<usage>EXAMPLE: 
+		"listSortPopups"=>array(
+				"idn"=>"Sort by number",
+				"money"=>"Sort by money",
+				"str"=>"Sort by string"
+			)
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listType}">
+		<title>listType</title>
+		<para>This setting determines which printHtmlForm method is called. Default value 0 implies use
+			of {@link MainEngineAbstract::showDefaultList()}. Setting it to 1 switches engine to use
+			{@link MainEngineAbstract::showCustomList()}. Since showCustomList() default implementation
+			is empty, user must override this method when setting listType to 1.
+		</para>
+		<usage>EXAMPLE: "listType"=>1
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id listViewable}">
+		<title>listViewable</title>
+		<para>Hides "show details" column at the listing (data output) page.
+		</para>
+		<usage>EXAMPLE: "listViewable"=>false
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id noPages}">
+		<title>noPages</title>
+		<para>By default at the listing (data output) page records are shown partially, i.e. output
+			is split to pages depending on {@tutorial ZenX.pkg#recordsPerPage} option. In order to list
+			all found results on the same page set "noPages" to true. Default value is false. 
+		</para>
+		<usage>EXAMPLE: "noPages"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id orderBy}">
+		<title>orderBy</title>
+		<para>Indicates default field to sort by. This setting is overriden by consequent user interactions.
+		  See also {@tutorial ZenX.pkg#reverseOrder}.
+		</para>
+		<usage>EXAMPLE: "orderBy"=>"date"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id outPhaseFooter}">
+		<title>outPhaseFooter</title>
+		<para>Specifies arbitrary text to be printed after engine output at the listing (data output) page.
+		</para>
+		<usage>EXAMPLE: "outPhaseFooter"=>"&lt;a href='".$_SESSION['backlink']."'>BACK&lt;/a>"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id outPhaseHeader}">
+		<title>outPhaseHeader</title>
+		<para>Specifies arbitrary text to be printed before engine output at the listing (data output) page.
+		</para>
+		<usage>EXAMPLE: "outPhaseHeader"=>"&lt;h1>DATA OUTPUT!&lt;/h1>"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id recordsPerPage}">
+		<title>recordsPerPage</title>
+		<para>Specifies number of records shown at one page during the listing (data output) phase. This setting
+			has no effect is {@tutorial ZenX.pkg#noPages} is set to true. Default value is 50.
+		</para>
+		<usage>EXAMPLE: "recordsPerPage"=>100
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id reverseOrder}">
+		<title>reverseOrder</title>
+		<para>Specifies whether to user reverseOrder (decending) instead of default one (ascending). See
+			also {@tutorial ZenX.pkg#orderBy}.
+		</para>
+		<usage>EXAMPLE: "reverseOrder"=>true
+		</usage>
+	</refsect3>
+
+  <refsect1 id="{@id options2}">
+    <title> </title>
+  </refsect1>
+
+  <refsect2 id="{@id miscoptions}">
+    <title>List of Other Miscellaneous Options</title>
+  </refsect2>
+
+	<refsect3 id="{@id clientInfoOn}">
+		<title>clientInfoOn</title>
+		<para>This option turn-on user environment getter feature using javascript stab. For details 
+			refer to {@link MainEngineAbstract::getClientInfo()}
+		</para>
+		<usage>EXAMPLE: "clientInfoOn"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id fileFolder}">
+		<title>fileFolder</title>
+		<para>Specifies the directory where engine will store uploaded files. Default value is "../dat". See also
+			{@tutorial ZenX.pkg#imageFolder}.
+		</para>
+		<usage>EXAMPLE: "fileFolder"=>"datafolder"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id imageFolder}">
+		<title>imageFolder</title>
+		<para>Specifies the directory where engine will store uploaded images. Default value is "../img". See also 
+			{@tutorial ZenX.pkg#fileFolder}.
+		</para>
+		<usage>EXAMPLE: "imageFolder"=>"images"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id mysqlMultiSuffix}">
+		<title>mysqlMultiSuffix</title>
+		<para> 'mysqlMultiSuffix' parameter is the suffix used to form multiple values tables (referenced values).
+			Default value is "_mul_". Full name of the multi table is formed like this: 
+			{@tutorial ZenX.pkg#mysqlPrefix} + main table name + mysqlMultiSuffix + multi field name. 
+		</para>
+		<usage>EXAMPLE: "mysqlMultiSuffix"=>"_referencevalues_"
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id mysqlPrefix}">
+		<title>mysqlPrefix</title>
+		<para> 'mysqlPrefix' parameter is the prefix used to form tables names within MySQL database.
+			Default value is "ZX_". Full name of the table is formed like this: mysqlPrefix + table name. 
+			See also {@tutorial ZenX.pkg#mysqlMultiSuffix}.
+		</para>
+		<usage>EXAMPLE: "mysqlPrefix"=>""
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id noInit}">
+		<title>noInit</title>
+		<para>By default one of the first methods to be called during page opening is 
+			{@link MainEngineAbstract::initialize()}. It's implementation is empty by default. However 
+			if user overrides it will be used every time during page opening. In order to turn off this
+			this method you can set "noInit" parameter to true. Default value is false.
+		</para>
+		<usage>EXAMPLE: "noInit"=>true
+		</usage>
+	</refsect3>
+	<refsect3 id="{@id sessionPrefix}">
+		<title>sessionPrefix</title>
+		<para>Specifies prefix to be added to all cookies with field names. Default value is "ZX_". See also
+			{@link MainEngineAbstract::setNavigationParameters()}.
+		</para>
+		<usage>EXAMPLE: "sessionPrefix"=>"ZX_",
+		</usage>
+	</refsect3>
+
+  <refsect1 id="{@id defaulttypes}">
+    <title>Initially Available Data Types</title>
+  </refsect1>
+
+  <refsect2 id="{@id typesspecial}">
+    <title>List of Special Data Types</title>
+  </refsect2>
+	<refsect3 id="{@id typekeys}">
+		<title>__KEYS</title>
+		<para>_KEYS - is a numeric identifier of the record in database, _KEYS field is hardcoded 
+			in some classes and can not be removed or altered. In MySQL _KEYS are defined as unsigned (positive)
+			integer. See also {@link DataDefiner::filterKeys()}.
+		</para>
+	</refsect3>
+
+  <refsect1 id="{@id types1}"><title> </title></refsect1>
+  <refsect2 id="{@id typestext}">
+    <title>List of Textual Data Types</title>
+  </refsect2>
+	<refsect3 id="{@id typeword}">
+		<title>__WORD</title>
+		<para>_WORD - is a short text, in MySQL it is defined as varchar(300), so it's length will be approximately
+			100 symbols for non-latin characters, depending on language you use. No tags allowed 
+			(will be filtered off). See also {@link DataDefiner::filterWord()}.</para>
+	</refsect3>
+ 	<refsect3 id="{@id typetext}">
+		<title>__TEXT</title>
+		<para>_TEXT - is a long text of arbitrary length. In MySQL defined as "text", typically this limits text
+			to 64 Kb. See also {@link DataDefiner::filterText()}.</para>
+	</refsect3>
+  
+  <refsect1 id="{@id types2}"><title> </title></refsect1>
+  <refsect2 id="{@id typesdate}">
+    <title>List of Calendar Data Types</title>
+  </refsect2>
+	<refsect3 id="{@id typedate}">
+		<title>__DATE</title>
+		<para>_DATE - is a date representation, stored in MySQL as "date" type, shown as text in YYYY-MM-DD format.
+			See also {@link DataDefiner::filterDate()}.	</para>
+	</refsect3>
+
+  <refsect1 id="{@id types3}"><title> </title></refsect1>
+  <refsect2 id="{@id typesbool}">
+    <title>List of Boolean Data Types</title>
+  </refsect2>
+	<refsect3 id="{@id typebool}">
+		<title>__BOOL</title>
+		<para>_BOOL - is simple boolean type. In MySQL defined as "tinyint(1)". See also 
+			{@link DataDefiner::filterBool()}.	</para>
+	</refsect3>
+
+  <refsect1 id="{@id types4}"><title> </title></refsect1>
+  <refsect2 id="{@id typesnumeric}">
+    <title>List of Numeric Data Types</title>
+  </refsect2>
+	<refsect3 id="{@id typerint}">
+		<title>_RINT</title>
+		<para>_RINT - is a regular integer, values up to 2147483647 (PHP int limit for 32 bit system, 
+			unsigned not supported). See also {@link DataDefiner::filterRint()}.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id typerflt}">
+		<title>_RFLT</title>
+		<para>_RFLT - is a regular float, stored in MySQL as "float". See also {@link DataDefiner::filterRflt()}.
+		</para>
+	</refsect3>
+
+  <refsect1 id="{@id types5}"><title> </title></refsect1>
+  <refsect2 id="{@id typeslists}">
+    <title>List of Multiple Data (Sets/"omni") Types</title>
+  </refsect2>
+	<refsect3 id="{@id typellst}">
+		<title>_LLST</title>
+		<para>Limited List. Shown as drop-down list. Stored in MySQL as keys(integers) in main table that refer 
+			to separate table, containing values. This list is limited, i.e. users can not add values to it. 
+			You must manually add values there during table creation. See also {@link DataDefiner::filterLlst()} and 
+			{@tutorial Steps.pkg#e03}.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id typerlst}">
+		<title>_RLST</title>
+		<para>Radio Buttons List. Shown as radio buttons set. Stored in MySQL as keys(integers) in main table that 
+			refer to separate table, containing values. This list is limited, i.e. users can not add values to it. 
+			You must manually add values there during table creation.See also {@link DataDefiner::filterRlst()} and 
+			{@tutorial Steps.pkg#e03}.</para>
+	</refsect3>
+	<refsect3 id="{@id typeelst}">
+		<title>_ELST</title>
+		<para>Extendable List. Shown as drop-down list. Stored in MySQL as keys(integers) in main table that refer 
+			to separate table, containing values. Users can add new values to this list. See also 
+			{@link DataDefiner::filterElst()} and {@tutorial Steps.pkg#e03}.</para>
+	</refsect3>
+
+  <refsect1 id="{@id types6}"><title> </title></refsect1>
+  <refsect2 id="{@id typesfiles}">
+    <title>List of External Data (Images / Files) Types</title>
+  </refsect2>
+	<refsect3 id="{@id typeimgs}">
+		<title>_IMGS</title>
+		<para>Picture. Shown as image. In MySQL database only image number is stored. The image file itself is 
+			stored at image folder and named as table name + field name + number. _IMGS type image dimension are:
+			800 x 600 px, maximum file size is 1000000 bytes. See also {@link MainEngineAbstract::verifyImageFields()}
+			and {@link MainEngineAbstract::imageResize()}. 
+		</para>
+	</refsect3>
+	<refsect3 id="{@id typeicon}">
+		<title>_ICON</title>
+		<para>Small Picture. Shown as image. In MySQL database only image number is stored. The image file itself is 
+			stored at image folder and named as table name + field name + number. _IMGS type image dimension are:
+			50 x 50 px, maximum file size is 300000 bytes. See also {@link MainEngineAbstract::verifyImageFields()}
+			and {@link MainEngineAbstract::imageResize()}. 
+		</para>
+	</refsect3>
+
+  <refsect1 id="{@id cssselectors}">
+    <title>CSS Selectors List</title>
+  </refsect1>
+  <refsect2 id="{@id csslist}">
+    <title>Listing (Output) Page Selectors</title>
+  </refsect2>
+	<refsect3 id="{@id csszx_add}">
+		<title>.zx_add</title>
+		<para>"zx_add" CSS class defines visual appearance of "div" containing form with "ADD NEW RECORD" button 
+			at the list page.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_fnd}">
+		<title>.zx_fnd</title>
+		<para>"zx_fnd" CSS class defines visual appearance of "table" containing form with "SEARCH" fields and 
+			buttons.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_lst}">
+		<title>.zx_lst</title>
+		<para>"zx_lst" CSS class defines visual appearance of main "table" containing all the data at list page.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_pgs}">
+		<title>.zx_pgs</title>
+		<para>"zx_pgs" CSS class defines visual appearance of "div" with page anchors.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_cols}">
+		<title>.zx_c[0-9]</title>
+		<para>"zx_cX" (where X is a number) CSS class defines visual appearance of "col" with relevant 
+			sequential number inside main table. Keep in mind that due to poor implementation of web standards,
+			many browsers allow to define only "width" attribute with this tag. Use relevant tag selectors for other
+			attributes. For example this will set width of fifth column to 55% and align its text to left:
+		</para>
+		<para>.zx_c5 { width:55%; }</para>
+		<para>.zx_lst td + td + td + td + td { text-align: left; }</para>
+	</refsect3>
+
+  <refsect1 id="{@id cssselectors1}"><title> </title></refsect1>
+  <refsect2 id="{@id cssform}">
+    <title>Form (Input) Page Selectors</title>
+  </refsect2>
+	<refsect3 id="{@id csszx_bul}">
+		<title>.zx_bul</title>
+		<para>"zx_bul" is a special CSS class for boolean (checkbox) type. Since all other inputs can be 
+			formatted indirectly this is the only input tag class. Use "important" notation to override
+			general settings. Example use:
+		</para>
+		<para>.zx_frm td input,.zx_frm td select { width:100%; border: none; }</para>
+		<para>.zx_bul { width:15px ! important; }</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_err}">
+		<title>.zx_err</title>
+		<para>"zx_err" CSS class defines visual appearance of "table" containing error messages.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_frb}">
+		<title>.zx_frb</title>
+		<para>"zx_frb" CSS class defines visual appearance for the last table row "tr" of input form,
+			containing "SAVE" button.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_frm}">
+		<title>.zx_frm</title>
+		<para>"zx_frm" CSS class defines visual appearance for main "div" containing form and table with 
+			input fields at the form page.
+		</para>
+	</refsect3>
+	<refsect3 id="{@id csszx_wrn}">
+		<title>.zx_wrn</title>
+		<para>"zx_wrn" CSS class defines visual appearance of "table" containing warning messages.
+		</para>
+	</refsect3>
+
+</refentry>

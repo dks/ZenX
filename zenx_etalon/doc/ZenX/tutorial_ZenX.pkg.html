@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>ZenX Manual</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+	<table class="tutorial-nav-box">
+	<tr>
+		<td style="width: 30%">
+							<a href="../ZenX/tutorial_Steps.pkg.html" class="nav-button">Previous</a>
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+							<span class="nav-button-disabled">Next</span>
+					</td>
+	</tr>
+	<tr>
+		<td style="width: 30%">
+							<span class="detail">ZenX Examples</span>
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+					</td>
+	</tr>
+</table>
+	
+<div><a name=""></a><div class="ref-title-box"><h1 class="ref-title">ZenX Manual</h1></div>
+  <div class="ref-synopsis"><span class="author">Konstantin Dvortsov <div class="author-blurb"><a href="http://dvortsov.tel">dvortsov.tel</a></div></span></div>
+    <h1 class="title">Table of Contents</h1>
+<ul class="toc">
+	
+			
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#intro">What is ZenX?</a></li>
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#sysreq">ZenX System Requirements</a></li>
+						
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#xhtml">XHTML Output</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#concepts">Basic ZenX Concepts</a></li>
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#outphase">Output Phase</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#inphase">Input Phase</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#datatypes">Data Types</a></li>
+										
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#datadefinitions">Data Type Definitions</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#datamulti">&quot;Omni&quot; Data Class</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#datadefinitions2">Data Type Definitions for &quot;Omni&quot; Types</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#options">Possible Options for the ZenX engine</a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formoptions">List of the Data Entry Form (Data Input) Options</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#acceptEmptyValues">acceptEmptyValues</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#customFormBackLink">customFormBackLink</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formBackLinkModifier">formBackLinkModifier</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formCustomPreprocessing">formCustomPreprocessing</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formDefaults">formDefaults</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formDefaultsWriteThrough">formDefaultsWriteThrough</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formHiddenFields">formHiddenFields</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formRelayParameters">formRelayParameters</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formShowKeys">formShowKeys</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#formType">formType</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#hideFormBackLink">hideFormBackLink</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#inPhaseFooter">inPhaseFooter</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#inPhaseHeader">inPhaseHeader</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#notNullFields">notNullFields</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#restrictedFields">restrictedFields</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#options1"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listoptions">List of the Data Listing Table (Data Output) Options</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#conditionalCellClass">conditionalCellClass</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#conditionalDeleteDisable">conditionalDeleteDisable</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#conditionalRowClass">conditionalRowClass</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#customGetData">customGetData</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#customSearchFields">customSearchFields</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#eraseNotListedInReorder">eraseNotListedInReorder</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#fieldReorder">fieldReorder</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#findHiddenFields">findHiddenFields</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#findParameters">findParameters</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#ignoreFindParameters">ignoreFindParameters</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#ignoreSortParameters">ignoreSortParameters</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#jumpOutPopups">jumpOutPopups</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#jumpOuts">jumpOuts</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#jumpToSelf">jumpToSelf</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#linkOuts">linkOuts</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listCustomPreprocessing">listCustomPreprocessing</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listDeletable">listDeletable</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listHiddenFields">listHiddenFields</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listHidePagesWord">listHidePagesWord</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listSearchable">listSearchable</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listShowKeys">listShowKeys</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listSortHeaders">listSortHeaders</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listSortPopups">listSortPopups</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listType">listType</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#listViewable">listViewable</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#noPages">noPages</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#orderBy">orderBy</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#outPhaseFooter">outPhaseFooter</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#outPhaseHeader">outPhaseHeader</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#recordsPerPage">recordsPerPage</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#reverseOrder">reverseOrder</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#options2"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#miscoptions">List of Other Miscellaneous Options</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#clientInfoOn">clientInfoOn</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#fileFolder">fileFolder</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#imageFolder">imageFolder</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#mysqlMultiSuffix">mysqlMultiSuffix</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#mysqlPrefix">mysqlPrefix</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#noInit">noInit</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#sessionPrefix">sessionPrefix</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#defaulttypes">Initially Available Data Types</a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typesspecial">List of Special Data Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typekeys">__KEYS</a></li>
+															
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#types1"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typestext">List of Textual Data Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typeword">__WORD</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typetext">__TEXT</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#types2"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typesdate">List of Calendar Data Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typedate">__DATE</a></li>
+															
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#types3"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typesbool">List of Boolean Data Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typebool">__BOOL</a></li>
+															
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#types4"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typesnumeric">List of Numeric Data Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typerint">_RINT</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typerflt">_RFLT</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#types5"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typeslists">List of Multiple Data (Sets/&quot;omni&quot;) Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typellst">_LLST</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typerlst">_RLST</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typeelst">_ELST</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#types6"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typesfiles">List of External Data (Images / Files) Types</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#typeimgs">_IMGS</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#typeicon">_ICON</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#cssselectors">CSS Selectors List</a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csslist">Listing (Output) Page Selectors</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_add">.zx_add</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_fnd">.zx_fnd</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_lst">.zx_lst</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_pgs">.zx_pgs</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_cols">.zx_c[0-9]</a></li>
+					
+				  								        </ul>
+					</ul>
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#cssselectors1"></a></li>
+										
+					
+				  				<ul class="toc">
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#cssform">Form (Input) Page Selectors</a></li>
+						
+					
+				  																				<ul class="toc">
+							<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_bul">.zx_bul</a></li>
+															
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_err">.zx_err</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_frb">.zx_frb</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_frm">.zx_frm</a></li>
+					
+					<li><a href="../ZenX/tutorial_ZenX.pkg.html#csszx_wrn">.zx_wrn</a></li>
+								</ul>
+		</ul>
+	</ul>
+
+  <span><a name="intro"></a><h2 class="title">What is ZenX?</h2><p>&quot;ZenX&quot; library is an object-oriented implementation of useful routines 
+      for data storage and manupulation. Though basics are quite simple and this
+      library can be used by a man with no background in programming, it is 
+      still aimed for professional programmers, since main advantages come from
+      overriding and/or extending methods provided herein. For those who is bothered 
+			reading this documentation - here is a link to <a href="../ZenX/tutorial_Steps.pkg.html">ZenX Examples</a>.</p>
+    <p>&quot;ZenX&quot; automates several data processing steps: input, verification, 
+      storage and retrieval; and also provides handy methods for its visualization
+      and manipulation (like sorters, filters, table cell colorings etc).</p></span>
+
+  <span><a name="sysreq"></a><h3 class="title">ZenX System Requirements</h3><p>It is implied that ZenX will be run under PHP 5.0 or higher. Correct library work is tested only
+			under Apache 2. In order to run ZenX you MUST have the following packages installed:</p>
+		<p>php-mysql</p>
+		<p>php-mbstring</p>
+		<p>php-gd</p>
+		<p>Pictures and files are stored externally (not in mysql), by default in &quot;../img&quot; and &quot;../dat&quot; folders
+			respectively. File paths are indicated relatively to user-defined ZenX classes. You must provide read/
+			write access to these folders for PHP. Default image/files folders paths can be changed by user settings.</p></span>
+
+  <span><a name="xhtml"></a><h3 class="title">XHTML Output</h3><p>ZenX default implementation produces valid XHTML output. XHTML has many differences with
+			plain HTML, but in ZenX these differences are basically limited to following:</p>
+    <p>- Replacing &amp; with &amp;amp;</p>
+    <p>- Closing all tags (example - printing &lt;br /&gt; instead of &lt;br&gt;)</p>
+    <p>- Not printing text within a &quot;body&quot; without wrapping elements</p>
+    <p>It may be arguable that XHTML is superior to others, but it is actually not so difficult to convert
+			ZenX output to plain HTML. There are many options: you can use &quot;Tidy&quot;, buffer output and replace amps and
+			closed tags, or even use Sed to change the source code, as well as do this manually. Anyway, fixing it
+			to HTML is easier than maintain several versions, so only XHTML is supported.</p>
+		<p>Just remember - one of the main reason to use XHTML is its XML validity. ZenX is a database engine
+			first of all, so it is likely to handle huge amount of data, thus it is always useful to make this 
+			output machine-readable. Basically you can load the result XHTML into XML parsers and do some nasty
+			tricks with data processing and automation. Do not forget it.</p></span>
+
+  <span><a name="concepts"></a><h3 class="title">Basic ZenX Concepts</h3>This section describes some of the basic ZenX concepts.
+    <p>Since ZenX engine was designed in a manner to simplify and automate routine
+      data manipulation operations, it is split in several parts. Let's call these parts 
+      &quot;Phases&quot; since they represent separate steps in data processing. Typically, data is sent from
+      one page to another, where it undergoes different manupulations. For ZenX, however, this is 
+      not the case. Since we want to keep it simple, we want to use only one page for all our 
+      activities. So the data is sent back to the same page it comes from. That means we need to 
+      distinguish cases when we show data from cases when we accept it. For this purpose different
+      blocks of code are activated on different phases. You can think of them as of &quot;page inside the page&quot;.</p>
+    <p>Though this reference relies heavily of MySQL terminology like records, tables etc. they
+      are not completely equal, since different storage engine may implement different ways to store and 
+      organize data. However, since currently ZenX implements only MySQL storage engine, the concepts are 
+      very close.</p></span>
+  <a name="outphase"></a><h4 class="title">Output Phase</h4>Output or &quot;Listing&quot; Phase activates a block of code that does data retrieval 
+      and rendering to the web-page.
+    <p>On the Output Phase we access out data storage and retrieve set of records
+      matching some predefined criteria. This is phase is actually a result of operator 
+      job, whether it is a price list or internet shop goods listing. Settings for this phase
+      supplied to the setParameters() method are mainly starting from the &quot;list&quot; word, showing that
+      they will affect only behaviour and appearance of this phase.</p><br />
+  <a name="inphase"></a><h4 class="title">Input Phase</h4>Input Phase activates blocks of code that do data verification,rendering and saving.
+    <p>The Input Phase is actually a group of smaller phases related to new data entry and editing.
+      Since data editing implies rendering of the old data to screen this phase also deals 
+      with data retrieval. However, this time we get only one specific record. Then, once editing or new
+      data input is completed, data is send to the script and again gets into the input phase, but
+      goes different way this time. First it is verified for correctness, and saved to data storage, if
+      no errors are found. Then it is rendered back to screen (this time it shows the new data) again.
+      This smaller cycle: ...-&gt;[show]-&gt;[get input]-&gt;[verify]-&gt;[save]-&gt;... is all Input Phase, and is
+      launched inside <a href="../ZenX/MainEngineAbstract.html#methodrunInputCycle">MainEngineAbstract::runInputCycle()</a> method.</p><br />
+
+  <span><a name="datatypes"></a><h3 class="title">Data Types</h3>This section describes ZenX data types and classes.</span>
+  <a name="datadefinitions"></a><h4 class="title">Data Type Definitions</h4><p>Class DataDefiner is a wrapper for <a href="../ZenX/DataDefiner.html#var$dataTypes">DataDefiner::$dataTypes</a> array that contains 
+			all data type definitions. Data type is basically a name that describing what type of data
+			can contain specific field in database table, like &quot;String&quot; or &quot;Integer&quot; etc. Data type
+			definition sets up the rules for the ZenX how to handle the specific data type.</p>
+		<p>First of all we need to explain to the engine how to render the data input fields
+			to the screen. Since we use HTML we define the html tag wrapping the data itself. The simpliest
+			case is the text input: &lt;input type='text' name='name' value='value' /&gt;. This string is
+			split into tree pieces, allowing engine to stick here user defined name and value. So we have
+			&quot;sTag&quot; (start of tag): &lt;input type='text' name=' , after which we place actual name, then we add
+			&quot;mTag&quot; (middle of tag): ' value=' , after which we place the value, and then we add closing 
+			tag &quot;eTag&quot; (end of tag): ' /&gt; Note the quotes we use, so the name and value would be quoted to 
+			form valid HTML. Basically this is all for simple data types. Multiple-value or &quot;omni&quot; data types 
+			has some extra features.</p><br />
+  <a name="datamulti"></a><h4 class="title">&quot;Omni&quot; Data Class</h4><p>Multiple data class is a data field that contains only numeric values that refer to the the
+      description of value in a separate &quot;linked&quot; table that has the same name as the field it is referred
+      from with a certain prefix. Prefixes for the table names are specified by the data storage engine
+      settings.</p><br />
+  <a name="datadefinitions2"></a><h4 class="title">Data Type Definitions for &quot;Omni&quot; Types</h4><p>Multiple data type is defined by &quot;omni&quot; key. &quot;omni&quot; key can have several values: unset or false,
+			indicates that this is simple/ not multiple data type, &quot;multiple1&quot; denotes the list of values wrapped
+			by common tags (for example &lt;option&gt; list wrapped by &lt;select&gt; tag), &quot;multiple2&quot; denotes
+			plain list of values (for example set of radio buttons).</p>
+		<p>For data types that have &quot;omni&quot; set to &quot;multiple1&quot; you need to define list wrappers by setting 
+			&quot;prefix1&quot;, &quot;prefix2&quot; and &quot;postfix&quot; keys, as well as string indicating selected option at &quot;selected&quot;
+			keys. Additionally if you want to make list of values extendable by user, set &quot;extendable&quot; to true.</p>
+		<p>For details and examples please see the source code of <a href="../ZenX/DataDefiner.html">DataDefiner</a> class, it is quite 
+			straightforward.</p><br />
+
+  <span><a name="options"></a><h2 class="title">Possible Options for the ZenX engine</h2>This section lists possible options that can be supplied to ZenX engine in order to change its behavior and/or visual appearance.</span>
+
+  <span><a name="formoptions"></a><h3 class="title">List of the Data Entry Form (Data Input) Options</h3></span>
+  <a name="acceptEmptyValues"></a><h4 class="title">acceptEmptyValues</h4><p>This option allows empty values to replace currently existing in data storage, i.e. erase it.
+			That key value is an array listing fields of the current table that must accept empty values.</p>
+		EXAMPLE: &quot;acceptEmptyValues&quot;=&gt;array(&quot;field1&quot;,&quot;field2&quot;)<br />
+  <a name="customFormBackLink"></a><h4 class="title">customFormBackLink</h4><p>This option prints user-defined &quot;back&quot; button at the data input form page instead of default one.</p>
+		EXAMPLE:&quot;customFormBackLink&quot;=&gt;&quot;&lt;a href='sample.php?someparam=1'&gt;GO_BACK&lt;/a&gt;&quot;<br />
+  <a name="formBackLinkModifier"></a><h4 class="title">formBackLinkModifier</h4><p>This option adds user-defined tail to the standard &quot;back&quot; button at the data input form page.
+			This allows to pass additional parameters to the script.</p>
+		EXAMPLE:&quot;formBackLinkModifier&quot;=&gt;&quot;item=&quot;.$id<br />
+	<a name="formCustomPreprocessing"></a><h4 class="title">formCustomPreprocessing</h4><p>Specifies user defined method(s) for processing data retrieved by default 
+			<a href="../ZenX/MainEngineAbstract.html#methodgetHtmlForm">MainEngineAbstract::getHtmlForm()</a> method before it is passed for printing. More than one 
+			processing methods are implemented concequently. Data return format must be same as in
+			<a href="../ZenX/MainEngineAbstract.html#methodgetHtmlForm">MainEngineAbstract::getHtmlForm()</a>. This method applies to the form (data input) page. 
+			See also <a href="../ZenX/tutorial_ZenX.pkg.html#listCustomPreprocessing">listCustomPreprocessing</a>.</p>
+		EXAMPLE: &quot;formCustomPreprocessing&quot;=&gt;array(&quot;getItemUserListFPP&quot;,&quot;anotherFPP&quot;)<br />
+	<a name="formDefaults"></a><h4 class="title">formDefaults</h4><p>Specifies default values for the unfilled fields at the form (data input) page. Parameter
+			value is an array where keys are field names and values are default values for them.</p>
+		EXAMPLE: &quot;formDefaults&quot;=&gt;array(&quot;prdt&quot;=&gt;date('Y-m-d'),&quot;stat&quot;=&gt;1)<br />
+	<a name="formDefaultsWriteThrough"></a><h4 class="title">formDefaultsWriteThrough</h4><p>Specifies whether default values will be saved to database even if this field is write-protected
+			by parameter <a href="../ZenX/tutorial_ZenX.pkg.html#restrictedFields">restrictedFields</a>. A direct attempt to save default values in 
+			write-protected field without setting formDefaultsWriteThrough parameter will fail, values set by
+			&quot;formDefaults&quot; without &quot;formDefaultsWriteThrough&quot; will not be send, and thus not saved. Parameter
+			value is an array listing field names permitted for saving. This setting has no effect for 
+			common (non write-protected) fields.</p>
+		EXAMPLE: &quot;formDefaultsWriteThrough&quot;=&gt;array(&quot;stat&quot;,&quot;uref&quot;)<br />
+	<a name="formHiddenFields"></a><h4 class="title">formHiddenFields</h4><p>Specifies fields that must NOT be shown at the form (data input) page. Since this will lead
+			to missing input for relevant field, make sure they are not listed in 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#notNullFields">notNullFields</a> or specify default data with <a href="../ZenX/tutorial_ZenX.pkg.html#formRelayParameters">formRelayParameters</a>.
+			Since this fields are not printed at all <a href="../ZenX/tutorial_ZenX.pkg.html#formDefaults">formDefaults</a> will not take effect.</p>
+		EXAMPLE: &quot;formHiddenFields&quot;=&gt;array(&quot;trgt&quot;,&quot;tref&quot;,&quot;uref&quot;,&quot;date&quot;)<br />
+	<a name="formRelayParameters"></a><h4 class="title">formRelayParameters</h4><p>Specifies values that transparently must be relayed to the page during input phase. Values 
+			passed with formRelayParameters can be any field not available within the current table, or fields
+			of the current table hidden with <a href="../ZenX/tutorial_ZenX.pkg.html#formHiddenFields">formHiddenFields</a> option. 
+			Value passed to the script with key names that do not match any
+			field name within the engine tables and not listed within the
+			formRelayParameters will be blocked by engine filter. See also <a href="../ZenX/tutorial_ZenX.pkg.html#formDefaults">formDefaults</a>.</p>
+		EXAMPLE: &quot;formRelayParameters&quot;=&gt;array(&quot;trgt&quot;=&gt;1,&quot;uref&quot;=&gt;$author,&quot;date&quot;=&gt;date(&quot;Y-m-d&quot;))<br />
+	<a name="formShowKeys"></a><h4 class="title">formShowKeys</h4><p>Specifies whether to show key field values at the form (data input) page. Default value is
+			TRUE.</p>
+		EXAMPLE:&quot;formShowKeys&quot;=&gt;false<br />
+	<a name="formType"></a><h4 class="title">formType</h4><p>This setting determines which printHtmlForm method is called. Default value 0 implies use
+			of <a href="../ZenX/MainEngineAbstract.html#methodprintDefaultHtmlForm">MainEngineAbstract::printDefaultHtmlForm()</a>. Setting it to 1 switches engine to use
+			<a href="../ZenX/MainEngineAbstract.html#methodprintCustomHtmlForm">MainEngineAbstract::printCustomHtmlForm()</a>. Since printCustomHtmlForm() default implementation
+			is empty, user must override this method when setting formType to 1.</p>
+		EXAMPLE: &quot;formType&quot;=&gt;1<br />
+	<a name="hideFormBackLink"></a><h4 class="title">hideFormBackLink</h4><p>Specifies whether NOT to show &quot;back&quot; link at the form (data input) page. Default value is FALSE.</p>
+		EXAMPLE: &quot;hideFormBackLink&quot;=&gt;true<br />
+	<a name="inPhaseFooter"></a><h4 class="title">inPhaseFooter</h4><p>Specifies arbitrary text to be printed after engine output at the form (data input) page.</p>
+		EXAMPLE: &quot;inPhaseFooter&quot;=&gt;&quot;&lt;h1&gt;DATA INPUT FOOTER!&lt;/h1&gt;&quot;<br />
+	<a name="inPhaseHeader"></a><h4 class="title">inPhaseHeader</h4><p>Specifies arbitrary text to be printed before engine output at the form (data input) page.</p>
+		EXAMPLE: &quot;inPhaseHeader&quot;=&gt;&quot;DATA INPUT HEADER!&quot;<br />
+	<a name="notNullFields"></a><h4 class="title">notNullFields</h4><p>This option allows to indicate which fields can not be empty/null. If user tries to save
+			record with empty value for field listed in &quot;notNullFields&quot; option, error message will be shown.</p>
+		EXAMPLE: &quot;notNullFields&quot;=&gt;array(&quot;money&quot;,&quot;men&quot;)<br />
+	<a name="restrictedFields"></a><h4 class="title">restrictedFields</h4><p>Specifies the names of fields that are restricted for editing (write-protected). 
+			See also <a href="../ZenX/tutorial_ZenX.pkg.html#formDefaultsWriteThrough">formDefaultsWriteThrough</a>. Parameter value is an array containing 
+			names of the fields to be write-protected.</p>
+		EXAMPLE: &quot;restrictedFields&quot;=&gt;array(&quot;stat&quot;,&quot;uref&quot;)<br />
+
+  <span><a name="options1"></a><h2 class="title"></h2></span>
+
+  <span><a name="listoptions"></a><h3 class="title">List of the Data Listing Table (Data Output) Options</h3></span>
+	<a name="conditionalCellClass"></a><h4 class="title">conditionalCellClass</h4><p>This option allows to assign custom CSS class names to table cells at the output listing.
+			This option value is a three layer nested array where external array keys are the names of 
+			the fields that need to be painted (assigned css class). Values of external array are arrays
+			containing the conditions which trigger this class on. Each condition is another array, having 
+			the following structure: first element is the name of CSS class that will be assigned in case 
+			of conditions match, after that key=&gt;value pairs go where key is the name of field from which 
+			value for testing is taken and value is the condition to be evaluated to true or false. Inside
+			the evaluation condition you can use predefined value &quot;$VAL&quot; which is the current value of the 
+			cell/field with the name given in the key.</p>
+		<p>In order to simulate &quot;AND&quot; behaviour you need to put all conditions at the third (deepest)
+			layer, since this triggers class on only when all conditions are met. To simulate &quot;OR&quot; behavior
+			put conditions at the second level, cell will be painted if any of the conditions is met.</p>
+		EXAMPLE:
+			&quot;conditionalCellClass&quot;=&gt;array(
+				&quot;bala&quot;=&gt;array(
+					array(&quot;redtext&quot;,&quot;bala&quot;=&gt;&quot;((int)strip_tags(\$VAL)) &lt;  0&quot;),
+					array(&quot;greentext&quot;,&quot;bala&quot;=&gt;&quot;((int)strip_tags(\$VAL)) &gt;  0&quot;)
+				),
+				&quot;idno&quot;=&gt;array(
+					array(&quot;violet&quot;,&quot;comm&quot;=&gt;&quot;\$VAL!=0&quot;)
+				)
+			)<br />
+	<a name="conditionalDeleteDisable"></a><h4 class="title">conditionalDeleteDisable</h4><p>This option allows to block item (table line) deletion option (hide delete checkbox) only for
+			those items that meet conditions written inside the value.
+			This option value is a two layer nested array containing the trigger conditions. 
+			Each condition is another array, having the key=&gt;value pairs where key is the name of field from which 
+			value for testing is taken and value is the condition to be evaluated to true or false. Inside
+			the evaluation condition you can use predefined value &quot;$VAL&quot; which is the current value of the 
+			cell/field with the name given in the key.</p>
+		<p>In order to simulate &quot;AND&quot; behaviour you need to put all conditions at the second (deepest)
+			layer, since this triggers on only when all conditions are met. To simulate &quot;OR&quot; behavior
+			put conditions at the first level, line will be blocked for deletion if any of the conditions is met.</p>
+		EXAMPLE: &quot;conditionalDeleteDisable&quot;=&gt;array(array(&quot;stat&quot;=&gt;&quot;\$VAL!='new';&quot;))<br />
+	<a name="conditionalRowClass"></a><h4 class="title">conditionalRowClass</h4><p>This option allows to assign custom CSS class names to table rows at the output listing.
+			This key value is two layer nested array containing the trigger conditions. Each condition is 
+			another array having the following structure: first element is the name of CSS 
+			class that will be assigned in case of conditions match, after that key=&gt;value pairs go where 
+			key is the name of field from which value for testing is taken and value is the condition to be 
+			evaluated to true or false. Inside the evaluation condition you can use predefined value &quot;$VAL&quot; 
+			which is the current value of the cell/field with the name given in the key.</p>
+		<p>In order to simulate &quot;AND&quot; behaviour you need to put all conditions at the second (deepest)
+			layer, since this triggers on only when all conditions are met. To simulate &quot;OR&quot; behavior
+			put conditions at the first level, line will be assigned CSS class if any of the conditions is met.</p>
+		EXAMPLE:
+	  &quot;conditionalRowClass&quot;=&gt;array(
+		  array(&quot;yell&quot;,&quot;pbnf&quot;=&gt;&quot;!empty(\$VAL)&quot;,&quot;prdt&quot;=&gt;&quot;strtotime('-2 weeks')&gt;strtotime(\$VAL)&quot;)
+	  )<br />
+	<a name="customGetData"></a><h4 class="title">customGetData</h4><p>This setting allows engine to use user-defined function to retrieve information from data base
+			instead of default implementation. In order this setting to take effect you must define function
+			supplied as parameter. Custom function must return result in the same format as the default one. 
+			See <a href="../ZenX/MainEngineAbstract.html#methodgetData">MainEngineAbstract::getData()</a>. Note that function name is written without brackets.</p>
+		EXAMPLE: &quot;customGetData&quot;=&gt;&quot;exampleRetrieval&quot;<br />
+	<a name="customSearchFields"></a><h4 class="title">customSearchFields</h4><p>This parameter adds user-defined table field to be available for search, i.e. allows this 
+			field within REQUEST and COOKIE arrays to pass through engine filter. You must however manually
+			define implementation for this search (for example catch custom field value from REQUEST array,
+			do some operation over it, and based on its results set new find parameters, or if you use 
+			customGetData option you can implement it directly whithin the data getter method).</p>
+		<p>This parameter value is an array with key =&gt; value pairs where key is the field name and
+			value is the description of this field (i.e. how this field would be called at the search form
+			during the output to user).</p>
+		EXAMPLE: &quot;customSearchFields&quot;=&gt;array(&quot;user&quot;=&gt;&quot;User Name&quot;),<br />
+	<a name="eraseNotListedInReorder"></a><h4 class="title">eraseNotListedInReorder</h4><p>This parameter is used in conjunction with <a href="../ZenX/tutorial_ZenX.pkg.html#fieldReorder">fieldReorder</a> parameter. 
+			If set to true, only the fields listed in reorder array will be shown at the page, otherwise 
+			all fields are shown after the reordered ones.</p>
+		EXAMPLE: &quot;eraseNotListedInReorder&quot;=&gt;true<br />
+	<a name="fieldReorder"></a><h4 class="title">fieldReorder</h4><p>By default on the output listing (table) fields are shown at the order they are initially added
+			at the class constructor. To reorder fields you must define &quot;fieldReorder&quot; parameter, which accepts
+			array containing fields in the desired order as parameter. See also 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#eraseNotListedInReorder">eraseNotListedInReorder</a></p>
+		EXAMPLE: &quot;fieldReorder&quot;=&gt;array(&quot;idno&quot;,&quot;user&quot;,&quot;name&quot;)<br />
+	<a name="findHiddenFields"></a><h4 class="title">findHiddenFields</h4><p>Specifies fields that must NOT be shown at the find (search) section at the listing page.</p>
+		EXAMPLE: &quot;findHiddenFields&quot;=&gt;array(&quot;city&quot;,&quot;txt&quot;,&quot;pic&quot;)<br />
+	<a name="findParameters"></a><h4 class="title">findParameters</h4><p>Specifies parameters narrowing the search/filtering the data. Parameter value is an array of
+			strings, where each string is storage engine specific formula. Currently it is MySQL &quot;WHERE&quot; clause.</p>
+		EXAMPLE: &quot;findParameters&quot;=&gt;array(&quot;iref=$itemid&quot;,&quot;id&gt;5&quot;)<br />
+ 	<a name="ignoreFindParameters"></a><h4 class="title">ignoreFindParameters</h4><p>Setting this option to true will cause table to ignore parameters listed in 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#findParameters">findParameters</a> option (including the case when this option was set automatically
+			by engine itself in response to user interation. 
+			This may be required if you are using two tables at the same page. 
+			Without setting this parameter PHP parser will throw runtime error if fields listed in
+			findParameters are not existing in one of the tables. Alternatively if you are using several tables
+			on the same page, having fields with the same names, (that is not advisable though) you may want to
+			filter only one table and set ignoreFindParameters where it is not required. See also 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#ignoreSortParameters">ignoreSortParameters</a>.</p>
+		EXAMPLE: &quot;ignoreFindParameters&quot;=&gt;true<br />
+	<a name="ignoreSortParameters"></a><h4 class="title">ignoreSortParameters</h4><p>Setting this option to true will cause table to ignore parameters listed in 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#orderBy">orderBy</a> and <a href="../ZenX/tutorial_ZenX.pkg.html#reverseOrder">reverseOrder</a> options (including the case when
+			this options are set automatically by engine itself in response to user interation). 
+			This may be required if you are using two tables at the same page. 
+			Without setting this parameter PHP parser will throw runtime error if fields listed in
+			findParameters are not existing in one of the tables. Alternatively if you are using several tables
+			on the same page, having fields with the same names, (that is not advisable though) you may want to
+			sort only one table and set ignoreSortParameters where it is not required. See also
+			<a href="../ZenX/tutorial_ZenX.pkg.html#ignoreFindParameters">ignoreFindParameters</a>.</p>
+		EXAMPLE: &quot;ignoreSortParameters&quot;=&gt;true<br />
+	<a name="jumpOutPopups"></a><h4 class="title">jumpOutPopups</h4><p>This option specifies popup (hint) text that will be displayed when user points mouse onto
+			a &quot;jumpOut&quot; link. Parameter value is an array where key is field name that has jumpOuts specified
+			by <a href="../ZenX/tutorial_ZenX.pkg.html#jumpOuts">jumpOuts</a> option and value is either field name (in this case values of 
+			the relevant field will be displayed) or arbitrary text (static text is displayed then).</p>
+		EXAMPLE: &quot;jumpOutPopups&quot;=&gt;array(&quot;idn&quot;=&gt;&quot;money&quot;)<br />
+	<a name="jumpOuts"></a><h4 class="title">jumpOuts</h4><p>This option for table listing (output phase) converts text values of the field specified in
+			option value array key into anchors (&lt;a&gt; tags) linking to other (external) resources. Option
+			value is associative array where keys is the name of the field to be converted to link and value
+			is name of the field containing URL's of the external resources. See also
+			<a href="../ZenX/tutorial_ZenX.pkg.html#linkOuts">linkOuts</a>, <a href="../ZenX/tutorial_ZenX.pkg.html#jumpOutPopups">jumpOutPopups</a>.</p>
+		EXAMPLE: &quot;jumpOuts&quot;=&gt;array(&quot;idn&quot;=&gt;&quot;str&quot;,&quot;text&quot;=&gt;&quot;link&quot;)<br />
+	<a name="jumpToSelf"></a><h4 class="title">jumpToSelf</h4><p>Specifies whether links created by <a href="../ZenX/tutorial_ZenX.pkg.html#linkOuts">linkOuts</a> and <a href="../ZenX/tutorial_ZenX.pkg.html#jumpOuts">jumpOuts</a>
+			parameters will open in the same window. The default is false, so when this option is not set, links
+			will open in new windows.</p>
+		EXAMPLE: &quot;jumpToSelf&quot;=&gt;true<br />
+	<a name="linkOuts"></a><h4 class="title">linkOuts</h4><p>This option for table listing (output phase) converts text values of the field specified in
+			option value array key into anchors (&lt;a&gt; tags) linking to the same domain (internal) resources. 
+			Option value is two layer nested associative array, where keys of the external array are names of
+			the fields where text is to be converted to link and values are inner array containing the following
+			keys: &quot;target&quot; - specifies file withing the same domain to which values will be sent, &quot;name&quot; - name
+			of the variable to be sent to target, &quot;value&quot; - name of the table field that will be sourcing values 
+			for variable specified with name. One more optional key is &quot;popup&quot; that specifies popup (hint) text 
+			that will be displayed when user points mouse onto a link. &quot;popup&quot; value is either field name (in 
+			this case values of the relevant field will be displayed) or arbitrary text (static text is 
+			displayed then). See also <a href="../ZenX/tutorial_ZenX.pkg.html#jumpOuts">jumpOuts</a>, <a href="../ZenX/tutorial_ZenX.pkg.html#jumpOutPopups">jumpOutPopups</a>.</p>
+		EXAMPLE:
+		&quot;linkOuts&quot;=&gt;array(
+			&quot;city&quot;=&gt;array(
+				&quot;value&quot;=&gt;&quot;str&quot;,
+				&quot;target&quot;=&gt;&quot;somefile.php&quot;,
+				&quot;name&quot;=&gt;&quot;somevar&quot;,
+				&quot;popup&quot;=&gt;&quot;txt&quot;
+			),
+			&quot;user&quot;=&gt;array(
+				&quot;target&quot;=&gt;&quot;userbalance.php&quot;,
+				&quot;name&quot;=&gt;&quot;FT&amp;user&quot;,
+				&quot;value&quot;=&gt;&quot;uref&quot;
+				)
+			)<br />
+	<a name="listCustomPreprocessing"></a><h4 class="title">listCustomPreprocessing</h4><p>Specifies user defined method(s) for processing data retrieved by default 
+			<a href="../ZenX/MainEngineAbstract.html#methodgetData">MainEngineAbstract::getData()</a> method before it is passed for printing. More than one 
+			processing methods are implemented concequently. Data return format must be same as in
+			<a href="../ZenX/MainEngineAbstract.html#methodgetData">MainEngineAbstract::getData()</a>. This method applies to the listing (data output) page. 
+			See also <a href="../ZenX/tutorial_ZenX.pkg.html#formCustomPreprocessing">formCustomPreprocessing</a>.</p>
+		EXAMPLE: &quot;listCustomPreprocessing&quot;=&gt;array(&quot;multiShipPackPreprocessing&quot;,&quot;userNamesPreprocessing&quot;)<br />
+	<a name="listDeletable"></a><h4 class="title">listDeletable</h4><p>Makes deletion impossible at listing (data output) page (e.i. hides &quot;DELETE&quot; column).</p>
+		EXAMPLE: &quot;listDeletable&quot;=&gt;false<br />
+	<a name="listHiddenFields"></a><h4 class="title">listHiddenFields</h4><p>Hides columns (fields) at the listing (data output) page. This option value is an array with 
+			the names of fields to be hidden.</p>
+		EXAMPLE: &quot;listHiddenFields&quot;=&gt;array(&quot;mtnm&quot;,&quot;link&quot;)<br />
+	<a name="listHidePagesWord"></a><h4 class="title">listHidePagesWord</h4><p>This option hides the word &quot;PAGES&quot; (can be localized at <a href="../ZenX/Signs.html">Signs</a> interface} at the bottom
+			of listing (data output) page. Default is &quot;false&quot;.</p>
+		EXAMPLE: &quot;listHidePagesWord&quot;=&gt;true<br />
+	<a name="listSearchable"></a><h4 class="title">listSearchable</h4><p>Setting this option to false hides search form at the listing (data output) page. Default is &quot;true&quot;.</p>
+		EXAMPLE: &quot;listSearchable&quot;=&gt;false<br />
+	<a name="listShowKeys"></a><h4 class="title">listShowKeys</h4><p>Hides key field column at the listing (data output) page. Default is &quot;true&quot;.</p>
+		EXAMPLE: &quot;listShowKeys&quot;=&gt;false<br />
+	<a name="listSortHeaders"></a><h4 class="title">listSortHeaders</h4><p>Specifies which field headers (titles) will be available for sorting (converted to sort links).
+			Parameter value is an array with field names.</p>
+		EXAMPLE: &quot;listSortHeaders&quot;=&gt;array(&quot;idno&quot;,&quot;prdt&quot;,&quot;name&quot;,&quot;user&quot;)
+		See also <a href="../ZenX/tutorial_Steps.pkg.html#e02">Example 2: Parameters</a>.<br />
+	<a name="listSortPopups"></a><h4 class="title">listSortPopups</h4><p>This option specifies popup (hint) text that will be displayed when user points mouse onto
+			a sortable table header link. Parameter value is an array where key is field name that was 
+			specified	by <a href="../ZenX/tutorial_ZenX.pkg.html#listSortHeaders">listSortHeaders</a> option and value is arbitrary text to be displayed.</p>
+		EXAMPLE: 
+		&quot;listSortPopups&quot;=&gt;array(
+				&quot;idn&quot;=&gt;&quot;Sort by number&quot;,
+				&quot;money&quot;=&gt;&quot;Sort by money&quot;,
+				&quot;str&quot;=&gt;&quot;Sort by string&quot;
+			)<br />
+	<a name="listType"></a><h4 class="title">listType</h4><p>This setting determines which printHtmlForm method is called. Default value 0 implies use
+			of <a href="../ZenX/MainEngineAbstract.html#methodshowDefaultList">MainEngineAbstract::showDefaultList()</a>. Setting it to 1 switches engine to use
+			<a href="../ZenX/MainEngineAbstract.html#methodshowCustomList">MainEngineAbstract::showCustomList()</a>. Since showCustomList() default implementation
+			is empty, user must override this method when setting listType to 1.</p>
+		EXAMPLE: &quot;listType&quot;=&gt;1<br />
+	<a name="listViewable"></a><h4 class="title">listViewable</h4><p>Hides &quot;show details&quot; column at the listing (data output) page.</p>
+		EXAMPLE: &quot;listViewable&quot;=&gt;false<br />
+	<a name="noPages"></a><h4 class="title">noPages</h4><p>By default at the listing (data output) page records are shown partially, i.e. output
+			is split to pages depending on <a href="../ZenX/tutorial_ZenX.pkg.html#recordsPerPage">recordsPerPage</a> option. In order to list
+			all found results on the same page set &quot;noPages&quot; to true. Default value is false.</p>
+		EXAMPLE: &quot;noPages&quot;=&gt;true<br />
+	<a name="orderBy"></a><h4 class="title">orderBy</h4><p>Indicates default field to sort by. This setting is overriden by consequent user interactions.
+		  See also <a href="../ZenX/tutorial_ZenX.pkg.html#reverseOrder">reverseOrder</a>.</p>
+		EXAMPLE: &quot;orderBy&quot;=&gt;&quot;date&quot;<br />
+	<a name="outPhaseFooter"></a><h4 class="title">outPhaseFooter</h4><p>Specifies arbitrary text to be printed after engine output at the listing (data output) page.</p>
+		EXAMPLE: &quot;outPhaseFooter&quot;=&gt;&quot;&lt;a href='&quot;.$_SESSION['backlink'].&quot;'&gt;BACK&lt;/a&gt;&quot;<br />
+	<a name="outPhaseHeader"></a><h4 class="title">outPhaseHeader</h4><p>Specifies arbitrary text to be printed before engine output at the listing (data output) page.</p>
+		EXAMPLE: &quot;outPhaseHeader&quot;=&gt;&quot;&lt;h1&gt;DATA OUTPUT!&lt;/h1&gt;&quot;<br />
+	<a name="recordsPerPage"></a><h4 class="title">recordsPerPage</h4><p>Specifies number of records shown at one page during the listing (data output) phase. This setting
+			has no effect is <a href="../ZenX/tutorial_ZenX.pkg.html#noPages">noPages</a> is set to true. Default value is 50.</p>
+		EXAMPLE: &quot;recordsPerPage&quot;=&gt;100<br />
+	<a name="reverseOrder"></a><h4 class="title">reverseOrder</h4><p>Specifies whether to user reverseOrder (decending) instead of default one (ascending). See
+			also <a href="../ZenX/tutorial_ZenX.pkg.html#orderBy">orderBy</a>.</p>
+		EXAMPLE: &quot;reverseOrder&quot;=&gt;true<br />
+
+  <span><a name="options2"></a><h2 class="title"></h2></span>
+
+  <span><a name="miscoptions"></a><h3 class="title">List of Other Miscellaneous Options</h3></span>
+
+	<a name="clientInfoOn"></a><h4 class="title">clientInfoOn</h4><p>This option turn-on user environment getter feature using javascript stab. For details 
+			refer to <a href="../ZenX/MainEngineAbstract.html#methodgetClientInfo">MainEngineAbstract::getClientInfo()</a></p>
+		EXAMPLE: &quot;clientInfoOn&quot;=&gt;true<br />
+	<a name="fileFolder"></a><h4 class="title">fileFolder</h4><p>Specifies the directory where engine will store uploaded files. Default value is &quot;../dat&quot;. See also
+			<a href="../ZenX/tutorial_ZenX.pkg.html#imageFolder">imageFolder</a>.</p>
+		EXAMPLE: &quot;fileFolder&quot;=&gt;&quot;datafolder&quot;<br />
+	<a name="imageFolder"></a><h4 class="title">imageFolder</h4><p>Specifies the directory where engine will store uploaded images. Default value is &quot;../img&quot;. See also 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#fileFolder">fileFolder</a>.</p>
+		EXAMPLE: &quot;imageFolder&quot;=&gt;&quot;images&quot;<br />
+	<a name="mysqlMultiSuffix"></a><h4 class="title">mysqlMultiSuffix</h4><p>'mysqlMultiSuffix' parameter is the suffix used to form multiple values tables (referenced values).
+			Default value is &quot;_mul_&quot;. Full name of the multi table is formed like this: 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#mysqlPrefix">mysqlPrefix</a> + main table name + mysqlMultiSuffix + multi field name.</p>
+		EXAMPLE: &quot;mysqlMultiSuffix&quot;=&gt;&quot;_referencevalues_&quot;<br />
+	<a name="mysqlPrefix"></a><h4 class="title">mysqlPrefix</h4><p>'mysqlPrefix' parameter is the prefix used to form tables names within MySQL database.
+			Default value is &quot;ZX_&quot;. Full name of the table is formed like this: mysqlPrefix + table name. 
+			See also <a href="../ZenX/tutorial_ZenX.pkg.html#mysqlMultiSuffix">mysqlMultiSuffix</a>.</p>
+		EXAMPLE: &quot;mysqlPrefix&quot;=&gt;&quot;&quot;<br />
+	<a name="noInit"></a><h4 class="title">noInit</h4><p>By default one of the first methods to be called during page opening is 
+			<a href="../ZenX/MainEngineAbstract.html#methodinitialize">MainEngineAbstract::initialize()</a>. It's implementation is empty by default. However 
+			if user overrides it will be used every time during page opening. In order to turn off this
+			this method you can set &quot;noInit&quot; parameter to true. Default value is false.</p>
+		EXAMPLE: &quot;noInit&quot;=&gt;true<br />
+	<a name="sessionPrefix"></a><h4 class="title">sessionPrefix</h4><p>Specifies prefix to be added to all cookies with field names. Default value is &quot;ZX_&quot;. See also
+			<a href="../ZenX/MainEngineAbstract.html#methodsetNavigationParameters">MainEngineAbstract::setNavigationParameters()</a>.</p>
+		EXAMPLE: &quot;sessionPrefix&quot;=&gt;&quot;ZX_&quot;,<br />
+
+  <span><a name="defaulttypes"></a><h2 class="title">Initially Available Data Types</h2></span>
+
+  <span><a name="typesspecial"></a><h3 class="title">List of Special Data Types</h3></span>
+	<a name="typekeys"></a><h4 class="title">__KEYS</h4><p>_KEYS - is a numeric identifier of the record in database, _KEYS field is hardcoded 
+			in some classes and can not be removed or altered. In MySQL _KEYS are defined as unsigned (positive)
+			integer. See also <a href="../ZenX/DataDefiner.html#methodfilterKeys">DataDefiner::filterKeys()</a>.</p><br />
+
+  <span><a name="types1"></a><h2 class="title"></h2></span>
+  <span><a name="typestext"></a><h3 class="title">List of Textual Data Types</h3></span>
+	<a name="typeword"></a><h4 class="title">__WORD</h4><p>_WORD - is a short text, in MySQL it is defined as varchar(300), so it's length will be approximately
+			100 symbols for non-latin characters, depending on language you use. No tags allowed 
+			(will be filtered off). See also <a href="../ZenX/DataDefiner.html#methodfilterWord">DataDefiner::filterWord()</a>.</p><br />
+ 	<a name="typetext"></a><h4 class="title">__TEXT</h4><p>_TEXT - is a long text of arbitrary length. In MySQL defined as &quot;text&quot;, typically this limits text
+			to 64 Kb. See also <a href="../ZenX/DataDefiner.html#methodfilterText">DataDefiner::filterText()</a>.</p><br />
+  
+  <span><a name="types2"></a><h2 class="title"></h2></span>
+  <span><a name="typesdate"></a><h3 class="title">List of Calendar Data Types</h3></span>
+	<a name="typedate"></a><h4 class="title">__DATE</h4><p>_DATE - is a date representation, stored in MySQL as &quot;date&quot; type, shown as text in YYYY-MM-DD format.
+			See also <a href="../ZenX/DataDefiner.html#methodfilterDate">DataDefiner::filterDate()</a>.</p><br />
+
+  <span><a name="types3"></a><h2 class="title"></h2></span>
+  <span><a name="typesbool"></a><h3 class="title">List of Boolean Data Types</h3></span>
+	<a name="typebool"></a><h4 class="title">__BOOL</h4><p>_BOOL - is simple boolean type. In MySQL defined as &quot;tinyint(1)&quot;. See also 
+			<a href="../ZenX/DataDefiner.html#methodfilterBool">DataDefiner::filterBool()</a>.</p><br />
+
+  <span><a name="types4"></a><h2 class="title"></h2></span>
+  <span><a name="typesnumeric"></a><h3 class="title">List of Numeric Data Types</h3></span>
+	<a name="typerint"></a><h4 class="title">_RINT</h4><p>_RINT - is a regular integer, values up to 2147483647 (PHP int limit for 32 bit system, 
+			unsigned not supported). See also <a href="../ZenX/DataDefiner.html#methodfilterRint">DataDefiner::filterRint()</a>.</p><br />
+	<a name="typerflt"></a><h4 class="title">_RFLT</h4><p>_RFLT - is a regular float, stored in MySQL as &quot;float&quot;. See also <a href="../ZenX/DataDefiner.html#methodfilterRflt">DataDefiner::filterRflt()</a>.</p><br />
+
+  <span><a name="types5"></a><h2 class="title"></h2></span>
+  <span><a name="typeslists"></a><h3 class="title">List of Multiple Data (Sets/&quot;omni&quot;) Types</h3></span>
+	<a name="typellst"></a><h4 class="title">_LLST</h4><p>Limited List. Shown as drop-down list. Stored in MySQL as keys(integers) in main table that refer 
+			to separate table, containing values. This list is limited, i.e. users can not add values to it. 
+			You must manually add values there during table creation. See also <a href="../ZenX/DataDefiner.html#methodfilterLlst">DataDefiner::filterLlst()</a> and 
+			<a href="../ZenX/tutorial_Steps.pkg.html#e03">Example 3: Lists</a>.</p><br />
+	<a name="typerlst"></a><h4 class="title">_RLST</h4><p>Radio Buttons List. Shown as radio buttons set. Stored in MySQL as keys(integers) in main table that 
+			refer to separate table, containing values. This list is limited, i.e. users can not add values to it. 
+			You must manually add values there during table creation.See also <a href="../ZenX/DataDefiner.html#methodfilterRlst">DataDefiner::filterRlst()</a> and 
+			<a href="../ZenX/tutorial_Steps.pkg.html#e03">Example 3: Lists</a>.</p><br />
+	<a name="typeelst"></a><h4 class="title">_ELST</h4><p>Extendable List. Shown as drop-down list. Stored in MySQL as keys(integers) in main table that refer 
+			to separate table, containing values. Users can add new values to this list. See also 
+			<a href="../ZenX/DataDefiner.html#methodfilterElst">DataDefiner::filterElst()</a> and <a href="../ZenX/tutorial_Steps.pkg.html#e03">Example 3: Lists</a>.</p><br />
+
+  <span><a name="types6"></a><h2 class="title"></h2></span>
+  <span><a name="typesfiles"></a><h3 class="title">List of External Data (Images / Files) Types</h3></span>
+	<a name="typeimgs"></a><h4 class="title">_IMGS</h4><p>Picture. Shown as image. In MySQL database only image number is stored. The image file itself is 
+			stored at image folder and named as table name + field name + number. _IMGS type image dimension are:
+			800 x 600 px, maximum file size is 1000000 bytes. See also <a href="../ZenX/MainEngineAbstract.html#methodverifyImageFields">MainEngineAbstract::verifyImageFields()</a>
+			and <a href="../ZenX/MainEngineAbstract.html#methodimageResize">MainEngineAbstract::imageResize()</a>.</p><br />
+	<a name="typeicon"></a><h4 class="title">_ICON</h4><p>Small Picture. Shown as image. In MySQL database only image number is stored. The image file itself is 
+			stored at image folder and named as table name + field name + number. _IMGS type image dimension are:
+			50 x 50 px, maximum file size is 300000 bytes. See also <a href="../ZenX/MainEngineAbstract.html#methodverifyImageFields">MainEngineAbstract::verifyImageFields()</a>
+			and <a href="../ZenX/MainEngineAbstract.html#methodimageResize">MainEngineAbstract::imageResize()</a>.</p><br />
+
+  <span><a name="cssselectors"></a><h2 class="title">CSS Selectors List</h2></span>
+  <span><a name="csslist"></a><h3 class="title">Listing (Output) Page Selectors</h3></span>
+	<a name="csszx_add"></a><h4 class="title">.zx_add</h4><p>&quot;zx_add&quot; CSS class defines visual appearance of &quot;div&quot; containing form with &quot;ADD NEW RECORD&quot; button 
+			at the list page.</p><br />
+	<a name="csszx_fnd"></a><h4 class="title">.zx_fnd</h4><p>&quot;zx_fnd&quot; CSS class defines visual appearance of &quot;table&quot; containing form with &quot;SEARCH&quot; fields and 
+			buttons.</p><br />
+	<a name="csszx_lst"></a><h4 class="title">.zx_lst</h4><p>&quot;zx_lst&quot; CSS class defines visual appearance of main &quot;table&quot; containing all the data at list page.</p><br />
+	<a name="csszx_pgs"></a><h4 class="title">.zx_pgs</h4><p>&quot;zx_pgs&quot; CSS class defines visual appearance of &quot;div&quot; with page anchors.</p><br />
+	<a name="csszx_cols"></a><h4 class="title">.zx_c[0-9]</h4><p>&quot;zx_cX&quot; (where X is a number) CSS class defines visual appearance of &quot;col&quot; with relevant 
+			sequential number inside main table. Keep in mind that due to poor implementation of web standards,
+			many browsers allow to define only &quot;width&quot; attribute with this tag. Use relevant tag selectors for other
+			attributes. For example this will set width of fifth column to 55% and align its text to left:</p>
+		<p>.zx_c5 { width:55%; }</p>
+		<p>.zx_lst td + td + td + td + td { text-align: left; }</p><br />
+
+  <span><a name="cssselectors1"></a><h2 class="title"></h2></span>
+  <span><a name="cssform"></a><h3 class="title">Form (Input) Page Selectors</h3></span>
+	<a name="csszx_bul"></a><h4 class="title">.zx_bul</h4><p>&quot;zx_bul&quot; is a special CSS class for boolean (checkbox) type. Since all other inputs can be 
+			formatted indirectly this is the only input tag class. Use &quot;important&quot; notation to override
+			general settings. Example use:</p>
+		<p>.zx_frm td input,.zx_frm td select { width:100%; border: none; }</p>
+		<p>.zx_bul { width:15px ! important; }</p><br />
+	<a name="csszx_err"></a><h4 class="title">.zx_err</h4><p>&quot;zx_err&quot; CSS class defines visual appearance of &quot;table&quot; containing error messages.</p><br />
+	<a name="csszx_frb"></a><h4 class="title">.zx_frb</h4><p>&quot;zx_frb&quot; CSS class defines visual appearance for the last table row &quot;tr&quot; of input form,
+			containing &quot;SAVE&quot; button.</p><br />
+	<a name="csszx_frm"></a><h4 class="title">.zx_frm</h4><p>&quot;zx_frm&quot; CSS class defines visual appearance for main &quot;div&quot; containing form and table with 
+			input fields at the form page.</p><br />
+	<a name="csszx_wrn"></a><h4 class="title">.zx_wrn</h4><p>&quot;zx_wrn&quot; CSS class defines visual appearance of &quot;table&quot; containing warning messages.</p><br /></div>
+
+	<table class="tutorial-nav-box">
+	<tr>
+		<td style="width: 30%">
+							<a href="../ZenX/tutorial_Steps.pkg.html" class="nav-button">Previous</a>
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+							<span class="nav-button-disabled">Next</span>
+					</td>
+	</tr>
+	<tr>
+		<td style="width: 30%">
+							<span class="detail">ZenX Examples</span>
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+					</td>
+	</tr>
+</table>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 29 Nov 2011 09:55:27 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

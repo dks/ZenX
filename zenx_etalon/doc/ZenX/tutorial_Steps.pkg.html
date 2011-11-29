@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>ZenX Examples</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+	<table class="tutorial-nav-box">
+	<tr>
+		<td style="width: 30%">
+							<span class="nav-button-disabled">Previous</span>
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+							<a href="../ZenX/tutorial_ZenX.pkg.html" class="nav-button">Next</a>
+					</td>
+	</tr>
+	<tr>
+		<td style="width: 30%">
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+							<span class="detail">ZenX Manual</span>
+					</td>
+	</tr>
+</table>
+	
+<div><a name=""></a><div class="ref-title-box"><h1 class="ref-title">ZenX Examples</h1></div>
+  <div class="ref-synopsis"><span class="author">Konstantin Dvortsov <div class="author-blurb"><a href="http://dvortsov.tel">dvortsov.tel</a></div></span></div>
+    <h1 class="title">Table of Contents</h1>
+<ul class="toc">
+	
+			
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#classes">Class Structure</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#setup">Environment Setup</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e01">Example 1: Basics</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e02">Example 2: Parameters</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e03">Example 3: Lists</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e04">Example 4: Paint it up with CSS</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e05">Example 5: Conditional CSS Markup</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e06">Example 6: Overriding Engine Functions</a></li>
+					
+					<li><a href="../ZenX/tutorial_Steps.pkg.html#e07">Example 7: Table Linking</a></li>
+					</ul>
+
+  <span><a name="classes"></a><h2 class="title">Class Structure</h2><p>Before jumping into examples you should know base class hierarchy. In order to use ZenX engine
+			you must extend bottom level class, that is typically data storage engine class. Current implementation 
+			has only one such class - that is StorageEngineMysql class.</p>
+		<p>Just for you to know class hierarchy goes as follows: MainEngineAbstract -&gt; StorageEngineMysql (whoa,
+			that's complicated!). All other engine classes like Table, Field, DataDefiner are independent. Basically 
+			that means that every user top-level class must start with &quot;extends StorageEngineMysql&quot;. To be clear let's
+			call that user class &quot;user class&quot; :) .</p>
+		<p>And remember that user class is an object that is used in other pages, let's call them &quot;client pages&quot;.
+			So you can have one table (ZenX class) that is used on several (client) pages with different settings.</p></span>
+  <span><a name="setup"></a><h2 class="title">Environment Setup</h2><p>Just few words about environment setup, i.e. file locations. If you are too lazy (like me) to 
+			write lots of	&quot;require&quot; statements you'll probably start your file with something like: 
+			&quot;function __autoload($class_name){ require_once 'PATH_TO_ZENX'.$class_name.'.php'; }&quot;. In order to have
+			just one such statement do all the job you can choose several options. Yeah, and do not forget to name
+			files same way as classes they contain ;) .</p>
+		<p>Messy one: just put all your files (including ZenX library files) at the same folder. In this case
+			you can write just once &quot;function __autoload($class_name){ require_once $class_name.'.php'; }&quot; at the
+			&quot;client page&quot; file and it'll do the job.</p>
+		<p>Fifty/fifty solution:Put ZenX files in separate folder. Keep in mind, however, that &quot;user class&quot; 
+			files are also part of ZenX and must be in the same folder. Having set things this way you can add
+			&quot;function __autoload($class_name){ require_once 'PATH_TO_ZENX'.$class_name.'.php'; }&quot; statement to
+			client pages and this will be enough.</p>
+		<p>Good one: Keep ZenX core files in separate folder, ZenX user class in yet another separate folder.
+			This way you have well-structured system. However in order for &quot;require&quot; to work without path
+			specification you must set up inclusion paths eigher in php.ini or .htaccess or at the file &quot;ini&quot; 
+			setting. Looks like the best solution, though you will have to dig &quot;ini&quot; files.</p>
+		<p>Used by Examples: by default &quot;examples&quot; folder is located at the same level as ZenX core folder, 
+			and ZenX user	classes and client pages are located there all together. In order to work without any 
+			setup all	examples have two &quot;require&quot; statements. Keep in mind however - this is not the best solution.</p></span>
+  <span><a name="e01"></a><h2 class="title">Example 1: Basics</h2><p>This one is quite simple. We create two files: ClientPageExample1.php and UserEngineExample1.php.
+			Let's see what inside:
+			<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-key">class&nbsp;</span><span class="src-id">UserEngineExample1&nbsp;</span><span class="src-key">extends&nbsp;</span><a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-str">&quot;localhost&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;user&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;pass&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;base&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Table.html">Table</a></span><span class="src-sym">(</span><span class="src-str">&quot;testTable1&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;idn&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_KEYS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;ID&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;str&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_WORD&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Simple&nbsp;Sentence&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">registerTable</span><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+</ol></div><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample1.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample1</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">createStorage</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+</ol></div>
+			P.S. Do not forget - you must create empty database before you run the script.</p>
+		<p>Done! You should be able to add and delete records, perform search, view details and
+			jump to different pages right now.</p>
+		<p>Let's see what we've done. We first created ZenX user class by extending MySQL storage engine.
+			In it's constructor we connected to database and provided engine with table description by creating
+			table. We created two data fields using table's <a href="../ZenX/Table.html#methodcreateField">Table::createField()</a> method, we could also 
+			create them using	field constructor, but this way it's easier, since newly created fields are 
+			automatically added to table. Once we finished creating table we register it within the engine core.</p>
+		<p>Inside the client page we use what we have created. First we setup includes in order to find
+			our classes (by default &quot;examples&quot; folder is located inside ZenX core folder), and then we create
+			ZenX object and call its methods. Basically only two lines are doing the job here: constructor and 
+			<a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">MainEngineAbstract::runFullCycle()</a> call. <a href="../ZenX/MainEngineAbstract.html#methodcreateStorage">MainEngineAbstract::createStorage()</a> is 
+			required only once, when you created empty database, you can	comment it out or delete during 
+			subsequent calls. If you made some changes, easy way to completely erase all tables that you 
+			created is calling <a href="../ZenX/MainEngineAbstract.html#methoddestroyDataStorage">MainEngineAbstract::destroyDataStorage()</a> method.</p></span>
+  <span><a name="e02"></a><h2 class="title">Example 2: Parameters</h2><p>Now let's turn table headers into &quot;sort&quot; buttons! In this example we use the same user ZenX class.
+			In our client page we add just one row: 
+			$zen-&gt;setParameters(array(&quot;<a href="../ZenX/tutorial_ZenX.pkg.html#listSortHeaders">listSortHeaders</a>&quot;=&gt;array(&quot;idn&quot;,&quot;str&quot;)));
+			Here we tell the engine that we want to create sort buttons for columns &quot;idn&quot; and &quot;str&quot; - these are
+			the names of data fields that we defined in our &quot;UserEngineExample1.php&quot;. Here is what we get in 
+			ClientPageExample2.php:
+			<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample1.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample1</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setParameters</span><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;listSortHeaders&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;idn&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;str&quot;</span><span class="src-sym">)))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+</ol></div></p>
+		<p></p></span>
+  <span><a name="e03"></a><h2 class="title">Example 3: Lists</h2><p>Okay, it's time for something more complicated. Now, let's imagine we want to create small
+			warehouse register. Like in previous examples we create two files: &quot;UserEngineExample3.php&quot; and 
+			&quot;ClientPageExample3.php&quot;. Let's see them:</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-key">class&nbsp;</span><span class="src-id">UserEngineExample3&nbsp;</span><span class="src-key">extends&nbsp;</span><a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-str">&quot;localhost&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;user&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;pass&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;base&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Table.html">Table</a></span><span class="src-sym">(</span><span class="src-str">&quot;goods&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;number&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_KEYS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;ID&nbsp;No.&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_WORD&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Item&nbsp;Name&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;supl&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_LLST&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Supplier&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;stock&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_BOOL&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Available&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;cost&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_RINT&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Price&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;descr&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_TEXT&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Item&nbsp;Description&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;make&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_ELST&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Manufacturer&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;payops&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_RLST&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Payment&nbsp;Options&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;pic&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_IMGS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Item&nbsp;Picture&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">registerTable</span><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+</ol></div></p>
+		<p>Nothing too complicated here - same thing as before, however we have three fields with types:
+			<a href="../ZenX/tutorial_ZenX.pkg.html#typellst">_LLST</a>,<a href="../ZenX/tutorial_ZenX.pkg.html#typerlst">_RLST</a> and <a href="../ZenX/tutorial_ZenX.pkg.html#typeelst">_ELST</a>.
+			We also have <a href="../ZenX/tutorial_ZenX.pkg.html#typeimgs">_IMGS</a> types here. Do not forget to set up images directory
+			properly. See <a href="../ZenX/tutorial_ZenX.pkg.html#sysreq">ZenX System Requirements</a>.</p>
+		<p>P.S. One warning - Don't try to call table or field &quot;desc&quot; - this is one of MySQL commands, 
+			you'll get your self in trouble.</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample3.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample3</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;Next&nbsp;3&nbsp;lines&nbsp;need&nbsp;to&nbsp;be&nbsp;executed&nbsp;only&nbsp;once!&nbsp;</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$zen-&gt;createStorage();</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$zen-&gt;customMysqlRequest(&quot;INSERT&nbsp;INTO&nbsp;ZX_goods_mul_supl&nbsp;VALUES&nbsp;(null,'Sonnie'),(null,'Cassia');&quot;);</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$zen-&gt;customMysqlRequest(&quot;INSERT&nbsp;INTO&nbsp;ZX_goods_mul_payops&nbsp;VALUES&nbsp;(null,'Cash'),(null,'Check'),(null,'Wire');&quot;);</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;Next&nbsp;1&nbsp;line&nbsp;needs&nbsp;to&nbsp;be&nbsp;executed&nbsp;only&nbsp;if&nbsp;you&nbsp;want&nbsp;to&nbsp;erase&nbsp;this&nbsp;table</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$zen-&gt;destroyDataStorage();</span></div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+</ol></div></p>
+		<p>One thing to note here - in the commented out lines there is a command to manually insert 
+			some values to &quot;supl&quot; and &quot;payops&quot; fields, since &quot;<a href="../ZenX/tutorial_ZenX.pkg.html#typellst">_LLST</a>&quot; and 
+			&quot;<a href="../ZenX/tutorial_ZenX.pkg.html#typerlst">_RLST</a>&quot; types do not allow users	to add new values. 
+			As you see we insert values to &quot;ZX_goods_mul_supl&quot; table. &quot;ZX_&quot; is <a href="../ZenX/tutorial_ZenX.pkg.html#mysqlPrefix">mysqlPrefix</a>,
+			&quot;goods&quot; is a main table name, &quot;_mul_&quot; is <a href="../ZenX/tutorial_ZenX.pkg.html#mysqlMultiSuffix">mysqlMultiSuffix</a> and &quot;supl&quot; is a 
+			field name. Simple :)</p></span>
+  <span><a name="e04"></a><h2 class="title">Example 4: Paint it up with CSS</h2><p>If you ever dreamed to be an artist - it's your lucky day. Let's paint up our table with CSS! 
+		As before - we create two files. Assume we are going to create a list of employees for our boss. 
+		Here they are:</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-key">class&nbsp;</span><span class="src-id">UserEngineExample4&nbsp;</span><span class="src-key">extends&nbsp;</span><a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-str">&quot;localhost&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;user&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;pass&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;base&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Table.html">Table</a></span><span class="src-sym">(</span><span class="src-str">&quot;employees&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;id&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_KEYS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;ID&nbsp;No.&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_WORD&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Employee&nbsp;Name&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;qual&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_BOOL&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Qualified&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;age&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_RINT&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Age&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">registerTable</span><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+</ol></div><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php&nbsp;</span>echo&nbsp;<span class="src-str">&quot;&lt;?xml&nbsp;version=\&quot;1.0\&quot;&nbsp;encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span><span class="src-sym">;&nbsp;</span><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&lt;!DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</div></li>
+<li><div class="src-line">&lt;html&nbsp;version=&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xml:lang=&quot;en&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://www.w3.org/1999/xhtml&nbsp;http://www.w3.org/MarkUp/SCHEMA/xhtml11.xsd&quot;</div></li>
+<li><div class="src-line">&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta&nbsp;http-equiv=&quot;Content-Type&quot;&nbsp;content=&quot;text/html;&nbsp;charset=utf-8&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Employee&nbsp;List&lt;/title&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;ClientPageExample4.css&quot;&nbsp;type=&quot;text/css&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;body&gt;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample4.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample4</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">createStorage</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://validator.w3.org/check?uri=referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://www.w3.org/Icons/valid-xhtml11-blue&quot;&nbsp;alt=&quot;Valid&nbsp;XHTML&nbsp;1.1&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://jigsaw.w3.org/css-validator/check/referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://jigsaw.w3.org/css-validator/images/vcss-blue&quot;&nbsp;alt=&quot;Valid&nbsp;CSS!&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/body&gt;</div></li>
+<li><div class="src-line">&lt;/html&gt;</div></li>
+</ol></div></p>
+		<p>Just few words about header here. I know &quot;&lt;html&gt;&lt;head&gt;&quot; looks nicer than this monster, but
+			since ZenX produces <a href="../ZenX/tutorial_ZenX.pkg.html#xhtml">XHTML Output</a> we have to make W3C guys happy. So, I just point few
+			things here. First line is tricky - the reason why we echo it from PHP rather then just printing in
+			in the source is that in most installations PHP have short tags on, so &quot;&lt;?xml&quot; will be treated as 
+			&quot;&lt;?phpxml&quot; and cause error. Next is the DOCTYPE declaration required by all standards nowdays. Then
+			goes this terrible and ugly bunch of xml declarations within the &quot;html&quot; tag, and finally we go to standard
+			heading. And yes - there is a reason why we add charset meta for UTF-8 (if you noticed - it is the same 
+			as in preceding &quot;&lt;?xml ?&gt;&quot; declaration: by default ZenX creates and works with Database in UTF-8, so
+			we have to be consistent with it.</p>
+		<p>And now - here is the new part - this is the CSS file that will do all the beauty!
+			<div class="src-code"><ol><li><div class="src-line">.<span class="src-id">zx_lst&nbsp;th&nbsp;input&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">padding</span>:<span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;td&nbsp;input&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">padding</span>:<span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">5</span><span class="src-id">px</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;solid&nbsp;</span><span class="src-comm">#d3d3d3;&nbsp;width:100%;&nbsp;margin:20px&nbsp;0;&nbsp;clear:&nbsp;both;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;td</span><span class="src-sym">,&nbsp;</span>.<span class="src-id">zx_lst&nbsp;th&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">padding</span>:<span class="src-num">2</span><span class="src-id">px&nbsp;</span><span class="src-num">5</span><span class="src-id">px</span><span class="src-sym">;&nbsp;</span><span class="src-id">vertical</span>-<span class="src-id">align</span>:<span class="src-id">middle</span><span class="src-sym">;&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;solid&nbsp;</span><span class="src-comm">#d3d3d3;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;thead&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-comm">#e3ecf7;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_fnd&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-id">none</span><span class="src-sym">;&nbsp;</span><span class="src-id">width</span>:<span class="src-num">49</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">float</span>:<span class="src-id">left</span><span class="src-sym">;&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">20</span><span class="src-id">px&nbsp;</span><span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_fnd&nbsp;th&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>-<span class="src-id">color</span>:&nbsp;<span class="src-comm">#eef;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:&nbsp;<span class="src-id">center</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:&nbsp;<span class="src-id">left</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_fnd&nbsp;input&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">98</span>%<span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_add&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">49</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">float</span>:<span class="src-id">right</span><span class="src-sym">;&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">20</span><span class="src-id">px&nbsp;</span><span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:<span class="src-id">center</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_add&nbsp;input&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">20</span><span class="src-id">px</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_pgs&nbsp;a&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">font</span>-<span class="src-id">weight</span>:&nbsp;<span class="src-id">bold</span><span class="src-sym">;&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;solid&nbsp;</span><span class="src-comm">#d3d3d3;&nbsp;text-decoration:none;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_pgs&nbsp;a</span>:<span class="src-id">hover&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-comm">#e3ecf7;&nbsp;}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;ridge&nbsp;</span><span class="src-comm">#add8e6;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;table&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">100</span>%<span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;th&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">30</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:&nbsp;<span class="src-id">right</span><span class="src-sym">;&nbsp;</span><span class="src-id">padding</span>:<span class="src-num">0&nbsp;5</span><span class="src-id">px</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frb&nbsp;th&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:&nbsp;<span class="src-id">center</span><span class="src-sym">;&nbsp;</span><span class="src-id">padding</span>:<span class="src-num">5</span><span class="src-id">px</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;td&nbsp;input</span><span class="src-sym">,</span>.<span class="src-id">zx_frm&nbsp;td&nbsp;select&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">100</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">border</span>:&nbsp;<span class="src-id">none</span><span class="src-sym">;&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-comm">#f5deb3;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;textarea&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">98</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">height</span>:&nbsp;<span class="src-num">300</span><span class="src-id">px</span><span class="src-sym">;&nbsp;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;label&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">display</span>:<span class="src-id">block</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_frm&nbsp;label&nbsp;input&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">15</span><span class="src-id">px</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">.<span class="src-id">zx_err&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;solid&nbsp;red</span><span class="src-sym">;&nbsp;</span><span class="src-id">width</span>:<span class="src-num">100</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">20</span><span class="src-id">px&nbsp;</span><span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_err&nbsp;thead&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-id">orange</span><span class="src-sym">;&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:<span class="src-id">center</span><span class="src-sym">;&nbsp;</span><span class="src-id">font</span>-<span class="src-id">weight</span>:<span class="src-id">bold</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_err&nbsp;tbody&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-id">yellow</span><span class="src-sym">;&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:<span class="src-id">left</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_err&nbsp;td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">60</span>%<span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">.<span class="src-id">zx_wrn&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;solid&nbsp;red</span><span class="src-sym">;&nbsp;</span><span class="src-id">width</span>:<span class="src-num">100</span>%<span class="src-sym">;&nbsp;</span><span class="src-id">margin</span>:<span class="src-num">20</span><span class="src-id">px&nbsp;</span><span class="src-num">0</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_wrn&nbsp;thead&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-id">orange</span><span class="src-sym">;&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:<span class="src-id">center</span><span class="src-sym">;&nbsp;</span><span class="src-id">font</span>-<span class="src-id">weight</span>:<span class="src-id">bold</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_wrn&nbsp;tbody&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-id">yellow</span><span class="src-sym">;&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:<span class="src-id">left</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_wrn&nbsp;td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">60</span>%<span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">.<span class="src-id">zx_bul&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:<span class="src-num">15</span><span class="src-id">px&nbsp;</span><span class="src-sym">!&nbsp;</span><span class="src-id">important</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-id">img&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-id">none</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+</ol></div></p>
+		<p>If it looks frightening you can cut is down, I just wanted to show CSS uses as much as 
+			possible. Check the <a href="../ZenX/tutorial_ZenX.pkg.html#cssselectors">CSS Selectors List</a> to get some hints on what element applies
+			to which object.</p></span> 
+  <span><a name="e05"></a><h2 class="title">Example 5: Conditional CSS Markup</h2><p>Okey, now let's get closer to real life. Imagine HR guys in your company have gone
+			mad and decided to fire everyone who has failed recent requalification and is older than
+			50. We use table from the previous example, so we are half way through. To satisfy our
+			imaginary HR guys we will highlight results in our employee list. First, we highlight age
+			of those who is below 50 in green and who is older in yellow. We also highlight in pink
+			those who is not qualified. And finally we highlight with blue and
+			some other fancy things the whole row for those who match both criteria.</p>
+		<p>In order to do so we use <a href="../ZenX/tutorial_ZenX.pkg.html#conditionalCellClass">conditionalCellClass</a> for cells and 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#conditionalRowClass">conditionalRowClass</a> for rows. This way cells and rows matching 
+			the criteria will be given relevant CSS class. The appearance itself is defined via CSS,
+			so we create additional CSS file to the previous one. Now let's see what we get. Here is 
+			our client page from previous example with some changes:</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php&nbsp;</span>echo&nbsp;<span class="src-str">&quot;&lt;?xml&nbsp;version=\&quot;1.0\&quot;&nbsp;encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span><span class="src-sym">;&nbsp;</span><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&lt;!DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</div></li>
+<li><div class="src-line">&lt;html&nbsp;version=&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xml:lang=&quot;en&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://www.w3.org/1999/xhtml&nbsp;http://www.w3.org/MarkUp/SCHEMA/xhtml11.xsd&quot;</div></li>
+<li><div class="src-line">&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta&nbsp;http-equiv=&quot;Content-Type&quot;&nbsp;content=&quot;text/html;&nbsp;charset=utf-8&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Employee&nbsp;List&lt;/title&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;ClientPageExample4.css&quot;&nbsp;type=&quot;text/css&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;ClientPageExample5.css&quot;&nbsp;type=&quot;text/css&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;body&gt;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample4.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample4</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setParameters</span><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;listSortHeaders&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;id&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;age&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;qual&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;conditionalCellClass&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;age&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;yellow&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;age&quot;</span>=&gt;<span class="src-str">&quot;((int)strip_tags(\$VAL))&nbsp;&gt;&nbsp;50&quot;</span><span class="src-sym">)</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;green&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;age&quot;</span>=&gt;<span class="src-str">&quot;((int)strip_tags(\$VAL))&nbsp;&lt;&nbsp;50&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;qual&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;red&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;qual&quot;</span>=&gt;<span class="src-str">&quot;empty(\$VAL)&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;conditionalRowClass&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;attn&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;qual&quot;</span>=&gt;<span class="src-str">&quot;empty(\$VAL)&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;age&quot;</span>=&gt;<span class="src-str">&quot;(\$VAL)&nbsp;&gt;&nbsp;55&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span></div></li>
+<li><div class="src-line"><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://validator.w3.org/check?uri=referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://www.w3.org/Icons/valid-xhtml11-blue&quot;&nbsp;alt=&quot;Valid&nbsp;XHTML&nbsp;1.1&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://jigsaw.w3.org/css-validator/check/referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://jigsaw.w3.org/css-validator/images/vcss-blue&quot;&nbsp;alt=&quot;Valid&nbsp;CSS!&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/body&gt;</div></li>
+<li><div class="src-line">&lt;/html&gt;</div></li>
+</ol></div></p>
+		<p>Just one thing to mention here: &quot;age&quot;=&gt;&quot;((int)strip_tags(\$VAL)) &gt; 55&quot; and &quot;age&quot;=&gt;&quot;(\$VAL) &gt; 55&quot;
+			will evaluate to the same things in this particular example. However first longer statement is taken
+			from the real project where numbers were highlighted with &quot;&lt;b&gt;&quot;, so this is a hint for you to use 
+			if you run into the same problem. And here is additional CSS file, describing conditional CSS classes.</p>
+		<p><div class="src-code"><ol><li><div class="src-line">.<span class="src-id">red&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-comm">#ffc0cb;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">green&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-comm">#90ee90;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">yellow&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-id">yellow</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">attn&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">background</span>:&nbsp;<span class="src-comm">#add8e6;&nbsp;}</span></div></li>
+<li><div class="src-line">.<span class="src-id">attn&nbsp;td&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">border</span>:<span class="src-num">1</span><span class="src-id">px&nbsp;solid&nbsp;red</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">.<span class="src-id">zx_lst&nbsp;td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span>+&nbsp;<span class="src-id">td&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">text</span>-<span class="src-id">align</span>:&nbsp;<span class="src-id">center</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_c4&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:&nbsp;<span class="src-num">70</span>%<span class="src-sym">;&nbsp;</span><span class="src-sym">}&nbsp;</span></div></li>
+<li><div class="src-line">.<span class="src-id">zx_c5</span><span class="src-sym">,&nbsp;</span>.<span class="src-id">zx_c6&nbsp;</span><span class="src-sym">{&nbsp;</span><span class="src-id">width</span>:&nbsp;<span class="src-num">5</span>%<span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+</ol></div></p>
+		<p>Typically style attributes for table cells override those for rows, however you can
+			use CSS hierarchy to apply row style to all table cells, just instead of 
+			&quot;.rowclass { blah-blah }&quot; write &quot;.rowclass td { blah-blah }&quot;. Keep in mind though, this 
+			statement must come after cell definitions, since when different styles are applied for the
+			same elements, conflicting values of the latest ones override precedents.</p>
+		<p>And yeah, those last three lines is just another way to format table columns. See 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#csszx_cols">.zx_c[0-9]</a>.</p></span>
+
+  <span><a name="e06"></a><h2 class="title">Example 6: Overriding Engine Functions</h2><p>It's time to try something a little bit more complicated. Let us create simple picture gallery.
+			For easy navigation it will have picture preview with smaller dimensions and full resolution picture
+			will be shown at the &quot;details&quot; (data input) page. So our source class must be quite simple. Like this:</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-key">class&nbsp;</span><span class="src-id">UserEngineExample6&nbsp;</span><span class="src-key">extends&nbsp;</span><a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-str">&quot;localhost&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;user&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;pass&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;base&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Table.html">Table</a></span><span class="src-sym">(</span><span class="src-str">&quot;fotofolder&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;idno&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_KEYS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;ID&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_WORD&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Picture&nbsp;Description&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;big&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_IMGS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Hi-Res&nbsp;Picture&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;small&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_ICON&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Picture&nbsp;Preview&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">registerTable</span><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">imageResize</span><span class="src-sym">(</span><span class="src-var">$imgfn</span><span class="src-sym">,</span><span class="src-var">$field</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$field</span><span class="src-sym">-&gt;</span><span class="src-id">getName</span><span class="src-sym">(</span><span class="src-sym">)</span>==<span class="src-str">'big'</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.php.net/copy">copy</a><span class="src-sym">(</span><span class="src-var">$imgfn</span><span class="src-sym">,</span><span class="src-sym">(</span><span class="src-var">$copyfn</span>=<a href="http://www.php.net/str_replace">str_replace</a><span class="src-sym">(</span><span class="src-str">'big'</span><span class="src-sym">,</span><span class="src-str">'small'</span><span class="src-sym">,</span><span class="src-var">$imgfn</span><span class="src-sym">)))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">imageResize</span><span class="src-sym">(</span><span class="src-var">$copyfn</span><span class="src-sym">,</span><span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Field.html">Field</a></span><span class="src-sym">(</span><span class="src-str">'small'</span><span class="src-sym">,</span><span class="src-str">'_ICON'</span><span class="src-sym">,</span><span class="src-str">'Picture&nbsp;Preview'</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">imageResize</span><span class="src-sym">(</span><span class="src-var">$imgfn</span><span class="src-sym">,</span><span class="src-var">$field</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+</ol></div></p>
+		<p>Now, I assume you have already noticed new fuction &quot;imageResize()&quot;. Actually it is not &quot;new&quot;,
+			since it is part of the core engine. We are overriding it (i.e. defining method in the child
+			class with the same name as the parent class). However we don't want to bother implementing the full
+			parent method, so we will do some custom job and then again call parent method. This technique is called
+			&quot;wrapper function&quot;.</p>
+		<p>So what does this mysterious method do? Well it's quite simple. Since big and small picture are always
+			the same, except for dimensions, let's make it easy for user to load images. Instead of selecting and 
+			uploading two image files, he will select and load only big one. Small one will be created automatically
+			by main ZenX engine since it will call &quot;imageResize()&quot; method, however since we've overriden it, our 
+			custom &quot;imageResize()&quot; method will create not one, but two images of different size.</p>
+		<p>Now take a look at the client page source code.</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php&nbsp;</span>echo&nbsp;<span class="src-str">&quot;&lt;?xml&nbsp;version=\&quot;1.0\&quot;&nbsp;encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span><span class="src-sym">;&nbsp;</span><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&lt;!DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</div></li>
+<li><div class="src-line">&lt;html&nbsp;version=&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xml:lang=&quot;en&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://www.w3.org/1999/xhtml&nbsp;http://www.w3.org/MarkUp/SCHEMA/xhtml11.xsd&quot;</div></li>
+<li><div class="src-line">&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta&nbsp;http-equiv=&quot;Content-Type&quot;&nbsp;content=&quot;text/html;&nbsp;charset=utf-8&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Picture&nbsp;Gallery&lt;/title&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;ClientPageExample4.css&quot;&nbsp;type=&quot;text/css&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&nbsp;type=&quot;text/css&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;width:&nbsp;50%;&nbsp;margin:0&nbsp;auto;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;td&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;td&nbsp;+&nbsp;td&nbsp;+&nbsp;td&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/style&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;body&gt;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample6.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample6</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">createStorage</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setParameters</span><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;listSortHeaders&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;idno&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;listHiddenFields&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;big&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;formHiddenFields&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;small&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line"><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://validator.w3.org/check?uri=referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://www.w3.org/Icons/valid-xhtml11-blue&quot;&nbsp;alt=&quot;Valid&nbsp;XHTML&nbsp;1.1&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://jigsaw.w3.org/css-validator/check/referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://jigsaw.w3.org/css-validator/images/vcss-blue&quot;&nbsp;alt=&quot;Valid&nbsp;CSS!&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/body&gt;</div></li>
+<li><div class="src-line">&lt;/html&gt;</div></li>
+</ol></div></p>
+		<p>Before we jump into PHP we add header with link to CSS from previous example, and also add few
+			lines specific to our gallery right here, instead of linking to external file.</p>
+		<p>Now, we don't want to show big images at the gallery list, so we hide them using 
+			<a href="../ZenX/tutorial_ZenX.pkg.html#listHiddenFields">listHiddenFields</a>, same thing for small images, since we don't want our user
+			to do redundant job, we turn it off at the data input page using <a href="../ZenX/tutorial_ZenX.pkg.html#formHiddenFields">formHiddenFields</a>.
+			Simple!</p>
+		<p>Just one warning here: this implementation of &quot;imageResize()&quot; overriding is not 100% correct, since
+			in the default function file size check is done before resizing. In case of overriden &quot;imageResize()&quot;
+			method this can not be done, since the file that is to be size checked does not exist (we make a
+			copy directly from file belonging to another field. However this should not be the issue in most 
+			cases, since we make a copy of the big file, that has bigger file size permissions.</p>
+		<p>Just don't make file size allowances too big, it may crash your script if it eats up all memory
+			available to PHP, because image transformations are quite memory consuming.</p></span>
+
+  <span><a name="e07"></a><h2 class="title">Example 7: Table Linking</h2><p>Well, to complete this training let's bind couple of tables together. You know, sometimes, especially
+			when having &quot;one-to-many&quot; relation we split data into several tables, though they represent sigle 
+			object. Now we going to illustrate such case. We will do very simple picture list, however each 
+			picture in our list can have unlimited number of comments.</p>
+		<p>We will create our engine class as usual, just this time we have two tables. Nothing special here.
+			All standard fields, except for 'pref' in 'comments', which is a reference to 'fotolist' id - this 
+			field actually is where linking occurs.</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-key">class&nbsp;</span><span class="src-id">UserEngineExample7&nbsp;</span><span class="src-key">extends&nbsp;</span><a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-key">function&nbsp;</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-str">&quot;localhost&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;user&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;pass&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;base&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$c&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Table.html">Table</a></span><span class="src-sym">(</span><span class="src-str">&quot;comments&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$c</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;idno&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_KEYS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;ID&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$c</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;date&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_DATE&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Date&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$c</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;comm&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_TEXT&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Comment&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$c</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;pref&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_RINT&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Reference&nbsp;to&nbsp;Parent&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">registerTable</span><span class="src-sym">(</span><span class="src-var">$c</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../ZenX/Table.html">Table</a></span><span class="src-sym">(</span><span class="src-str">&quot;fotolist&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;idno&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_KEYS&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;ID&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_WORD&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Picture&nbsp;Description&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$t</span><span class="src-sym">-&gt;</span><span class="src-id">createField</span><span class="src-sym">(</span><span class="src-str">&quot;small&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;_ICON&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;Picture&nbsp;Preview&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">registerTable</span><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+</ol></div></p>
+		<p>Just one thing to note here, since <a href="../ZenX/MainEngineAbstract.html#methodregisterTable">MainEngineAbstract::registerTable()</a> also makes this 
+			table current, the last table to create will always be a main one - &quot;fotolist&quot; in our case, thus it
+			will be shown by default, without need to call <a href="../ZenX/MainEngineAbstract.html#methodsetCurrentTable">MainEngineAbstract::setCurrentTable()</a>.</p>
+		<p>And now we create client page. Watch carefully, we have some new stuff here.</p>
+		<p></p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php&nbsp;</span>echo&nbsp;<span class="src-str">&quot;&lt;?xml&nbsp;version=\&quot;1.0\&quot;&nbsp;encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span><span class="src-sym">;&nbsp;</span><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&lt;!DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</div></li>
+<li><div class="src-line">&lt;html&nbsp;version=&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xml:lang=&quot;en&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://www.w3.org/1999/xhtml&nbsp;http://www.w3.org/MarkUp/SCHEMA/xhtml11.xsd&quot;</div></li>
+<li><div class="src-line">&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta&nbsp;http-equiv=&quot;Content-Type&quot;&nbsp;content=&quot;text/html;&nbsp;charset=utf-8&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Picture&nbsp;Gallery&lt;/title&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;ClientPageExample4.css&quot;&nbsp;type=&quot;text/css&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&nbsp;type=&quot;text/css&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;width:&nbsp;50%;&nbsp;margin:0&nbsp;auto;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;td&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;td&nbsp;+&nbsp;td&nbsp;+&nbsp;td&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/style&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;body&gt;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample7.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample7</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$zen-&gt;destroyDataStorage();</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$zen-&gt;createStorage();</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setParameters</span><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;listSortHeaders&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;idno&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;name&quot;</span><span class="src-sym">)))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">getCurrentPhase</span><span class="src-sym">(</span><span class="src-sym">)</span>==<span class="src-str">&quot;IN&quot;</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$record</span>=<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">getCurrentRecord</span><span class="src-sym">(</span><span class="src-sym">))</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$currentFotoId</span>=<span class="src-var">$record</span><span class="src-sym">[</span><span class="src-str">'idno'</span><span class="src-sym">]</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setCurrentTable</span><span class="src-sym">(</span><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">getTableByName</span><span class="src-sym">(</span><span class="src-str">&quot;comments&quot;</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">resetParameters</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setParameters</span><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;listHiddenFields&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;pref&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;findParameters&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str">pref=<span class="src-var">$currentFotoId</span></span><span class="src-str">&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;noPages&quot;</span>=&gt;<span class="src-id">true</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;listDeletable&quot;</span>=&gt;<span class="src-id">false</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;listShowKeys&quot;</span>=&gt;<span class="src-id">false</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;listViewable&quot;</span>=&gt;<span class="src-id">false</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class="src-str">&quot;&lt;p&gt;Comments&nbsp;List:&lt;/p&gt;&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">showDefaultList</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class="src-str">&quot;</span><span class="src-str">&lt;p&gt;&lt;a&nbsp;href='ClientPageExample7-1.php?id=<span class="src-var">$currentFotoId</span>'&gt;Add&nbsp;or&nbsp;Remove&nbsp;Comment&lt;/a&gt;&lt;/p&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">getCurrentPhase</span><span class="src-sym">(</span><span class="src-sym">)</span>==<span class="src-str">&quot;OUT&quot;</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">deletedIds</span><span class="src-sym">)</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">customMysqlRequest</span><span class="src-sym">(</span><span class="src-str">&quot;DELETE&nbsp;FROM&nbsp;ZX_comments&nbsp;WHERE&nbsp;pref&nbsp;IN&nbsp;(&quot;</span>.<span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">deletedIds</span>.<span class="src-str">&quot;);&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;Below&nbsp;is&nbsp;the&nbsp;example&nbsp;of&nbsp;Manual&nbsp;Pictures&nbsp;Deletion.&nbsp;Not&nbsp;required&nbsp;in&nbsp;our&nbsp;case&nbsp;though.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;//1.&nbsp;Obtain&nbsp;Pictures&nbsp;Ids</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;$picIds=$zen-&gt;customMysqlRequest(&nbsp;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&quot;SELECT&nbsp;id&nbsp;FROM&nbsp;ZX_sometable&nbsp;WHERE&nbsp;refToMainTableId&nbsp;IN&nbsp;(&quot;.$zen-&gt;deletedIds.&quot;);&quot;);</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;//2.&nbsp;Delete&nbsp;Foto&nbsp;Files</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;($picIds){</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach($picIds&nbsp;as&nbsp;$id){</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$imgname=null;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$imgfn=glob(&quot;../img/sometable_someimagefield_&quot;.$id['idfieldname'].&quot;.*&quot;);</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!empty($imgfn))&nbsp;$imgname=$imgfn[0];&nbsp;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;($imgname)&nbsp;unlink($imgname);</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;//3.&nbsp;Delete&nbsp;Foto&nbsp;Records</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;$core-&gt;customMysqlRequest(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&quot;DELETE&nbsp;FROM&nbsp;ZX_sometable&nbsp;WHERE&nbsp;refToMainTableId&nbsp;IN&nbsp;(&quot;.$zen-&gt;deletedIds.&quot;);&quot;);</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://validator.w3.org/check?uri=referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://www.w3.org/Icons/valid-xhtml11-blue&quot;&nbsp;alt=&quot;Valid&nbsp;XHTML&nbsp;1.1&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://jigsaw.w3.org/css-validator/check/referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://jigsaw.w3.org/css-validator/images/vcss-blue&quot;&nbsp;alt=&quot;Valid&nbsp;CSS!&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/body&gt;</div></li>
+<li><div class="src-line">&lt;/html&gt;</div></li>
+</ol></div></p>
+		<p>As you can see all the fun starts inside the &quot;input phase&quot;. Basically second table (comments) is
+			hidden at the main list, so we show it only when user views details (i.e. at the input phase). Once
+			we determine we are at the &quot;input&quot; phase and successfully get main table record id (that is not exists
+			only during record creation, i.e. before it is actually saved to database), we switch to the comments
+			table, do some pretty standard setup and show the list of comments. However we can not do anything except
+			listing for the second table that is located in the same file with the main one. But before I explain that
+			part - let's look at the last section.</p>
+		<p>As you may have already realized - since this tables are independent - it is our job to clean up
+			the garbage after deletion. In order to prevent orphant records in comments table we must delete all
+			comments related to record in main table. That actually mades just one line here. The big commented out
+			block is just a skeleton for the cases when you attached unlimited amount of pictures (pictures table) to 
+			main table.</p>
+		<p>Small step aside from main topic: You can also use this concept to implement user access rights.
+			You can pass in a cookie, for example,	userid or user acess level and based on it change table settings
+			so that some fields will be hidded or write protected.</p>
+		<p>And now - let's get to the interesting part. Why won't we process all routines for both tables 
+			at the same place. Errr.., sorry, we can't. If you have already read <a href="../ZenX/tutorial_ZenX.pkg.html#concepts">Basic ZenX Concepts</a> then
+			you know we have special block of code for handling each data input phases. But since current
+			implementation does not distinguish which table send the request it will jump into the first table
+			and tries to perform the request there. But that evidently can crush our script. For example you may
+			try to delete a record from the second table that is not existent in the first one, or change field
+			that exists only in the second one and so on. Well, you can, of course, try to pass some flags attached
+			to all requests, allowing to distinguish which table to activate, but that will lead to a big mess,
+			both in programming and you understaing of program workflow. The only reasonable solution is to 
+			move second table for processing into separate file. That is exactly what we do. Let's see it.</p>
+		<p><div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php&nbsp;</span><a href="http://www.php.net/session_start">session_start</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;&nbsp;</span><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line"><span class="src-php">&lt;?php&nbsp;</span>echo&nbsp;<span class="src-str">&quot;&lt;?xml&nbsp;version=\&quot;1.0\&quot;&nbsp;encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span><span class="src-sym">;&nbsp;</span><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&lt;!DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</div></li>
+<li><div class="src-line">&lt;html&nbsp;version=&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.1//EN&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xml:lang=&quot;en&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://www.w3.org/1999/xhtml&nbsp;http://www.w3.org/MarkUp/SCHEMA/xhtml11.xsd&quot;</div></li>
+<li><div class="src-line">&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta&nbsp;http-equiv=&quot;Content-Type&quot;&nbsp;content=&quot;text/html;&nbsp;charset=utf-8&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Picture&nbsp;Gallery&lt;/title&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;link&nbsp;rel=&quot;stylesheet&quot;&nbsp;href=&quot;ClientPageExample4.css&quot;&nbsp;type=&quot;text/css&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&nbsp;type=&quot;text/css&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.zx_lst&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;width:&nbsp;50%;&nbsp;margin:0&nbsp;auto;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;text-align:&nbsp;center;&nbsp;}</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/style&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/head&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;body&gt;</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">require<span class="src-sym">(</span><span class="src-str">&quot;UserEngineExample7.php&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">__autoload</span><span class="src-sym">(</span><span class="src-var">$class_name</span><span class="src-sym">)</span><span class="src-sym">{&nbsp;</span><span class="src-inc">require_once&nbsp;</span><span class="src-str">'../ZenX/'</span>.<span class="src-var">$class_name</span>.<span class="src-str">'.php'</span><span class="src-sym">;&nbsp;</span><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-key">if&nbsp;</span><span class="src-sym">(</span>isset<span class="src-sym">(</span><span class="src-var">$_REQUEST</span><span class="src-sym">[</span><span class="src-str">'id'</span><span class="src-sym">]</span><span class="src-sym">))</span><span class="src-sym">{&nbsp;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$currentFotoId</span>=<span class="src-var">$_SESSION</span><span class="src-sym">[</span><span class="src-str">'id'</span><span class="src-sym">]</span>=<span class="src-var">$_REQUEST</span><span class="src-sym">[</span><span class="src-str">'id'</span><span class="src-sym">]</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-sym">}&nbsp;</span><span class="src-key">else&nbsp;</span><span class="src-key">if&nbsp;</span><span class="src-sym">(</span>isset<span class="src-sym">(</span><span class="src-var">$_SESSION</span><span class="src-sym">[</span><span class="src-str">'id'</span><span class="src-sym">]</span><span class="src-sym">))</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$currentFotoId</span>=<span class="src-var">$_SESSION</span><span class="src-sym">[</span><span class="src-str">'id'</span><span class="src-sym">]</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-sym">}&nbsp;</span><span class="src-key">else&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class="src-str">&quot;Can&nbsp;not&nbsp;tie&nbsp;comments&nbsp;to&nbsp;foto!&nbsp;Please&nbsp;enter&nbsp;from&nbsp;the&nbsp;main&nbsp;page!!!&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">exit</span><span class="src-sym">(</span><span class="src-num">125</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$zen&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">UserEngineExample7</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setCurrentTable</span><span class="src-sym">(</span><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">getTableByName</span><span class="src-sym">(</span><span class="src-str">&quot;comments&quot;</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">setParameters</span><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;listHiddenFields&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;pref&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;findParameters&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str">pref=<span class="src-var">$currentFotoId</span></span><span class="src-str">&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;restrictedFields&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;date&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;formDefaults&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;date&quot;</span>=&gt;<a href="http://www.php.net/date">date</a><span class="src-sym">(</span><span class="src-str">&quot;Y-m-d&quot;</span><span class="src-sym">))</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;formDefaultsWriteThrough&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;date&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;formHiddenFields&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;pref&quot;</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;formRelayParameters&quot;</span>=&gt;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;pref&quot;</span>=&gt;<span class="src-var">$currentFotoId</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">,</span><span class="src-str">&quot;noPages&quot;</span>=&gt;<span class="src-id">true</span></div></li>
+<li><div class="src-line"><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$zen</span><span class="src-sym">-&gt;</span><span class="src-id">runFullCycle</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class="src-str">&quot;</span><span class="src-str">&lt;p&gt;&lt;a&nbsp;href='ClientPageExample7.php?ZX_ACTION=VIEW&amp;amp;ZX_TARGET=<span class="src-var">$currentFotoId</span>'&gt;Back&nbsp;To&nbsp;Foto&lt;/a&gt;&lt;/p&gt;</span><span class="src-str">&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://validator.w3.org/check?uri=referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://www.w3.org/Icons/valid-xhtml11-blue&quot;&nbsp;alt=&quot;Valid&nbsp;XHTML&nbsp;1.1&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href=&quot;http://jigsaw.w3.org/css-validator/check/referer&quot;&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;src=&quot;http://jigsaw.w3.org/css-validator/images/vcss-blue&quot;&nbsp;alt=&quot;Valid&nbsp;CSS!&quot;&nbsp;/&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/body&gt;</div></li>
+<li><div class="src-line">&lt;/html&gt;</div></li>
+</ol></div></p>
+		<p>This one is quite simple. The only thing here is to turn on session and save parent id, otherwise
+			we won't be able to tie records to main table or/and get back to main table details screen. You can use
+			cookies for this purpose as well, if you like this more.</p>
+		<p>That is basically all for starters. The rest you will have to make yourself or search the web. 
+			Good luck!</p></span></div>
+
+	<table class="tutorial-nav-box">
+	<tr>
+		<td style="width: 30%">
+							<span class="nav-button-disabled">Previous</span>
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+							<a href="../ZenX/tutorial_ZenX.pkg.html" class="nav-button">Next</a>
+					</td>
+	</tr>
+	<tr>
+		<td style="width: 30%">
+					</td>
+		<td style="text-align: center">
+					</td>
+		<td style="text-align: right; width: 30%">
+							<span class="detail">ZenX Manual</span>
+					</td>
+	</tr>
+</table>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 29 Nov 2011 09:55:26 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

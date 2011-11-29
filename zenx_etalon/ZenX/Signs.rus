@@ -1,0 +1,59 @@
+<?php
+/**
+ * "ZenX" PHP data manupulation library.
+ *
+ * @author Konstantin Dvortsov <kostya.dvortsov@gmail.com>. You can 
+ * also track me down at {@link http://dvortsov.tel dvortsov.tel }
+ * @version 1.0
+ * @package ZenX 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
+ */
+/**
+ * Signs interface contains constants with descriptions of visual elements
+ * and error explanations. Override/replace this class for localization.
+ *
+ * @package ZenX
+ * @author Konstatin Dvortsov
+ */
+interface Signs{
+  const VIEWFORM="Подробно";
+  const VIEWHINT="Просмотреть детали";
+  const REMOVE="Удалить выбранные записи";
+  const DELSIMBOL="✘";
+  const SUBMIT="Сохранить";
+  const SUBMITHINT="Сохранить данные отображаемые на экране";
+  const BACK="Назад";
+  const BACKHINT="Вернутся к списку записей";
+  const ADDNEW="Добавить";
+  const ADDHINT="Добавить новую запись";
+  const SEARCH="Поиск";
+  const SEARCHHINT="Поиск записей, соответствующих указанным параметрам";
+  const RESET="Сброс";
+  const RESETHINT="Очистить параметры поиска";
+  const KEYBLOCKED="Данная таблица защищена от записи!";
+  const FIELDBLOCKED="Данное поле защищено от записи!";
+  const STRTOOLONG="Слишком длинная строка в данном поле была обрезана.";
+  const WRONGKEY="Неправильный формат ключа!";
+  const WRONGINT="Неправильный формат целого числа!";
+	const WRONGFLOAT="Неправильный формат дробного числа!";
+  const TEXTTOOLONG="Объем текста слишком большой! Размер текста не должен превышать 64Кб!";
+  const GENSAVEERR="все поля";
+  const GENSAVEERRTXT="Все поля не могут быть пустыми!";
+  const SAVEERRHEADER="Ошибка!";
+  const ERRORAT="Ошибка в поле ";
+  const SAVENOTIFHEADER="Предупреждение!";
+  const NOTEAT="Данные в поле ";
+  const WRONGDATE="Неправильный формат даты! Пожалуйста, введите дату в формате ГГГГ-ММ-ДД !";
+  const NUMBERCLEARED="Недопустимые символы в цифровом поле были удалены!";
+  const PAGES="Страницы: ";
+  const CANTBENULL="Данное поле обязательно для заполнения и не может быть пустым!";
+  const MUSTBEUNIQUE="Такое значение уже имеется! Значения в данном поле должны быть уникальными!";
+  const FUEEXCEEDSERV="Файл не был загружен. Размер файла превышает ограничение, установленное на сервере!";
+  const FUEEXCEEDFORM="Файл не был загружен. Размер файла превышает ограничение, установленное при отправке! ";
+  const FUEPARTIAL="Файл не был загружен. Файл был загружен частично!";
+  const FUENOTMPDIR="Файл не был загружен. Нет доступа ко временной папки для хранения файлов на сервере!";
+  const FUECANTWRITE="Файл не был загружен. Ошибка записи файла на диск!";
+  const FUEEXTERR="Файл не был загружен. Одно из расширений PHP прервало процесс загрузки файла!";
+  const FILESIZETOOBIG="Файл не был загружен. Размер загружаемого файла превышает ограничение, установленное администратором, для этого типа данных!";
+	const IMGDELONUPDATE="Удалить существующую картинку";
+}

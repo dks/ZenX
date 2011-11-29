@@ -1,0 +1,2276 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class MainEngineAbstract</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class MainEngineAbstract</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../ZenX/Signs.html">Signs</a></li>            </ul>
+        </p>
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">MainEngineAbstract class is the core of ZenX library.</p>
+<p class="description"><p>It contains most of the methods not related to particular storage engine.  It is mainly dealing with data verification, session variables and data rendering.  Three main things to start from is the class constructor, <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">runFullCycle()</a> method and  ops variable that contains current class settings.</p><p>One thing to mention is the image handling. It is actually must be under storage engine class,  however I failed to separate it from main class, so it may be a job for future improvements.  Ideally storage engine could implement sockets and/or save images directly to data base/  storage file, but this implementation relies heavily on standard PHP functions so files are  uploaded to server via standard HTML forms first and handled thereafter. Current implementation  of storage engine <a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a> only saves file name at the data base and the file  itself is kept at server.</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Konstatin Dvortsov</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">MainEngineAbstract::runFullCycle()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_ZenX---MainEngineAbstract.php.html">/ZenX/MainEngineAbstract.php</a> (line <span class="field">32</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../ZenX/StorageEngineMysql.html">StorageEngineMysql</a></td>
+					<td>
+											StorageEngineMysql class extends MainEngineAbstract class and implements  data storage specific functions for MySQL database.
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																								<div class="var-title">
+					<span class="var-type">Array</span>
+					<a href="#$curRec" title="details" class="var-name">$curRec</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>
+					<a href="#$currentTable" title="details" class="var-name">$currentTable</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">String</span>
+					<a href="#$deletedIds" title="details" class="var-name">$deletedIds</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">Array</span>
+					<a href="#$inputErrors" title="details" class="var-name">$inputErrors</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">Array</span>
+					<a href="#$inputNotifications" title="details" class="var-name">$inputNotifications</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">Array</span>
+					<a href="#$ops" title="details" class="var-name">$ops</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">Array</span>
+					<a href="#$tables" title="details" class="var-name">$tables</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																																																																																																																																																																																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">MainEngineAbstract</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__destruct" title="details" class="method-name">__destruct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#addNewRecord" title="details" class="method-name">addNewRecord</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#addParameters" title="details" class="method-name">addParameters</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">$params</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#createStorage" title="details" class="method-name">createStorage</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#deleteItems" title="details" class="method-name">deleteItems</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#deleteRecords" title="details" class="method-name">deleteRecords</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$idList</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#destroyDataStorage" title="details" class="method-name">destroyDataStorage</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#dumpParameters" title="details" class="method-name">dumpParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#dumpTables" title="details" class="method-name">dumpTables</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getAllTables" title="details" class="method-name">getAllTables</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getClientInfo" title="details" class="method-name">getClientInfo</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">String</span>
+										<a href="#getCurrentPhase" title="details" class="method-name">getCurrentPhase</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getCurrentRecord" title="details" class="method-name">getCurrentRecord</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../ZenX/Table.html">Table</a></span>
+										<a href="#getCurrentTable" title="details" class="method-name">getCurrentTable</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getData" title="details" class="method-name">getData</a>
+											([<span class="var-type">Integer</span>&nbsp;<span class="var-name">$rowLimit</span> = <span class="var-default">null</span>], [<span class="var-type">Integer</span>&nbsp;<span class="var-name">$startOffset</span> = <span class="var-default">null</span>], [<span class="var-type">String</span>&nbsp;<span class="var-name">$orderField</span> = <span class="var-default">null</span>], [<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$reverseOrder</span> = <span class="var-default">false</span>], [<span class="var-type">String</span>&nbsp;<span class="var-name">$findParams</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">String</span>
+										<a href="#getFilterName" title="details" class="method-name">getFilterName</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$string</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getHtmlForm" title="details" class="method-name">getHtmlForm</a>
+											([<span class="var-type">Integer</span>&nbsp;<span class="var-name">$id</span> = <span class="var-default">null</span>], [<span class="var-type">Array</span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Integer</span>
+										<a href="#getLastRequestTotalRecords" title="details" class="method-name">getLastRequestTotalRecords</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getMultiItems" title="details" class="method-name">getMultiItems</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$listName</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getRecordById" title="details" class="method-name">getRecordById</a>
+											(<span class="var-type">String|int</span>&nbsp;<span class="var-name">$id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#getSearchForm" title="details" class="method-name">getSearchForm</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../ZenX/Table.html">Table</a></span>
+										<a href="#getTableByName" title="details" class="method-name">getTableByName</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$tableName</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Integer</span>
+										<a href="#getTotalRecords" title="details" class="method-name">getTotalRecords</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#imageResize" title="details" class="method-name">imageResize</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$imgfn</span>, <span class="var-type"><a href="../ZenX/Field.html">Field</a></span>&nbsp;<span class="var-name">$field</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#initialize" title="details" class="method-name">initialize</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Boolean</span>
+										<a href="#isFieldEditable" title="details" class="method-name">isFieldEditable</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$name</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Boolean</span>
+										<a href="#isUnique" title="details" class="method-name">isUnique</a>
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$fieldName</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$value</span>, <span class="var-type">Integer</span>&nbsp;<span class="var-name">$keyValue</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#printCustomHtmlForm" title="details" class="method-name">printCustomHtmlForm</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#printDefaultHtmlForm" title="details" class="method-name">printDefaultHtmlForm</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#printHtmlForm" title="details" class="method-name">printHtmlForm</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#registerTable" title="details" class="method-name">registerTable</a>
+											(<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>&nbsp;<span class="var-name">$table</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#reportErrors" title="details" class="method-name">reportErrors</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#reportNotifications" title="details" class="method-name">reportNotifications</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#resetParameters" title="details" class="method-name">resetParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#retrieveVars" title="details" class="method-name">retrieveVars</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#runFullCycle" title="details" class="method-name">runFullCycle</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#runInputCycle" title="details" class="method-name">runInputCycle</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setCurrentTable" title="details" class="method-name">setCurrentTable</a>
+											(<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>&nbsp;<span class="var-name">$table</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#setEngineParameters" title="details" class="method-name">setEngineParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setFindParameters" title="details" class="method-name">setFindParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setNavigationParameters" title="details" class="method-name">setNavigationParameters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setParameters" title="details" class="method-name">setParameters</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">$params</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showAddRecordButton" title="details" class="method-name">showAddRecordButton</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showCustomList" title="details" class="method-name">showCustomList</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showDefaultList" title="details" class="method-name">showDefaultList</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showList" title="details" class="method-name">showList</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showPhaseFooters" title="details" class="method-name">showPhaseFooters</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showPhaseHeaders" title="details" class="method-name">showPhaseHeaders</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#showSearchForm" title="details" class="method-name">showSearchForm</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">int</span>
+										<a href="#updateRecord" title="details" class="method-name">updateRecord</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Array</span>
+										<a href="#validateVars" title="details" class="method-name">validateVars</a>
+											(<span class="var-type">Array</span>&nbsp;<span class="var-name">&$vars</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#verifyImageFields" title="details" class="method-name">verifyImageFields</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$curRec" id="$curRec"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">Array</span>
+			<span class="var-name">$curRec</span>
+			 = <span class="var-default">null</span>			(line <span class="line-number">109</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">curRec is variable for temporary storage of the record set.</p>
+<p class="description"><p>curRec variable is used for temporary storage of the record set retrieved by last  getCurrentRecord() call. It is used to prevent duplicate calls for accessing the same data.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Associative array with keys containing field names and values containing  record values.</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetCurrentRecord">MainEngineAbstract::getCurrentRecord()</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$currentTable" id="$currentTable"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>
+			<span class="var-name">$currentTable</span>
+			 = <span class="var-default">null</span>			(line <span class="line-number">69</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">currentTable variable contains current Table object.</p>
+<p class="description"><p>Current table contains a Table object to which all actions and settings will be  applied.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Contains current Table object</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetCurrentTable">MainEngineAbstract::setCurrentTable()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetCurrentTable">MainEngineAbstract::getCurrentTable()</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$deletedIds" id="$deletedIds"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">String</span>
+			<span class="var-name">$deletedIds</span>
+			 = <span class="var-default">null</span>			(line <span class="line-number">122</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">deletedIds variable contains list of ID's of the recently deleted records.</p>
+<p class="description"><p>deletedIds is a comma-separated list the ID's of the records deleted by last deleteItems()  call. Though it is used within the deleteRecords() function for a temporary storage there  is no real need in it. It's main purpose is to be able to get the list of ID's from outside  of the engine for user-definded handling.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Comma separated list of deleted records ID's.</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddeleteRecords">MainEngineAbstract::deleteRecords()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddeleteItems">MainEngineAbstract::deleteItems()</a></li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$inputErrors" id="$inputErrors"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">Array</span>
+			<span class="var-name">$inputErrors</span>
+			 = <span class="var-default">null</span>			(line <span class="line-number">83</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">inputError variable contains array with data verification errors.</p>
+<p class="description"><p>At the phase of data acceptance prior to saving data is verified for correctness.  Any errors found during data verification are saved to this array. If this variable  is not empty data is not saved to storage and returned to user instead.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Nested associative array where first key is a Table description (not Name!),  second key is a sequential number and value is the text error description.</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$inputNotifications">MainEngineAbstract::$inputNotifications</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodreportErrors">MainEngineAbstract::reportErrors()</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$inputNotifications" id="$inputNotifications"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">Array</span>
+			<span class="var-name">$inputNotifications</span>
+			 = <span class="var-default">null</span>			(line <span class="line-number">98</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">inputNotifications variable contains array with data verification warnings.</p>
+<p class="description"><p>At the phase of data acceptance prior to saving data is verified for correctness.  Any minor errors are automatically corrected and notification describing what was  changed is saved to this array. Non-empty notification array does not prevent data  from saving into storage.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Nested associative array where first key is a Table description (not Name!),  second key is a sequential number and value is the text notification.</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$inputErrors">MainEngineAbstract::$inputErrors</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodreportNotifications">MainEngineAbstract::reportNotifications()</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$ops" id="$ops"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">Array</span>
+			<span class="var-name">$ops</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">58</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Ops variable is an array of miscellaneous setup parameters.</p>
+<p class="description"><p>Ops variable is one of the key elements of MainEngineAbstract class. It  contains list of class setting variables which define most of its behavior  and visual appearance. Thought it is not directly accessible it can be easily  modified by setParameters() and addParameters() methods. In case you need to  see its contents for debugging purposes you can use dumpParameters() method.  Since list of possible options is quite long, possible parameter values are  shown in a separate file.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Multi-dimensional associative array of engine settings/properties</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#options">Possible Options for the ZenX engine</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodresetParameters">MainEngineAbstract::resetParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddumpParameters">MainEngineAbstract::dumpParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$tables" id="$tables"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">Array</span>
+			<span class="var-name">$tables</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">39</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tables variable contains array of table objects.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Array of Table objects</li>
+				<li><span class="field">see:</span> <a href="../ZenX/Table.html">Table</a></li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">132</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">__construct() is the main class constructor.</p>
+<p class="description"><p>This is the main class constructor which basically starts session, sets up engine  parameters and does some minor data definition validation.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodverifyImageFields">MainEngineAbstract::verifyImageFields()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodresetParameters">MainEngineAbstract::resetParameters()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">MainEngineAbstract</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#method__construct">StorageEngineMysql::__construct()</a>
+								: Class constructor.
+							</li>
+				</ul>
+	</div>
+<a name="method__destruct" id="__destruct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Destructor __destruct</span> (line <span class="line-number">142</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">__destruct() is an empty implementation of the class destructor.</p>
+<p class="description"><p>You may want to override this method in order to free up some memory for large projects.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__destruct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodaddNewRecord" id="addNewRecord"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">addNewRecord</span> (line <span class="line-number">357</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">addNewRecord() method adds a record to data storage.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must append (insert) new data row (record) to the storage. All data is verified before  it is passed to this method, so there is no need in data check.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddeleteRecords">MainEngineAbstract::deleteRecords()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodupdateRecord">MainEngineAbstract::updateRecord()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addNewRecord
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$data</span><span class="var-description">: Associative array with key=&gt;value pairs where key is a field name and value  is the data to be saved.</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodaddNewRecord">StorageEngineMysql::addNewRecord()</a>
+								: addNewRecord() method stores data supplied as argument to database.
+							</li>
+				</ul>
+	</div>
+<a name="methodaddParameters" id="addParameters"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addParameters</span> (line <span class="line-number">173</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">addParameters() is a convenience method for setting engine parameters.</p>
+<p class="description"><p>One of the key difference from the setParameter() method is that it does not override  values of the parameters with the same name, but append new values instead. Its typically  used to add more record search parameters, thus narrowing the list of matches.</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#options">Possible Options for the ZenX engine</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetNavigationParameters">MainEngineAbstract::setNavigationParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addParameters
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">$params</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$params</span><span class="var-description">: Associative array with key=&gt;value pairs where value can be another array,  depending on the parameter type. For details see options tutorial.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateStorage" id="createStorage"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">createStorage</span> (line <span class="line-number">447</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">createStorage() method creates data storage.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must implement all necessary routines in order to create (not connect to existing, but  to create a non-existent) data storage.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddestroyDataStorage">MainEngineAbstract::destroyDataStorage()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			createStorage
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodcreateStorage">StorageEngineMysql::createStorage()</a>
+								: createStorage() method performs all necessary routines to create tables from  <a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a> array.
+							</li>
+				</ul>
+	</div>
+<a name="methoddeleteItems" id="deleteItems"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">deleteItems</span> (line <span class="line-number">1125</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">deleteItems() creates list of items to be deleted from the form submitted data.</p>
+<p class="description"><p>This is small convenience method that retrieves list of ids from specifically  formatted form submission data. It forms then a comma-separated list of ID's  to be deleted that is passes as parameter to deleteRecords() method and at the  same time sets deletedIds variable.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$deletedIds">MainEngineAbstract::$deletedIds</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddeleteRecords">MainEngineAbstract::deleteRecords()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			deleteItems
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methoddeleteRecords" id="deleteRecords"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">deleteRecords</span> (line <span class="line-number">388</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">deleteRecords() method erases specified records at data storage.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must erase (delete) all records with the ids, specified as parameter.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodupdateRecord">MainEngineAbstract::updateRecord()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddNewRecord">MainEngineAbstract::addNewRecord()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddeleteItems">MainEngineAbstract::deleteItems()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			deleteRecords
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$idList</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$idList</span><span class="var-description">: Comma-separated list of ID's (Keys) of the records to be deleted.</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methoddeleteRecords">StorageEngineMysql::deleteRecords()</a>
+								: deleteRecords() method deletes records with the specified IDs from the current table.
+							</li>
+				</ul>
+	</div>
+<a name="methoddestroyDataStorage" id="destroyDataStorage"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">destroyDataStorage</span> (line <span class="line-number">422</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">destroyDataStorage() method destroys (erases) all tables of the class instance at data storage.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must implemend all nessessary routines to erase all tables of the current class instance  that called this method. Typically it is used only during development phase in order to erase  unneeded data.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodcreateStorage">MainEngineAbstract::createStorage()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			destroyDataStorage
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methoddestroyDataStorage">StorageEngineMysql::destroyDataStorage()</a>
+								: destroyDataStorage() method deletes all tables from database and images related to these  tables from image folder.
+							</li>
+				</ul>
+	</div>
+<a name="methoddumpParameters" id="dumpParameters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">dumpParameters</span> (line <span class="line-number">186</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">dumpParameters() is a convenience method for viewing the content of $ops variable.</p>
+<p class="description"><p>Parameters dump is used mainly for debugging purposes at the development phase.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			dumpParameters
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methoddumpTables" id="dumpTables"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">dumpTables</span> (line <span class="line-number">320</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">dumpTables() is a convenience method showing $tables array contents for debigging purposes.</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			dumpTables
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetAllTables" id="getAllTables"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAllTables</span> (line <span class="line-number">270</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getAllTables() method returns $tables array containing all Table objects registered  at this instance.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Array with Table objects</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodregisterTable">MainEngineAbstract::registerTable()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getAllTables
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetClientInfo" id="getClientInfo"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getClientInfo</span> (line <span class="line-number">556</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getClientInfo() method obtains user agent information using javascript.</p>
+<p class="description"><p>This method is among the first ones to be called at the <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">runFullCycle()</a>  method. It prints javascript that obtains user environment variables and redirects  back to server. Once recieved by server those variables are saved to PHP $_SESSION  array. On consequent page openings since ZX_CLINFO session variable is set, no  javascript printing / redirection occurs. Thus changes to client variable during  the same session will not be captured.</p><p>By default this function is off, in order to turn it on you must set &quot;clientInfoOn&quot;  parameter to true.</p><p>Below is the list of the user evironment session variables. You may want to override  this function to get more information.</p><p>ZX_CLINFO_browser_code<br />  ZX_CLINFO_browser_name<br />  ZX_CLINFO_browser_version<br />  ZX_CLINFO_platform<br />  ZX_CLINFO_user_agent_header<br />  ZX_CLINFO_screen_width<br />  ZX_CLINFO_screen_height<br />  ZX_CLINFO<br /></p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">MainEngineAbstract::runFullCycle()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getClientInfo
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCurrentPhase" id="getCurrentPhase"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCurrentPhase</span> (line <span class="line-number">734</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getCurrentPhase() method determines what phase script is in.</p>
+<p class="description"><p>This method is mainly to be used out of the class for user-defined behaviour, for example  it can be used to display different page headers depending on whether it is &quot;OUT&quot; phase  (data listing) or &quot;IN&quot; phase (data input). Please note the deletion (&quot;DELETE&quot;) action is  also considered to be &quot;OUT&quot; phase, since it is immediately followed by listing (&quot;SHOW&quot;) action.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> &quot;IN&quot; or &quot;OUT&quot; word</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#inphase">Input Phase</a></li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#outphase">Output Phase</a></li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#concepts">Basic ZenX Concepts</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowPhaseHeaders">MainEngineAbstract::showPhaseHeaders()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">String</span>
+		<span class="method-name">
+			getCurrentPhase
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCurrentRecord" id="getCurrentRecord"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCurrentRecord</span> (line <span class="line-number">300</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getCurrentRecord() method returns current record if it exists.</p>
+<p class="description"><p>This method is typically used during the input phase and contains  the data array of the record currently accessed. One of the main purposes  of this method and its difference with getRecordById() is that it saves  the record to memory to prevent redundant accesses to data storage.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where keys are field names and values are  record values</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#inphase">Input Phase</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetRecordById">MainEngineAbstract::getRecordById()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getCurrentRecord
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCurrentTable" id="getCurrentTable"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCurrentTable</span> (line <span class="line-number">241</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getCurrentTable() method returns Table object from currentTable variable.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Table object marked as current</li>
+				<li><span class="field">see:</span> <a href="../ZenX/Table.html">Table</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetCurrentTable">MainEngineAbstract::setCurrentTable()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$currentTable">MainEngineAbstract::$currentTable</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../ZenX/Table.html">Table</a></span>
+		<span class="method-name">
+			getCurrentTable
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetData" id="getData"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getData</span> (line <span class="line-number">477</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getData() is one of the core methods; it retrieves records from the data storage confirming  specified parameters.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must retrieve records from the current table matching the specified criteria.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowDefaultList">MainEngineAbstract::showDefaultList()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetFindParameters">MainEngineAbstract::setFindParameters()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getData
+		</span>
+					([<span class="var-type">Integer</span>&nbsp;<span class="var-name">$rowLimit</span> = <span class="var-default">null</span>], [<span class="var-type">Integer</span>&nbsp;<span class="var-name">$startOffset</span> = <span class="var-default">null</span>], [<span class="var-type">String</span>&nbsp;<span class="var-name">$orderField</span> = <span class="var-default">null</span>], [<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$reverseOrder</span> = <span class="var-default">false</span>], [<span class="var-type">String</span>&nbsp;<span class="var-name">$findParams</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$rowLimit</span><span class="var-description">: Maximum number of records to be retrieved</span>			</li>
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$startOffset</span><span class="var-description">: Starting offset within the number of records to be returned</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$orderField</span><span class="var-description">: Name of the field to order by</span>			</li>
+					<li>
+				<span class="var-type">Boolean</span>
+				<span class="var-name">$reverseOrder</span><span class="var-description">: Flag specifying whether to use descending order</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$findParams</span><span class="var-description">: Search/filtering criteria</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodgetData">StorageEngineMysql::getData()</a>
+								: getData() retrieves rows in accordance with the specified parameters.
+							</li>
+				</ul>
+	</div>
+<a name="methodgetFilterName" id="getFilterName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFilterName</span> (line <span class="line-number">1107</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getFilterName() creates data filtering method name according to standard rules.</p>
+<p class="description"><p>This is small covenience method that creates data filtering method name that is  assumed to be within DataDefiner class  according to the rules  based on input  string. Called from validateVars() method.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Data filter name</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/DataDefiner.html">DataDefiner</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">String</span>
+		<span class="method-name">
+			getFilterName
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$string</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$string</span><span class="var-description">: Field name</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetHtmlForm" id="getHtmlForm"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getHtmlForm</span> (line <span class="line-number">616</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getHtmlForm() method obtains a record and supplies values with names and relevant HTML tags.</p>
+<p class="description"><p>This is one of the core methods used during the data editing (&quot;IN&quot;) phase. When viewing the  data it retrieves record from data storage using the ID supplied as parameter, if no ID  supplied it returns form with HTML tag filled with no values or default values,if any.  During the data saving phase if data verification error is found $override array is supplied  to the method that overrides values from the storage (if any), so the user could correct  wrong data.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where keys are table field descriptions (Not names!)  obtained by <a href="../ZenX/Field.html#methodgetNote">Field::getNote()</a> method and values are record values wrapped by  relevant HTML tags.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#formCustomPreprocessing">formCustomPreprocessing</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodprintHtmlForm">MainEngineAbstract::printHtmlForm()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getHtmlForm
+		</span>
+					([<span class="var-type">Integer</span>&nbsp;<span class="var-name">$id</span> = <span class="var-default">null</span>], [<span class="var-type">Array</span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$id</span><span class="var-description">: ID (Key) of the record to be retrieved and processed.</span>			</li>
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$override</span><span class="var-description">: Associative array where keys are table field names and values  are record values.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetLastRequestTotalRecords" id="getLastRequestTotalRecords"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLastRequestTotalRecords</span> (line <span class="line-number">410</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getLastRequestTotalRecords() method returns total number of records matching filtering parameters.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must return total number of records matching filtering parameters regardless of start and  end offset. It is basically analogue of mysql &quot;SELECT FOUND_ROWS()&quot; function. This function is used by  ZenX engine for pagination.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Total number of records matching predefined search parameters</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Integer</span>
+		<span class="method-name">
+			getLastRequestTotalRecords
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodgetLastRequestTotalRecords">StorageEngineMysql::getLastRequestTotalRecords()</a>
+								: getLastRequestTotalRecords() returns number of total records retrieved by last request.
+							</li>
+				</ul>
+	</div>
+<a name="methodgetMultiItems" id="getMultiItems"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getMultiItems</span> (line <span class="line-number">460</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getMultiItems() method retrieves all records from the table linked to the field with the name  specified at the parameter.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must retrieve all records from the table linked to the field.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where key is linked table record ID and value  is record value.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#datamulti">&quot;Omni&quot; Data Class</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getMultiItems
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$listName</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$listName</span><span class="var-description">: Name of the field with linked table.</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodgetMultiItems">StorageEngineMysql::getMultiItems()</a>
+								: getMultiItems retrives referenced values of the &quot;multi&quot; field.
+							</li>
+				</ul>
+	</div>
+<a name="methodgetRecordById" id="getRecordById"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRecordById</span> (line <span class="line-number">332</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getRecordById() method returns specific record and must be overrided by storage engine class.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. However in data storage engines  this method must access the data storage and retrieve record specified by ID given as a parameter.  The format of the return result must be and associative array where key is a field name and value  is the value of that field taken from the data storage for this specific record.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/Field.html">Field</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getRecordById
+		</span>
+					(<span class="var-type">String|int</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String|int</span>
+				<span class="var-name">$id</span><span class="var-description">: Identification number (Key) of the record to be retrieved.</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodgetRecordById">StorageEngineMysql::getRecordById()</a>
+								: getRecordById() retrieves record using the key supplied.
+							</li>
+				</ul>
+	</div>
+<a name="methodgetSearchForm" id="getSearchForm"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getSearchForm</span> (line <span class="line-number">1445</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getSearchForm() creates array with search fields.</p>
+<p class="description"><p>This method creates array with the search fields, where keys are field descriptions obtained by  <a href="../ZenX/Field.html#methodgetNote">Field::getNote()</a> method and values are pre-formatted html input tags. This array is usually  passed to showSearchForm() method for the final preparation and printout, however you may create  your own methods that use this array as the raw data for custom fancy printing of search form.  This array also contains the following reserved keys:<br />  ZX_SF_START - contains form header (&quot;form&quot; tag etc.)<br />  ZX_SF_END_LEFT - contains submit button<br />  ZX_SF_END_RIGHT - contains reset button<br />  ZX_SF_END - contains closing &quot;form&quot; tag<br /></p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array with key=&gt;value pairs</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowSearchForm">MainEngineAbstract::showSearchForm()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			getSearchForm
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetTableByName" id="getTableByName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTableByName</span> (line <span class="line-number">282</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getTableByName() method returns Table object with the specified name.</p>
+<p class="description"><p>This function basically iterates through $tables array and returns Table  object this the name matching a string specified as parameter.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Table object with the name as specified by parameter string</li>
+				<li><span class="field">see:</span> <a href="../ZenX/Table.html">Table</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../ZenX/Table.html">Table</a></span>
+		<span class="method-name">
+			getTableByName
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$tableName</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$tableName</span><span class="var-description">: Name of the table to be retrieved.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetTotalRecords" id="getTotalRecords"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTotalRecords</span> (line <span class="line-number">398</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">getTotalRecords() method returns total number of records at the current table at data storage.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must return total number of records from the current table at data storage. This method is  not used by ZenX engine and is supplied only for user convenience.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Total number of current table records.</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Integer</span>
+		<span class="method-name">
+			getTotalRecords
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodgetTotalRecords">StorageEngineMysql::getTotalRecords()</a>
+								: getTotalRecords() returns number of total records in current table.
+							</li>
+				</ul>
+	</div>
+<a name="methodimageResize" id="imageResize"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">imageResize</span> (line <span class="line-number">1606</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">imageResize() method resizes uploaded images to the dimensions set up in data type definition.</p>
+<p class="description"><p>This is short convenience method that utilizes external <a href="../ZenX/SimpleImage.html">SimpleImage</a> class in order to  resize images to the dimensions set up in data type definition.</p><p>It is actually must be under storage engine class, however I failed to separate image handling  from main class, so it may be a job for future improvements.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/DataDefiner.html">DataDefiner</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			imageResize
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$imgfn</span>, <span class="var-type"><a href="../ZenX/Field.html">Field</a></span>&nbsp;<span class="var-name">$field</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$imgfn</span><span class="var-description">: Image file name</span>			</li>
+					<li>
+				<span class="var-type"><a href="../ZenX/Field.html">Field</a></span>
+				<span class="var-name">$field</span><span class="var-description">: Field object that contains data of the image type</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodinitialize" id="initialize"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">initialize</span> (line <span class="line-number">503</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This is an initialization function with empty implementation.</p>
+<p class="description"><p>Use is at your own convenience. Since it is one of the first functions that  is called during the page creation its typical uses can be security check,  setting variables preparation, session cookies hanling and so on. If you call  it manually before main loop and do not need it to be called again, it can be  disabled by setting &quot;noInit&quot; parameter to true.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			initialize
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodisFieldEditable" id="isFieldEditable"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">isFieldEditable</span> (line <span class="line-number">982</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">isFieldEditable() method determines whether the specific field is allowed for editing.</p>
+<p class="description"><p>This is convenienve method that checks whether field is listed at &quot;restrictedFields&quot; parameter  and returns true if not (means it is allowed for editing).</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> True if field is editable, false otherwise.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Boolean</span>
+		<span class="method-name">
+			isFieldEditable
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$name</span><span class="var-description">: Name of the field that needs to be checked wether it is editable</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisUnique" id="isUnique"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isUnique</span> (line <span class="line-number">493</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">isUnique() method determines whether value supplied to the field specified by parameter  at the current table would be unique.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must request data storage to check whether there are any records containing same value  at the specific field. If there are no such records or it is record with the same key as supplied  (in case of update to the existing record) then it should return true, or return false otherwise.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Aswer to whether this record value would be unique</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Boolean</span>
+		<span class="method-name">
+			isUnique
+		</span>
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$fieldName</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$value</span>, <span class="var-type">Integer</span>&nbsp;<span class="var-name">$keyValue</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$fieldName</span><span class="var-description">: Name of the field to be checked</span>			</li>
+					<li>
+				<span class="var-type">String</span>
+				<span class="var-name">$value</span><span class="var-description">: Value to be checked</span>			</li>
+					<li>
+				<span class="var-type">Integer</span>
+				<span class="var-name">$keyValue</span><span class="var-description">: Value of the Key field of the current Table</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodisUnique">StorageEngineMysql::isUnique()</a>
+								: isUnique() method determines whether the value supplied is unique.
+							</li>
+				</ul>
+	</div>
+<a name="methodprintCustomHtmlForm" id="printCustomHtmlForm"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">printCustomHtmlForm</span> (line <span class="line-number">527</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">printCustomHtmlForm() method is a user-defined implementation of printHtmlForm() method.</p>
+<p class="description"><p>At the MainEngineAbstract class this method has empty implementation. It must be  overriden by subclass in order to be used. If you want engine to call this method  instead of the default one you must set &quot;formType&quot; parameter to 1 (default is 0).</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodprintDefaultHtmlForm">MainEngineAbstract::printDefaultHtmlForm()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodprintHtmlForm">MainEngineAbstract::printHtmlForm()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			printCustomHtmlForm
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$override</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodprintDefaultHtmlForm" id="printDefaultHtmlForm"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">printDefaultHtmlForm</span> (line <span class="line-number">903</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">printDefaultHtmlForm() prints data entry form.</p>
+<p class="description"><p>This method prints out html &quot;div&quot; with class=&quot;zx_frm&quot; which contains form and table with  data entry fields. Default implementation of this method is highly customizable via engine  parameters.</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#formoptions">List of the Data Entry Form (Data Input) Options</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodprintHtmlForm">MainEngineAbstract::printHtmlForm()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			printDefaultHtmlForm
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$override</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodprintHtmlForm" id="printHtmlForm"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">printHtmlForm</span> (line <span class="line-number">885</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">printHtmlForm() method calls default or user-defined method for data entry printout.</p>
+<p class="description"><p>This method is influenced by &quot;formType&quot; parameter, if its value is 0 (default) it calls  default method, 1 calls custom form printing method.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodprintDefaultHtmlForm">MainEngineAbstract::printDefaultHtmlForm()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodprintCustomHtmlForm">MainEngineAbstract::printCustomHtmlForm()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			printHtmlForm
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$override</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$override</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodregisterTable" id="registerTable"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">registerTable</span> (line <span class="line-number">258</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">registerTable() method adds a Table object to $tables array and sets it current.</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetCurrentTable">MainEngineAbstract::setCurrentTable()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$tables">MainEngineAbstract::$tables</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			registerTable
+		</span>
+					(<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>&nbsp;<span class="var-name">$table</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>
+				<span class="var-name">$table</span><span class="var-description">: Table object to be registered.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodreportErrors" id="reportErrors"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">reportErrors</span> (line <span class="line-number">849</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">reportErrors() method prints out errors found during data verification.</p>
+<p class="description"><p>This method prints out html table with class='zx_err' containing textual  description of the fields and error causes. Error descriptions are taken  from the Signs interface.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/Signs.html">Signs</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodreportNotifications">MainEngineAbstract::reportNotifications()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			reportErrors
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodreportNotifications" id="reportNotifications"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">reportNotifications</span> (line <span class="line-number">867</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">reportNotifications() method prints out warnings found during data verification.</p>
+<p class="description"><p>This method prints out html table with class='zx_wrn' containing textual  description of the fields and warning causes. Warning descriptions are taken  from the Signs interface.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/Signs.html">Signs</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodreportErrors">MainEngineAbstract::reportErrors()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			reportNotifications
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodresetParameters" id="resetParameters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">resetParameters</span> (line <span class="line-number">203</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">resetParameters() function empties $ops variable and fills it up with default settings.</p>
+<p class="description"><p>Make sure you call this method if you use more than one table on the same page. You may  want to override this function to have different default settings. This method is called  at the class constructor. This method calls setEngineParameters() method.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetEngineParameters">MainEngineAbstract::setEngineParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#method__construct">MainEngineAbstract::__construct()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			resetParameters
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodretrieveVars" id="retrieveVars"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">retrieveVars</span> (line <span class="line-number">957</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">retrieveVars() method filters $_REQUEST array and obtains variables relevant to ZenX engine.</p>
+<p class="description"><p>This method will retrieve all request variables that have matching field name within ANY of  the tables. It will also get user-defined field values set by parameters &quot;customSearchFields&quot;  and &quot;formRelayParameters&quot;. This method is called by the following methods: runInputCycle(),  getCurrentRecord(), setNavigationParameters().</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where key is variable name that has a match within field  names and value is the value submitted to engine.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#formoptions">List of the Data Entry Form (Data Input) Options</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodrunInputCycle">MainEngineAbstract::runInputCycle()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			retrieveVars
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrunFullCycle" id="runFullCycle"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">runFullCycle</span> (line <span class="line-number">789</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">runFullCycle() method is the main ZenX method, it is a wrapper for all other actions.</p>
+<p class="description"><p>This method wraps all other method calls. Once you have completed class initialization  and set-up you must call this method in order to run all actions.</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#concepts">Basic ZenX Concepts</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#method__construct">MainEngineAbstract::__construct()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			runFullCycle
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrunInputCycle" id="runInputCycle"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">runInputCycle</span> (line <span class="line-number">817</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">runInputCycle() method is the main ZenX method for data input and editing.</p>
+<p class="description"><p>This method wraps other method calls related to data input and editing. In the first  place it checks for any variables sumbitted to the script and if any it initiates  variables check and saving section, otherwise it prints out data input form and tries  to fill it with values (if any).</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#concepts">Basic ZenX Concepts</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">MainEngineAbstract::runFullCycle()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			runInputCycle
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetCurrentTable" id="setCurrentTable"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCurrentTable</span> (line <span class="line-number">230</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setCurrentTable() method assigns a Table object to currentTable variable.</p>
+<p class="description"><p>Due to the nature of PHP language since Table object pre-exists it is  passed by reference.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetCurrentTable">MainEngineAbstract::getCurrentTable()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$currentTable">MainEngineAbstract::$currentTable</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCurrentTable
+		</span>
+					(<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>&nbsp;<span class="var-name">$table</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../ZenX/Table.html">Table</a></span>
+				<span class="var-name">$table</span><span class="var-description">: Table object to be selected as current</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetEngineParameters" id="setEngineParameters"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setEngineParameters</span> (line <span class="line-number">343</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setEngineParameters() method implements storage engine specific variables setup.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must set-up necessary Storage Engine specific parameters. This method is called from the  resetParameters() method after setParameters() call, so it will override default parameters if  parameter names of the MainEngineAbstract class and storage engine class are the same.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where keys are field names and values are record values</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			setEngineParameters
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodsetEngineParameters">StorageEngineMysql::setEngineParameters()</a>
+								: setEngineParameters() method adds engine specific settings using  <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a> method.
+							</li>
+				</ul>
+	</div>
+<a name="methodsetFindParameters" id="setFindParameters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setFindParameters</span> (line <span class="line-number">436</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setFindParameters() method retrieves search/filter parameters from the class instance and  creates data engine specific request.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must iterate through session variables and if variable with the name matching to the  one of the field names of current table is found method must create data storage engine  specific search parameter and pass it to <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a> method  within the &quot;findParameters&quot; array.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetNavigationParameters">MainEngineAbstract::setNavigationParameters()</a></li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setFindParameters
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodsetFindParameters">StorageEngineMysql::setFindParameters()</a>
+								: setFindParameters() method creates mysql search request using search/filter parameters.
+							</li>
+				</ul>
+	</div>
+<a name="methodsetNavigationParameters" id="setNavigationParameters"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setNavigationParameters</span> (line <span class="line-number">1530</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setNavigationParameters() sets cookies containing the state of user navigation.</p>
+<p class="description"><p>This method checks data submission from page buttons, search/filter fields (if any)  and sets relevant cookies, so that if user goes to &quot;details&quot; page (&quot;IN&quot; phase) and then  gets back it will be shown the same page we went away from. Since there maybe several  combination of navigation parameters behaviour of this method is slightly complicated.  There are following cookie/post/get variables, containing navigation states:<br />  ZX_PAGE - contains page currently viewed<br />  ZX_SORT - contains name of field selected for sorting by<br />  ZX_SORD - contains sort order (1 - descending / 0 - ascending)<br />  ZX_xxxx - where xxxx is a field name to perform search in<br />  <br />  When one of the nav parameters changes (and send via POST/GET) it may reset others  or add itself to existing ones, depending on its priority. Naturally it does not make any  sence to keep page number, if new filtering parameter is entered, since amount of pages and  page contents are changed. So the parameter priority is as follows:<br /><br />  E: X X X<br />  F: X X O<br />  S: X O -<br />  P: O - -<br /><br />  Column 1 - Request, Column 2 - Page, Column 3 - Sort, Column 4 - Search/Filter.<br />  Legend for Column 1: F - filter, S - sort, P - page, E - empty.<br />Legend for Columns 2,3,4:  X - unset, O - set, &quot;-&quot; - no changes (keep)<br /><br />  So, for example, empty request will erase all navigation cookies (highest priority), and request  containing field name (F) will erase page and sort cookies, and set filter cookie. The least  priority is with the page, request with page parameter will set new page cookie, but remain all  others cookes untouched.<br /></p><p>Cookies with navigation parameters must be parsed by data storage engine to form string parameters  and hand over these parameters to <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">addParameters()</a> method. Since the content of the  search/filter parameter is storage engine dependant it can not be implemented at the MainEngineAbstract  class. For example <a href="../ZenX/StorageEngineMysql.html#methodsetFindParameters">StorageEngineMysql::setFindParameters()</a> method can grab cookie with  name &quot;user&quot; and value &quot;Smith&quot; and create search parameter as mysql query string:  &quot;findParameters&quot;=&gt;array(&quot;user='Smith%'&quot;). It will, then, be given to addParameters() method like this:  $this-&gt;addParameters(array(&quot;findParameters&quot;=&gt;array(&quot;user='Smith%'&quot;)));</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetFindParameters">MainEngineAbstract::setFindParameters()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setNavigationParameters
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetParameters" id="setParameters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setParameters</span> (line <span class="line-number">155</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">setParameters() is a convenience method for setting engine parameters.</p>
+<p class="description"><p>One of the key difference from the addParameter() method is that it overrides  values of the parameters with the same name.</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#options">Possible Options for the ZenX engine</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddParameters">MainEngineAbstract::addParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#var$ops">MainEngineAbstract::$ops</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setParameters
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">$params</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$params</span><span class="var-description">: Associative array with key=&gt;value pairs where value can be another array,  depending on the parameter type. For details see options tutorial.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodshowAddRecordButton" id="showAddRecordButton"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">showAddRecordButton</span> (line <span class="line-number">1423</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showAddRecordButton() outputs &quot;Add&quot; button referring to new record data entry page.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showAddRecordButton
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodshowCustomList" id="showCustomList"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">showCustomList</span> (line <span class="line-number">515</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showCustomList() method is a user-defined implementation of showList() method.</p>
+<p class="description"><p>At the MainEngineAbstract class this method has empty implementation. It must be  overriden by subclass in order to be used. If you want engine to call this method  instead of the default one you must set &quot;listType&quot; parameter to 1 (default is 0).</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowDefaultList">MainEngineAbstract::showDefaultList()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowList">MainEngineAbstract::showList()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showCustomList
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodshowDefaultList" id="showDefaultList"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">showDefaultList</span> (line <span class="line-number">1147</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showDefaultList() method implements all data preparation routines and outputs the  data list (table).</p>
+<p class="description"><p>This is one of the core methods of the MainEngineAbstract class during the &quot;OUT&quot; phase.  It is reponsible for implementation of setting-dependant behaviour, data output  preprocessing and visualization. Once all preparations are completed it outputs  table with class='zx_lst'.</p></p>
+	<ul class="tags">
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#outphase">Output Phase</a></li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#listoptions">List of the Data Listing Table (Data Output) Options</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowList">MainEngineAbstract::showList()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showDefaultList
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodshowList" id="showList"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">showList</span> (line <span class="line-number">1411</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showList() outputs &quot;Add&quot; button, search form and data list, depending on the current setting.</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowAddRecordButton">MainEngineAbstract::showAddRecordButton()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowSearchForm">MainEngineAbstract::showSearchForm()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowCustomList">MainEngineAbstract::showCustomList()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowDefaultList">MainEngineAbstract::showDefaultList()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showList
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodshowPhaseFooters" id="showPhaseFooters"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">showPhaseFooters</span> (line <span class="line-number">772</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showPhaseFooters() method outputs user defined footer at the specific phase.</p>
+<p class="description"><p>If user sets parameters &quot;inPhaseFooter&quot; or &quot;outPhaseFooter&quot; this function will  output relevant footers, depending on the current phase. This function is called  automatically from the <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">runFullCycle()</a> method.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowPhaseHeaders">MainEngineAbstract::showPhaseHeaders()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetCurrentPhase">MainEngineAbstract::getCurrentPhase()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showPhaseFooters
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodshowPhaseHeaders" id="showPhaseHeaders"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">showPhaseHeaders</span> (line <span class="line-number">755</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showPhaseHeaders() method outputs user defined headers at the specific phase.</p>
+<p class="description"><p>If user sets parameters &quot;inPhaseHeader&quot; or &quot;outPhaseHeader&quot; this function will  output relevant header, depending on the current phase. This function is called  automatically from the <a href="../ZenX/MainEngineAbstract.html#methodrunFullCycle">runFullCycle()</a> method.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodshowPhaseFooters">MainEngineAbstract::showPhaseFooters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetCurrentPhase">MainEngineAbstract::getCurrentPhase()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showPhaseHeaders
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodshowSearchForm" id="showSearchForm"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">showSearchForm</span> (line <span class="line-number">1479</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">showSearchForm() method prints out search form at the listing page.</p>
+<p class="description"><p>This is small method that obtains form data from getSearchForm() method and prints  it inside table with class='zx_fnd'.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodgetSearchForm">MainEngineAbstract::getSearchForm()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			showSearchForm
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodupdateRecord" id="updateRecord"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">updateRecord</span> (line <span class="line-number">375</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">updateRecord() method changes values of the record fields at data storage.</p>
+<p class="description"><p>At the MainEngineAbstract class this method is not implemented. In data storage engine this  method must change (update) existing data row (record). All data is verified before  it is passed to this method, so there is no need in data verification. This method, however,  must check $data array for existence of ID (Key) field, indicating what record to alter and  throw <a href="../ZenX/NoUpdateKeySuppliedException.html">NoUpdateKeySuppliedException</a> if not found.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Key (ID) of the record in data storage</li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodaddNewRecord">MainEngineAbstract::addNewRecord()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodvalidateVars">MainEngineAbstract::validateVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methoddeleteRecords">MainEngineAbstract::deleteRecords()</a></li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">throws:</span> NoUpdateKeySuppliedException</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			updateRecord
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">$data</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$data</span><span class="var-description">: Associative array with key=&gt;value pairs where key is a field name and value  is the data to be saved.</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../ZenX/StorageEngineMysql.html#methodupdateRecord">StorageEngineMysql::updateRecord()</a>
+								: updateRecord() method stores data supplied as argument to database, replacing the old values.
+							</li>
+				</ul>
+	</div>
+<a name="methodvalidateVars" id="validateVars"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validateVars</span> (line <span class="line-number">1017</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">validateVars() method checkes and filters values submitted to engine against  field settings and data types.</p>
+<p class="description"><p>This method is called immediately after retrieveVars() within the runInputCycle().  It accepts array returned by retrieveVars() method, and checks whether fields this  data intended for are allowed to be edited and applies data type specific filters  preventing storage engine specific data incompatibility and security issues. If some  errors are found they are added to notification and errors array and reportErrors()  and/or reportNotifications() methods are called.</p><p>Behaviour of this function is highly influences by current settings, in particular by  the following parameters: formDefaultsWriteThrough, restrictedFields, notNullFields,  uniqueFields and all data definition limitations.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Associative array where keys are field names and values are filtered  and sanitized data submitted to engine.</li>
+				<li><span class="field">tutorial:</span> <a href="../ZenX/tutorial_ZenX.pkg.html#formoptions">List of the Data Entry Form (Data Input) Options</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodreportErrors">MainEngineAbstract::reportErrors()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodreportNotifications">MainEngineAbstract::reportNotifications()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodsetParameters">MainEngineAbstract::setParameters()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodrunInputCycle">MainEngineAbstract::runInputCycle()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodisFieldEditable">MainEngineAbstract::isFieldEditable()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#methodretrieveVars">MainEngineAbstract::retrieveVars()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/DataDefiner.html">DataDefiner</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Array</span>
+		<span class="method-name">
+			validateVars
+		</span>
+					(<span class="var-type">Array</span>&nbsp;<span class="var-name">&$vars</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Array</span>
+				<span class="var-name">&$vars</span><span class="var-description">: Associative array where keys are field names and values are  values submitted to engine.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodverifyImageFields" id="verifyImageFields"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">verifyImageFields</span> (line <span class="line-number">1576</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">verifyImageFields() method checks image data type definitions for correctness.</p>
+<p class="description"><p>This is small convenience method that is called at the class constructor, that checks  whether all necessary properties are defined for the image data types, since incorrect  data definition may lead to unexpected behaviour during the runtime. If some properties  are not defined it will throw <a href="../ZenX/MissingImageDefinitionException.html">MissingImageDefinitionException</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../ZenX/MainEngineAbstract.html#method__construct">MainEngineAbstract::__construct()</a></li>
+				<li><span class="field">see:</span> <a href="../ZenX/DataDefiner.html">DataDefiner</a></li>
+				<li><span class="field">throws:</span> MissingImageDefinitionException</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			verifyImageFields
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 29 Nov 2011 09:55:28 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

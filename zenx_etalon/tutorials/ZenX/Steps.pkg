@@ -1,0 +1,300 @@
+<refentry id="{@id}">
+  <refnamediv>
+    <refname>ZenX Examples</refname>
+  </refnamediv>
+  <refsynopsisdiv>
+    <author>Konstantin Dvortsov <authorblurb>{@link http://dvortsov.tel dvortsov.tel}</authorblurb>
+    </author>
+  </refsynopsisdiv>
+    {@toc}
+  <refsect1 id="{@id classes}">
+    <title>Class Structure</title>
+    <para>Before jumping into examples you should know base class hierarchy. In order to use ZenX engine
+			you must extend bottom level class, that is typically data storage engine class. Current implementation 
+			has only one such class - that is StorageEngineMysql class. 
+    </para>
+		<para>Just for you to know class hierarchy goes as follows: MainEngineAbstract -> StorageEngineMysql (whoa,
+			that's complicated!). All other engine classes like Table, Field, DataDefiner are independent. Basically 
+			that means that every user top-level class must start with "extends StorageEngineMysql". To be clear let's
+			call that user class "user class" :) .
+		</para>
+		<para>And remember that user class is an object that is used in other pages, let's call them "client pages".
+			So you can have one table (ZenX class) that is used on several (client) pages with different settings. 
+		</para>
+  </refsect1>
+  <refsect1 id="{@id setup}">
+    <title>Environment Setup</title>
+    <para>Just few words about environment setup, i.e. file locations. If you are too lazy (like me) to 
+			write lots of	"require" statements you'll probably start your file with something like: 
+			"function __autoload($class_name){ require_once 'PATH_TO_ZENX'.$class_name.'.php'; }". In order to have
+			just one such statement do all the job you can choose several options. Yeah, and do not forget to name
+			files same way as classes they contain ;) .
+    </para>
+		<para>Messy one: just put all your files (including ZenX library files) at the same folder. In this case
+			you can write just once "function __autoload($class_name){ require_once $class_name.'.php'; }" at the
+			"client page" file and it'll do the job.
+		</para>
+		<para>Fifty/fifty solution:Put ZenX files in separate folder. Keep in mind, however, that "user class" 
+			files are also part of ZenX and must be in the same folder. Having set things this way you can add
+			"function __autoload($class_name){ require_once 'PATH_TO_ZENX'.$class_name.'.php'; }" statement to
+			client pages and this will be enough.
+		</para>
+		<para>Good one: Keep ZenX core files in separate folder, ZenX user class in yet another separate folder.
+			This way you have well-structured system. However in order for "require" to work without path
+			specification you must set up inclusion paths eigher in php.ini or .htaccess or at the file "ini" 
+			setting. Looks like the best solution, though you will have to dig "ini" files.
+		</para>
+		<para>Used by Examples: by default "examples" folder is located at the same level as ZenX core folder, 
+			and ZenX user	classes and client pages are located there all together. In order to work without any 
+			setup all	examples have two "require" statements. Keep in mind however - this is not the best solution.
+		</para>
+  </refsect1>
+  <refsect1 id="{@id e01}">
+    <title>Example 1: Basics</title>
+		<para>This one is quite simple. We create two files: ClientPageExample1.php and UserEngineExample1.php.
+			Let's see what inside:
+			{@example UserEngineExample1.php}
+			{@example ClientPageExample1.php}
+			P.S. Do not forget - you must create empty database before you run the script.
+    </para>
+		<para>Done! You should be able to add and delete records, perform search, view details and
+			jump to different pages right now.
+		</para>
+		<para>
+			Let's see what we've done. We first created ZenX user class by extending MySQL storage engine.
+			In it's constructor we connected to database and provided engine with table description by creating
+			table. We created two data fields using table's {@link Table::createField()} method, we could also 
+			create them using	field constructor, but this way it's easier, since newly created fields are 
+			automatically added to table. Once we finished creating table we register it within the engine core.
+		</para>
+		<para>Inside the client page we use what we have created. First we setup includes in order to find
+			our classes (by default "examples" folder is located inside ZenX core folder), and then we create
+			ZenX object and call its methods. Basically only two lines are doing the job here: constructor and 
+			{@link MainEngineAbstract::runFullCycle()} call. {@link MainEngineAbstract::createStorage()} is 
+			required only once, when you created empty database, you can	comment it out or delete during 
+			subsequent calls. If you made some changes, easy way to completely erase all tables that you 
+			created is calling {@link MainEngineAbstract::destroyDataStorage()} method.
+		</para>
+  </refsect1>
+  <refsect1 id="{@id e02}">
+    <title>Example 2: Parameters</title>
+		<para>Now let's turn table headers into "sort" buttons! In this example we use the same user ZenX class.
+			In our client page we add just one row: 
+			$zen->setParameters(array("{@tutorial ZenX.pkg#listSortHeaders}"=>array("idn","str")));
+			Here we tell the engine that we want to create sort buttons for columns "idn" and "str" - these are
+			the names of data fields that we defined in our "UserEngineExample1.php". Here is what we get in 
+			ClientPageExample2.php:
+			{@example ClientPageExample2.php}
+    </para>
+		<para>
+		</para>
+  </refsect1>
+  <refsect1 id="{@id e03}">
+    <title>Example 3: Lists</title>
+		<para>Okay, it's time for something more complicated. Now, let's imagine we want to create small
+			warehouse register. Like in previous examples we create two files: "UserEngineExample3.php" and 
+			"ClientPageExample3.php". Let's see them:
+    </para>
+		<para>
+			{@example UserEngineExample3.php}
+    </para>
+		<para>
+			Nothing too complicated here - same thing as before, however we have three fields with types:
+			{@tutorial ZenX.pkg#typellst},{@tutorial ZenX.pkg#typerlst} and {@tutorial ZenX.pkg#typeelst}.
+			We also have {@tutorial ZenX.pkg#typeimgs} types here. Do not forget to set up images directory
+			properly. See {@tutorial ZenX.pkg#sysreq}.
+		</para>
+		<para>
+			P.S. One warning - Don't try to call table or field "desc" - this is one of MySQL commands, 
+			you'll get your self in trouble.
+    </para>
+		<para>
+			{@example ClientPageExample3.php}
+    </para>
+		<para>
+			One thing to note here - in the commented out lines there is a command to manually insert 
+			some values to "supl" and "payops" fields, since "{@tutorial ZenX.pkg#typellst}" and 
+			"{@tutorial ZenX.pkg#typerlst}" types do not allow users	to add new values. 
+			As you see we insert values to "ZX_goods_mul_supl" table. "ZX_" is {@tutorial ZenX.pkg#mysqlPrefix},
+			"goods" is a main table name, "_mul_" is {@tutorial ZenX.pkg#mysqlMultiSuffix} and "supl" is a 
+			field name. Simple :)
+		</para>
+  </refsect1>
+  <refsect1 id="{@id e04}">
+    <title>Example 4: Paint it up with CSS</title>
+		<para>If you ever dreamed to be an artist - it's your lucky day. Let's paint up our table with CSS! 
+		As before - we create two files. Assume we are going to create a list of employees for our boss. 
+		Here they are: </para>
+		<para>
+			{@example UserEngineExample4.php}
+			{@example ClientPageExample4.php}
+    </para>
+		<para>
+			Just few words about header here. I know "&lt;html>&lt;head>" looks nicer than this monster, but
+			since ZenX produces {@tutorial ZenX.pkg#xhtml} we have to make W3C guys happy. So, I just point few
+			things here. First line is tricky - the reason why we echo it from PHP rather then just printing in
+			in the source is that in most installations PHP have short tags on, so "&lt;?xml" will be treated as 
+			"&lt;?phpxml" and cause error. Next is the DOCTYPE declaration required by all standards nowdays. Then
+			goes this terrible and ugly bunch of xml declarations within the "html" tag, and finally we go to standard
+			heading. And yes - there is a reason why we add charset meta for UTF-8 (if you noticed - it is the same 
+			as in preceding "&lt;?xml ?>" declaration: by default ZenX creates and works with Database in UTF-8, so
+			we have to be consistent with it.
+    </para>
+		<para>
+			And now - here is the new part - this is the CSS file that will do all the beauty!
+			{@example ClientPageExample4.css}
+    </para>
+		<para>If it looks frightening you can cut is down, I just wanted to show CSS uses as much as 
+			possible. Check the {@tutorial ZenX.pkg#cssselectors} to get some hints on what element applies
+			to which object.
+    </para>
+	</refsect1> 
+  <refsect1 id="{@id e05}">
+    <title>Example 5: Conditional CSS Markup</title>
+		<para>Okey, now let's get closer to real life. Imagine HR guys in your company have gone
+			mad and decided to fire everyone who has failed recent requalification and is older than
+			50. We use table from the previous example, so we are half way through. To satisfy our
+			imaginary HR guys we will highlight results in our employee list. First, we highlight age
+			of those who is below 50 in green and who is older in yellow. We also highlight in pink
+			those who is not qualified. And finally we highlight with blue and
+			some other fancy things the whole row for those who match both criteria.
+		</para>
+		<para>In order to do so we use {@tutorial ZenX.pkg#conditionalCellClass} for cells and 
+			{@tutorial ZenX.pkg#conditionalRowClass} for rows. This way cells and rows matching 
+			the criteria will be given relevant CSS class. The appearance itself is defined via CSS,
+			so we create additional CSS file to the previous one. Now let's see what we get. Here is 
+			our client page from previous example with some changes:
+		</para>
+		<para>
+			{@example ClientPageExample5.php}
+		</para>
+		<para>Just one thing to mention here: "age"=>"((int)strip_tags(\$VAL)) > 55" and "age"=>"(\$VAL) > 55"
+			will evaluate to the same things in this particular example. However first longer statement is taken
+			from the real project where numbers were highlighted with "&lt;b>", so this is a hint for you to use 
+			if you run into the same problem. And here is additional CSS file, describing conditional CSS classes.
+		</para>
+		<para>
+			{@example ClientPageExample5.css}
+    </para>
+		<para>Typically style attributes for table cells override those for rows, however you can
+			use CSS hierarchy to apply row style to all table cells, just instead of 
+			".rowclass { blah-blah }" write ".rowclass td { blah-blah }". Keep in mind though, this 
+			statement must come after cell definitions, since when different styles are applied for the
+			same elements, conflicting values of the latest ones override precedents.
+    </para>
+		<para>And yeah, those last three lines is just another way to format table columns. See 
+			{@tutorial ZenX.pkg#csszx_cols}.
+    </para>
+	</refsect1>
+
+  <refsect1 id="{@id e06}">
+    <title>Example 6: Overriding Engine Functions</title>
+		<para>It's time to try something a little bit more complicated. Let us create simple picture gallery.
+			For easy navigation it will have picture preview with smaller dimensions and full resolution picture
+			will be shown at the "details" (data input) page. So our source class must be quite simple. Like this:
+		</para>
+		<para>
+			{@example UserEngineExample6.php}
+		</para>
+		<para>Now, I assume you have already noticed new fuction "imageResize()". Actually it is not "new",
+			since it is part of the core engine. We are overriding it (i.e. defining method in the child
+			class with the same name as the parent class). However we don't want to bother implementing the full
+			parent method, so we will do some custom job and then again call parent method. This technique is called
+			"wrapper function".
+		</para>
+		<para>So what does this mysterious method do? Well it's quite simple. Since big and small picture are always
+			the same, except for dimensions, let's make it easy for user to load images. Instead of selecting and 
+			uploading two image files, he will select and load only big one. Small one will be created automatically
+			by main ZenX engine since it will call "imageResize()" method, however since we've overriden it, our 
+			custom "imageResize()" method will create not one, but two images of different size.			
+		</para>
+		<para>Now take a look at the client page source code.</para>
+		<para>
+			{@example ClientPageExample6.php}
+    </para>
+		<para>Before we jump into PHP we add header with link to CSS from previous example, and also add few
+			lines specific to our gallery right here, instead of linking to external file.		
+    </para>
+		<para>Now, we don't want to show big images at the gallery list, so we hide them using 
+			{@tutorial ZenX.pkg#listHiddenFields}, same thing for small images, since we don't want our user
+			to do redundant job, we turn it off at the data input page using {@tutorial ZenX.pkg#formHiddenFields}.
+			Simple!
+    </para>
+		<para>Just one warning here: this implementation of "imageResize()" overriding is not 100% correct, since
+			in the default function file size check is done before resizing. In case of overriden "imageResize()"
+			method this can not be done, since the file that is to be size checked does not exist (we make a
+			copy directly from file belonging to another field. However this should not be the issue in most 
+			cases, since we make a copy of the big file, that has bigger file size permissions.
+		</para>
+		<para>Just don't make file size allowances too big, it may crash your script if it eats up all memory
+			available to PHP, because image transformations are quite memory consuming.
+		</para>
+	</refsect1>
+
+  <refsect1 id="{@id e07}">
+    <title>Example 7: Table Linking</title>
+		<para>Well, to complete this training let's bind couple of tables together. You know, sometimes, especially
+			when having "one-to-many" relation we split data into several tables, though they represent sigle 
+			object. Now we going to illustrate such case. We will do very simple picture list, however each 
+			picture in our list can have unlimited number of comments.
+		</para>
+		<para>We will create our engine class as usual, just this time we have two tables. Nothing special here.
+			All standard fields, except for 'pref' in 'comments', which is a reference to 'fotolist' id - this 
+			field actually is where linking occurs.
+		</para>
+		<para>
+			{@example UserEngineExample7.php}
+		</para>
+		<para>Just one thing to note here, since {@link MainEngineAbstract::registerTable()} also makes this 
+			table current, the last table to create will always be a main one - "fotolist" in our case, thus it
+			will be shown by default, without need to call {@link MainEngineAbstract::setCurrentTable()}.
+		</para>
+		<para>And now we create client page. Watch carefully, we have some new stuff here.
+		</para>
+		<para>
+		</para>
+		<para>
+			{@example ClientPageExample7.php}
+    </para>
+		<para>As you can see all the fun starts inside the "input phase". Basically second table (comments) is
+			hidden at the main list, so we show it only when user views details (i.e. at the input phase). Once
+			we determine we are at the "input" phase and successfully get main table record id (that is not exists
+			only during record creation, i.e. before it is actually saved to database), we switch to the comments
+			table, do some pretty standard setup and show the list of comments. However we can not do anything except
+			listing for the second table that is located in the same file with the main one. But before I explain that
+			part - let's look at the last section.
+    </para>
+		<para>As you may have already realized - since this tables are independent - it is our job to clean up
+			the garbage after deletion. In order to prevent orphant records in comments table we must delete all
+			comments related to record in main table. That actually mades just one line here. The big commented out
+			block is just a skeleton for the cases when you attached unlimited amount of pictures (pictures table) to 
+			main table.
+    </para>
+		<para>Small step aside from main topic: You can also use this concept to implement user access rights.
+			You can pass in a cookie, for example,	userid or user acess level and based on it change table settings
+			so that some fields will be hidded or write protected.
+		</para>
+		<para>And now - let's get to the interesting part. Why won't we process all routines for both tables 
+			at the same place. Errr.., sorry, we can't. If you have already read {@tutorial ZenX.pkg#concepts} then
+			you know we have special block of code for handling each data input phases. But since current
+			implementation does not distinguish which table send the request it will jump into the first table
+			and tries to perform the request there. But that evidently can crush our script. For example you may
+			try to delete a record from the second table that is not existent in the first one, or change field
+			that exists only in the second one and so on. Well, you can, of course, try to pass some flags attached
+			to all requests, allowing to distinguish which table to activate, but that will lead to a big mess,
+			both in programming and you understaing of program workflow. The only reasonable solution is to 
+			move second table for processing into separate file. That is exactly what we do. Let's see it.
+    </para>
+		<para>
+			{@example ClientPageExample7-1.php}
+    </para>
+		<para>This one is quite simple. The only thing here is to turn on session and save parent id, otherwise
+			we won't be able to tie records to main table or/and get back to main table details screen. You can use
+			cookies for this purpose as well, if you like this more.
+		</para>
+		<para>That is basically all for starters. The rest you will have to make yourself or search the web. 
+			Good luck!
+		</para>
+	</refsect1>
+
+</refentry>
