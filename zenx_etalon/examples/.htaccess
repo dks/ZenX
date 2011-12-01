@@ -1,1 +1,8 @@
 allow from all
+<IfModule mod_php5.c>
+ php_flag display_errors on
+ php_flag log_errors on
+ php_value error_log log/php_errors.log
+ php_value upload_max_filesize 12M
+ php_value post_max_size 12M
+</IfModule>

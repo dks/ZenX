@@ -1603,27 +1603,28 @@ abstract class MainEngineAbstract implements Signs{
    * @param Field $field Field object that contains data of the image type
    * @see DataDefiner
    */
-  function imageResize($imgfn,$field){
-    $settings=DataDefiner::$dataTypes[$field->getType()];
-    if (filesize($imgfn)>$settings['maxBytes']) {
-      unlink($imgfn);
-    } else {
-    if ($settings['mustResize']){
-      $image = new SimpleImage();
-      $image->load($imgfn);
-      $Lw=$settings['width'];
-      $Lh=$settings['height'];
-      $W=$image->getWidth();
-      $H=$image->getHeight();
-      if ($Lw<$W && $Lh<$H){
-        $dW=$W-$Lw;
-        $dH=$H-$Lh;
-        if ($dW>$dH) $image->resizeToWidth($Lw);
-        else $image->resizeToHeight($Lh);
-      } else if ($Lw<$W) $image->resizeToWidth($Lw);
-        else if ($Lh<$H) $image->resizeToHeight($Lh);
-      $image->save($imgfn);
-  }}}//EOF
+	function imageResize($imgfn,$field){
+		if (file_exists($imgfn)){
+			$settings=DataDefiner::$dataTypes[$field->getType()];
+			if (filesize($imgfn)>$settings['maxBytes']) {
+				unlink($imgfn);
+			} else {
+				if ($settings['mustResize']){
+					$image = new SimpleImage();
+					$image->load($imgfn);
+					$Lw=$settings['width'];
+					$Lh=$settings['height'];
+					$W=$image->getWidth();
+					$H=$image->getHeight();
+					if ($Lw<$W && $Lh<$H){
+						$dW=$W-$Lw;
+						$dH=$H-$Lh;
+						if ($dW>$dH) $image->resizeToWidth($Lw);
+						else $image->resizeToHeight($Lh);
+					} else if ($Lw<$W) $image->resizeToWidth($Lw);
+					else if ($Lh<$H) $image->resizeToHeight($Lh);
+					$image->save($imgfn);
+	}}}}//EOF
 	/**
    * microtime_float() is a utility function that returns unix time with microseconds precision
    * 
@@ -1635,6 +1636,25 @@ abstract class MainEngineAbstract implements Signs{
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);
   }
+	/**
+	 * fileUploadErrorHandler() provides custom implementation of image folder access rights error.
+	 *
+	 * @param Integer $errno PHP error number
+	 * @param String $errstr PHP error message
+	 * @param String $errfile File where error occured
+	 * @param Integer $errline Error cause line number
+	 */
+  function fileUploadErrorHandler($errno, $errstr, $errfile, $errline){
+    if ($errno==2){
+      echo "<pre>\nZenX ERROR: can not save file to the image storage folder!\n";
+      echo "Please correct PHP access rights to this folder!\n";
+    } else {
+      echo "<pre>\nZenX ERROR: unknown file upload error!\n";
+    }
+      echo "--------------------------------------------------------------------\n";
+      echo "Native PHP warning number is: $errno\nNative PHP warning message is:\n";
+      echo "$errstr\n</pre>\n";
+  }//EOF
 }
 /**
  * NoCurrentTableException is a custom exception that is thrown by

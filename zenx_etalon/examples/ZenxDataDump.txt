@@ -1,0 +1,1 @@
+a:4:{s:3:"str";s:12:"sdfgsdfgsdfg";s:3:"txt";s:8:"sdfgsdfg";s:3:"num";s:5:"50544";s:3:"fot";s:23:"../img/formdata_fot.jpg";}

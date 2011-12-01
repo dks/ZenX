@@ -611,25 +611,6 @@ class StorageEngineMysql extends MainEngineAbstract {
     if (($res) && (mysql_num_rows($res)==0 || mysql_result($res,0)==$keyVal)) return true;
     else return false;
   }//EOF
-	/**
-	 * fileUploadErrorHandler() provides custom implementation of image folder access rights error.
-	 *
-	 * @param Integer $errno PHP error number
-	 * @param String $errstr PHP error message
-	 * @param String $errfile File where error occured
-	 * @param Integer $errline Error cause line number
-	 */
-  function fileUploadErrorHandler($errno, $errstr, $errfile, $errline){
-    if ($errno==2){
-      echo "<pre>\nZenX ERROR: can not save file to the image storage folder!\n";
-      echo "Please correct PHP access rights to this folder!\n";
-    } else {
-      echo "<pre>\nZenX ERROR: unknown file upload error!\n";
-    }
-      echo "--------------------------------------------------------------------\n";
-      echo "Native PHP warning number is: $errno\nNative PHP warning message is:\n";
-      echo "$errstr\n</pre>\n";
-  }//EOF
 }
 
 /**
