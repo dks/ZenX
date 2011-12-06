@@ -55,5 +55,5 @@ interface Signs{
   const FUECANTWRITE="File was not uploaded! File write error!";
   const FUEEXTERR="File was not uploaded! One of PHP extensions broke the uploading process!";
   const FILESIZETOOBIG="File was not uploaded! File size exceeds limit set by administrator for this date type!";
-  const IMGDELONUPDATE="Delete Existing Picture";
+  const FILEDELONUPDATE="Delete Existing File";
 }

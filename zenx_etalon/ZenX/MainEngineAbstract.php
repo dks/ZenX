@@ -635,7 +635,7 @@ abstract class MainEngineAbstract implements Signs{
                 $s.=$field->getProp("selected");
 					} else { //text
 						if (isset($values[$fn])){
-							if ($field->getProp("isImage")) $s.="<label><input type='checkbox' name='${fn}_nv' />".Signs::IMGDELONUPDATE."</label>";
+							if ($field->getProp("isFile")) $s.="<label><input type='checkbox' name='${fn}_nv' />".Signs::FILEDELONUPDATE."</label>";
 							$s.=$values[$fn];
 						}	else if (isset($this->ops['formDefaults']) && !isset($values) &&
 								in_array($fn,array_keys($this->ops['formDefaults'])))
@@ -1065,9 +1065,10 @@ abstract class MainEngineAbstract implements Signs{
       }// end of data array iteration
 			if ($field->getProp("isFile")){//files and images upload check
 				if (isset($vars[$fn."_nv"])){//if file is set to be deleted
+      		$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
 					unset($vars[$fn.'_nv']);
 					$filename=null;
-					$filn=glob($this->ops['imageFolder']."/".$table->getName()."_".$fn."_".$vars[$table->getKey()->getName()].".*");
+					$filn=glob($folder."/".$table->getName()."_".$fn."_".$vars[$table->getKey()->getName()].".*");
 					if (!empty($filn)) $filename=$filn[0]; else $filename=null;
 					if ($filename) unlink($filename);
 				}
