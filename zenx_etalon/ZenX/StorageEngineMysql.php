@@ -45,7 +45,8 @@ class StorageEngineMysql extends MainEngineAbstract {
     "_BOOL" => "tinyint(1)",
     "_DATE" => "date",
     "_IMGS" => "",
-    "_ICON" => ""
+    "_ICON" => "",
+    "_FILE" => ""
 	);
 	/**
 	 * $storageMultiTypes array contains storage engine specific data types descriptions for "multi" types.
@@ -213,7 +214,6 @@ class StorageEngineMysql extends MainEngineAbstract {
 	 *
 	 * @param Array $data Associative array where keys are field names and values is data to be stored.
 	 * @throws fileUploadErrorHandler
-	 * @todo Implement file storage process (or amend image storage to file storage).
    * @return int Key (ID) of the record in data storage
 	 */
   function addNewRecord($data){
@@ -237,18 +237,21 @@ class StorageEngineMysql extends MainEngineAbstract {
     $ss=substr($ss,0,strlen($ss)-1).";";
     mysql_query($ss) or die(mysql_error());
     $last_id=mysql_insert_id();
-    foreach($table->getFields() as $field){//images
-      if ($field->getProp("isImage")){
+    foreach($table->getFields() as $field){//file/image handling
+			if ($field->getProp("isFile")){ 
+      	$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
         $fn=$field->getName();
         if (isset($_FILES[$fn]) && $_FILES[$fn]['error']==0){
           $tmp=basename($_FILES[$fn]['name']);
           $ext=substr($tmp,$ps=strrpos($tmp,"."),strlen($tmp)-$ps);
-          $imgfn =$this->ops['imageFolder']."/".$tabName."_".$fn."_".$last_id.$ext;
+          $imgfn =$folder."/".$tabName."_".$fn."_".$last_id.$ext;
+          $imgToDel=glob($folder."/".$table->getName()."_".$fn."_".$last_id.".*");
           set_error_handler(array($this,"fileUploadErrorHandler"),E_WARNING);
+          foreach($imgToDel as $itd) unlink($itd);
           move_uploaded_file($_FILES[$fn]['tmp_name'],$imgfn);
           restore_error_handler();
-          $this->imageResize($imgfn,$field);
-    }}}//images
+          if ($field->getProp("isImage")) $this->imageResize($imgfn,$field);
+    }}}//file/image handling
     return $last_id;
   }//EOF
 	/**
@@ -266,7 +269,6 @@ class StorageEngineMysql extends MainEngineAbstract {
 	 * @param Array $data Associative array where keys are field names and values is data to be stored.
 	 * @throws fileUploadErrorHandler
 	 * @throws NoUpdateKeySuppliedException
-	 * @todo Implement file storage process (or amend image storage to file storage).
 	 */
   function updateRecord($data){
 		$needCleanUp=false;
@@ -304,28 +306,29 @@ class StorageEngineMysql extends MainEngineAbstract {
     $ss.=" WHERE $key='".$data[$key]."';";
     mysql_query($ss) or die(mysql_error());
     if ($needCleanUp) $this->cleanupMultiValues();
-    foreach($table->getFields() as $field){//image
-      if ($field->getProp("isImage")){
+    foreach($table->getFields() as $field){//file/image handling
+			if ($field->getProp("isFile")){ 
+      	$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
         $last_id=$data[$key];
         $fn=$field->getName();
         if (isset($_FILES[$fn]) && $_FILES[$fn]['error']==0){
           $tmp=basename($_FILES[$fn]['name']);
           $ext=substr($tmp,$ps=strrpos($tmp,"."),strlen($tmp)-$ps);
-          $imgfn =$this->ops['imageFolder']."/".$tabName."_".$fn."_".$last_id.$ext;
-          $imgToDel=glob($this->ops['imageFolder']."/".$table->getName()."_".$fn."_".$last_id.".*");
+          $imgfn =$folder."/".$tabName."_".$fn."_".$last_id.$ext;
+          $imgToDel=glob($folder."/".$table->getName()."_".$fn."_".$last_id.".*");
           set_error_handler(array($this,"fileUploadErrorHandler"),E_WARNING);
           foreach($imgToDel as $itd) unlink($itd);
           move_uploaded_file($_FILES[$fn]['tmp_name'],$imgfn);
           restore_error_handler();
-          $this->imageResize($imgfn,$field);
-    }}}// image
+          if ($field->getProp("isImage")) $this->imageResize($imgfn,$field);
+    }}}//file/image handling
   }
 	/**
 	 * getRecordById() retrieves record using the key supplied.
 	 *
 	 * @param Integer $id Identification number (Key) of the element
 	 * @return Array Associative array where keys are field names and values are actual data
-	 * @todo Implement file storage process (or amend image storage to file storage).
+   * @todo Document "fileDescriptors" option 
 	 */
   function getRecordById($id){
     $table=$this->getCurrentTable();
@@ -346,16 +349,23 @@ class StorageEngineMysql extends MainEngineAbstract {
       " LIMIT 1;";
     $res=mysql_query($ss) or die(mysql_error());
     if (mysql_num_rows($res)!=0) $values=mysql_fetch_assoc($res);
-    foreach($table->getFields() as $field){//image handling
-      if ($field->getProp("isImage")){
+    foreach($table->getFields() as $field){//file|image handling
+      if ($field->getProp("isFile")){
+      	$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
         $fn=$field->getName();
           $imgname=null;
-          $imgfn=glob($this->ops['imageFolder']."/".$tabName."_".$fn."_".
-            $values[$table->getKey()->getName()].".*");
+          $imgfn=glob($folder."/".$tabName."_".$fn."_".$values[$table->getKey()->getName()].".*");
           if (!empty($imgfn)) $imgname=$imgfn[0]; else $imgname=null;
-          if ($imgname) $values[$fn]="<img src='$imgname' alt='simg' />";
-          else $values[$fn]=null;
-    }}//image handling
+          if ($imgname){
+						if ($field->getProp('isImage')) $values[$fn]="<img src='$imgname' alt='simg' />";
+						else {
+							$desc=$field->getNote();
+							if (isset($this->ops['fileDescriptors']) && in_array($fn,array_keys($this->ops['fileDescriptors']))){
+                if (isset($values[$this->ops['fileDescriptors'][$fn]])) $desc=$values[$this->ops['fileDescriptors'][$fn]];
+                else $desc=$this->ops['fileDescriptors'][$fn];
+							} $values[$fn]="<a href='$imgname' class='zx_att'>$desc</a>";
+					}} else $values[$fn]=null;
+    }}//file|image handling
     return $values;
   }//EOF
 	/**

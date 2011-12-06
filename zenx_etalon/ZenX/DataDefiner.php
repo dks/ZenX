@@ -105,7 +105,7 @@ class DataDefiner{
     //_IMGS - standard images
     "_IMGS" => array(
       "sTag" => "<input type='file' name='",
-      "mTag" => "' alt='image' />", 
+      "mTag" => "' />", 
       "eTag" => "<input type='hidden' name='MAX_FILE_SIZE' value='1000000' />",
       "isFile" => true,
       "maxBytes" => 1000000,
@@ -117,7 +117,7 @@ class DataDefiner{
     //_ICON - small icon image
     "_ICON" => array(
       "sTag" => "<input type='file' name='",
-      "mTag" => "' alt='icon' />", 
+      "mTag" => "' />", 
       "eTag" => "<input type='hidden' name='MAX_FILE_SIZE' value='300000' />",
       "isFile" => true,
       "maxBytes" => 300000,
@@ -125,7 +125,15 @@ class DataDefiner{
       "mustResize" => true,
       "width" => 50,
       "height" => 50
-    )
+    ),
+    //_FILE - general files
+    "_FILE" => array(
+      "sTag" => "<input type='file' name='",
+      "mTag" => "' />", 
+      "eTag" => "<input type='hidden' name='MAX_FILE_SIZE' value='1000000' />",
+      "isFile" => true,
+      "maxBytes" => 1000000
+    ),
   );
   /**
 	 * filterKeys() method implements filter for ID "_KEYS" field.
