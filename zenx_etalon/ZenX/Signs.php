@@ -54,6 +54,6 @@ interface Signs{
   const FUENOTMPDIR="File was not uploaded! Access to temporary file folded is restricted!";
   const FUECANTWRITE="File was not uploaded! File write error!";
   const FUEEXTERR="File was not uploaded! One of PHP extensions broke the uploading process!";
-  const FILESIZETOOBIG="File was not uploaded! File size exceeds limit set by administrator for this date type!";
+  const FILESIZETOOBIG="File upload rejected! File size exceeds limit set by administrator for this data type!";
   const FILEDELONUPDATE="Delete Existing File";
 }

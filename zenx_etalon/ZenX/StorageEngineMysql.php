@@ -235,6 +235,9 @@ class StorageEngineMysql extends MainEngineAbstract {
     $ss="INSERT INTO ".$this->ops['mysqlPrefix'].$tabName." SET ";
     foreach($data as $k=>$v) if ($v!="") $ss.="$k='".mysql_real_escape_string($v)."',";
     $ss=substr($ss,0,strlen($ss)-1).";";
+		// in case table has only key field (rest of fields are of file types) 
+		if (count($data)==1 && array_search("",$data)==$table->getKey()->getName())
+			$ss="INSERT INTO ".$this->ops['mysqlPrefix'].$tabName." VALUES(null);";
     mysql_query($ss) or die(mysql_error());
     $last_id=mysql_insert_id();
     foreach($table->getFields() as $field){//file/image handling
@@ -304,7 +307,9 @@ class StorageEngineMysql extends MainEngineAbstract {
 		}}}
     $ss=substr($ss,0,strlen($ss)-1);
     $ss.=" WHERE $key='".$data[$key]."';";
-    mysql_query($ss) or die(mysql_error());
+		// in case table has only key field (rest of fields are of file types) update NOT REQUIRED
+		if (!(count($data)==1 && array_pop(array_keys($data))==$table->getKey()->getName()))
+    	mysql_query($ss) or die(mysql_error());
     if ($needCleanUp) $this->cleanupMultiValues();
     foreach($table->getFields() as $field){//file/image handling
 			if ($field->getProp("isFile")){ 
@@ -480,17 +485,25 @@ class StorageEngineMysql extends MainEngineAbstract {
     if (mysql_num_rows($res)!=0) 
       while($row=mysql_fetch_assoc($res))
         $values[]=$row;
-    foreach($table->getFields() as $field){//image handling
-      if ($field->getProp("isImage")){
+    foreach($table->getFields() as $field){//file|image handling
+      if ($field->getProp("isFile")){
+      	$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
         $fn=$field->getName();
         for($i=1;$i<count($values);$i++){
           $imgname=null;
-          $imgfn=glob($this->ops['imageFolder']."/".$tabName."_".$fn."_".
-            $values[$i][$table->getKey()->getName()].".*");
+          $imgfn=glob($folder."/".$tabName."_".$fn."_".$values[$i][$table->getKey()->getName()].".*");
           if (!empty($imgfn)) $imgname=$imgfn[0]; else $imgname=null;
-          if ($imgname) $values[$i][$fn]="<img src='$imgname' alt='limg' />";
-          else $values[$i][$fn]=null;
-    }}}//image handling
+          if ($imgname){
+						if ($field->getProp('isImage')) $values[$i][$fn]="<img src='$imgname' alt='simg' />";
+						else {
+							$desc=$field->getNote();
+							if (isset($this->ops['fileDescriptors']) && in_array($fn,array_keys($this->ops['fileDescriptors']))){
+                if (isset($values[$i][$this->ops['fileDescriptors'][$fn]])) $desc=$values[$i][$this->ops['fileDescriptors'][$fn]];
+                else $desc=$this->ops['fileDescriptors'][$fn];
+							} $values[$i][$fn]="<a href='$imgname' class='zx_att'>$desc</a>";
+					}} else $values[$i][$fn]=null;
+				}
+    }}//file|image handling
     return $values;
   }//EOF
 	/**
@@ -509,17 +522,18 @@ class StorageEngineMysql extends MainEngineAbstract {
     $res=mysql_query($ss) or die(mysql_error());
     $ss=null;
     $this->cleanupMultiValues();
-    foreach($table->getFields() as $field){//image handling
-      if ($field->getProp("isImage")){
+    foreach($table->getFields() as $field){//file|image handling
+      if ($field->getProp("isFile")){
+      	$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
         $fn=$field->getName();
         $ids=explode(",",$idList);
         foreach($ids as $id){
           $imgname=null;
-          $imgfn=glob($this->ops['imageFolder']."/".$table->getName()."_".$fn."_".
+          $imgfn=glob($folder."/".$table->getName()."_".$fn."_".
             $id.".*");
           if (!empty($imgfn)) $imgname=$imgfn[0]; else $imgname=null;
           if ($imgname) unlink($imgname);
-    }}}//image handling
+    }}}//file|image handling
   }//EOF
 	/**
 	 * destroyDataStorage() method deletes all tables from database and images related to these

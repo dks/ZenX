@@ -91,19 +91,22 @@ abstract class StorageEngineHtmlForm extends MainEngineAbstract {
       }
     }
     foreach($data as $k=>$v) if ($v!="") $uploadedData[$k]=$v;
-    foreach($table->getFields() as $field){//images
-      if ($field->getProp("isImage")){
+    foreach($table->getFields() as $field){//file/image handling
+			if ($field->getProp("isFile")){ 
+      	$folder=$field->getProp("isImage")?$this->ops['imageFolder']:$this->ops['fileFolder'];
         $fn=$field->getName();
         if (isset($_FILES[$fn]) && $_FILES[$fn]['error']==0){
           $tmp=basename($_FILES[$fn]['name']);
           $ext=substr($tmp,$ps=strrpos($tmp,"."),strlen($tmp)-$ps);
-          $imgfn =$this->ops['imageFolder']."/".$tabName."_".$fn.$ext;
+          $imgfn =$folder."/".$tabName."_".$fn.$ext;
+          $imgToDel=glob($folder."/".$table->getName()."_".$fn.".*");
           set_error_handler(array($this,"fileUploadErrorHandler"),E_WARNING);
+          foreach($imgToDel as $itd) unlink($itd);
           move_uploaded_file($_FILES[$fn]['tmp_name'],$imgfn);
           restore_error_handler();
-          $this->imageResize($imgfn,$field);
+          if ($field->getProp("isImage")) $this->imageResize($imgfn,$field);
 					$uploadedData[$fn]=$imgfn;
-    }}}//images
+    }}}//file/image handling
 		$this->saveData($uploadedData);
   }//EOF
 

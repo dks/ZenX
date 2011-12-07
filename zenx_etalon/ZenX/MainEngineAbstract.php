@@ -1082,12 +1082,18 @@ abstract class MainEngineAbstract implements Signs{
 							case 7: $e=Signs::FUECANTWRITE; break;
 							case 8: $e=Signs::FUEEXTERR; break;
 							default: $e=$_FILES[$fn]['error']; break;
-						}
-						$this->inputNotifications[$field->getNote()][]=$e;
-					}}
+						} $this->inputNotifications[$field->getNote()][]=$e;
+					} 
+					// in case table has only key field (rest of fields are of file types)
+					if (count($vars)==1 && array_pop(array_keys($vars))==$table->getKey()->getName())
+					if ($_FILES[$fn]['error']==0) $allempty=false;
+				}
 				$settings=DataDefiner::$dataTypes[$field->getType()];
-				if (@filesize($_FILES[$fn]['tmp_name'])>$settings['maxBytes'])
+				if (@filesize($_FILES[$fn]['tmp_name'])>$settings['maxBytes']){
 					$this->inputNotifications[$field->getNote()][]=Signs::FILESIZETOOBIG;
+					unlink($_FILES[$fn]['tmp_name']);
+					unset($_FILES);
+				}
 			}
     }// end of table fields iteration
     if ($allempty) $this->inputErrors[Signs::GENSAVEERR][]=Signs::GENSAVEERRTXT;
