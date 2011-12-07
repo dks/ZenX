@@ -1,6 +1,6 @@
 <?php
 /**
- * "ZenX" PHP data manupulation library.
+ * "ZenX" PHP data manipulation library.
  *
  * @author Konstantin Dvortsov <kostya.dvortsov@gmail.com>. You can 
  * also track me down at {@link http://dvortsov.tel dvortsov.tel }
@@ -9,8 +9,8 @@
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
  */
 /**
- * StorageEngineMysql class extends MainEngineAbstract class and implements
- * data storage specific functions for MySQL database.
+ * StorageEngineHtmlForm class extends MainEngineAbstract class and implements
+ * html form data sending from user to server, it does not have any storage though.
  *
  * @package ZenX
  * @author Konstatin Dvortsov
@@ -19,12 +19,8 @@ abstract class StorageEngineHtmlForm extends MainEngineAbstract {
 	/**
 	 * Class constructor.
 	 *
-	 * Invokes parent class constructor and creates database connection.
+	 * Invokes parent class constructor.
 	 *
-	 * @param String $host Host name for database connection
-	 * @param String $user User name for database connection
-	 * @param String $pass Password for database connection
-	 * @param String $base Name of the data base to connect to.
 	 * @see connect()
 	 */
   function __construct(){
@@ -40,22 +36,6 @@ abstract class StorageEngineHtmlForm extends MainEngineAbstract {
 	/**
 	 * createStorage() method performs all necessary routines to create tables from 
 	 * {@link MainEngineAbstract::$tables} array.
-	 *
-	 * This is utility method for automatic creation of mysql tables. Tables are created 
-	 * considering the following parameters:
-	 * 'mysqlPrefix' parameter at {@link MainEngineAbstract::$ops} is the string to prepend table name.
-	 * 'imageFolder' parameter at {@link MainEngineAbstract::$ops} is the name of folder storing images,
-	 * must have read/write access.
-	 * 'fileFolder' parameter at {@link MainEngineAbstract::$ops} is the name of folder storing files
-	 * (other than images), must have read/write access.
-	 * 'mysqlMultiSuffix' parameter at {@link MainEngineAbstract::$ops} is the suffix used to form
-	 * multiple values tables (referenced values).
-	 *
-	 * Data charset is set to UTF-8. If image/file folder can not be accessed 
-	 * {@link MySqlNoFolderCreateRightsException} is thrown.
-	 *
-	 * Please note, that current implementation stores files/images externally in file system instead of
-	 * database, image tables contain only reference numbers for file names identification.
 	 *
 	 * @throws MySqlNoFolderCreateRightsException
 	 * @see MainEngineAbstract::setParameters()

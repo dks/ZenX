@@ -1,6 +1,6 @@
 <?php
 /**
- * "ZenX" PHP data manupulation engine.
+ * "ZenX" PHP data manipulation engine.
   *
  * @author Konstantin Dvortsov <kostya.dvortsov@gmail.com>. You can 
  * also track me down at {@link http://dvortsov.tel dvortsov.tel }
