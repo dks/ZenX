@@ -126,6 +126,18 @@ class DataDefiner{
       "width" => 50,
       "height" => 50
     ),
+    //_DICO -  double size icon image
+    "_DICO" => array(
+      "sTag" => "<input type='file' name='",
+      "mTag" => "' />", 
+      "eTag" => "<input type='hidden' name='MAX_FILE_SIZE' value='600000' />",
+      "isFile" => true,
+      "maxBytes" => 600000,
+      "isImage" => true,
+      "mustResize" => true,
+      "width" => 100,
+      "height" => 100
+    ),
     //_FILE - general files
     "_FILE" => array(
       "sTag" => "<input type='file' name='",

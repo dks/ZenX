@@ -681,9 +681,9 @@ class MySqlMultiTypeUndefinedException extends Exception{
  */
 class MySqlNoFolderCreateRightsException extends Exception{
   public function errorMessage(){
-    $errorMsg = "<pre>\nZenX ERROR: Could not create image folder '".$this->getMessage()."' ".
+    $errorMsg = "<pre>\nZenX ERROR: Could not create image and/or data folder '".$this->getMessage()."' ".
       "at current location!\n".
-      "Please correct PHP access rights for this folder!\n".'in '.$this->getFile().' on line '.
+      "Please correct PHP access rights for this folder(s)!\n".'in '.$this->getFile().' on line '.
       $this->getLine()."\n".$this->getTraceAsString()."\n</pre>\n";
     return $errorMsg;
   }

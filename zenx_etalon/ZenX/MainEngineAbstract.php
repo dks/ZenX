@@ -1653,7 +1653,7 @@ abstract class MainEngineAbstract implements Signs{
 	 */
   function fileUploadErrorHandler($errno, $errstr, $errfile, $errline){
     if ($errno==2){
-      echo "<pre>\nZenX ERROR: can not save file to the image storage folder!\n";
+      echo "<pre>\nZenX ERROR: can not save file to the image/data storage folder!\n";
       echo "Please correct PHP access rights to this folder!\n";
     } else {
       echo "<pre>\nZenX ERROR: unknown file upload error!\n";
