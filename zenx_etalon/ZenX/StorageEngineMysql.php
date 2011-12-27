@@ -504,6 +504,9 @@ class StorageEngineMysql extends MainEngineAbstract {
 					}} else $values[$i][$fn]=null;
 				}
     }}//file|image handling
+    require_once("Utilities.php");
+		foreach($this->getCurrentTable()->getFields() as $fld) $ordfldlst[]=$fld->getName();
+    for($i=0;$i<count($values);$i++) array_reorder($values[$i],$ordfldlst,true);
     return $values;
   }//EOF
 	/**
