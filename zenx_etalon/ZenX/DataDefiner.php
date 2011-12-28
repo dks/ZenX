@@ -146,6 +146,14 @@ class DataDefiner{
       "isFile" => true,
       "maxBytes" => 1000000
     ),
+    //_BFIL - big files
+    "_BFIL" => array(
+      "sTag" => "<input type='file' name='",
+      "mTag" => "' />", 
+      "eTag" => "<input type='hidden' name='MAX_FILE_SIZE' value='32000000' />",
+      "isFile" => true,
+      "maxBytes" => 32000000
+    )
   );
   /**
 	 * filterKeys() method implements filter for ID "_KEYS" field.

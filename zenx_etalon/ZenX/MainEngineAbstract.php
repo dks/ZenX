@@ -619,6 +619,18 @@ abstract class MainEngineAbstract implements Signs{
     if ($override) $values=$override;
     else if ($id) $values=$this->getRecordById($id);
     if ($values) $this->curRec=$values;
+		
+		//calculate total max_upload_size, since html form has only one MAX_FILE_SIZE value
+		foreach($table->getFields() as $field){
+			if ($field->getProp("isFile")) {
+				preg_match("/(<[^>]*MAX_FILE_SIZE[^>0-9]*([0-9]+)[^>]*>|<[^>0-9]*([0-9]+).*MAX_FILE_SIZE[^>]*>)/i",$field->getProp("eTag"),$match);
+				$fileFields[$field->getName()]=(int)$match[count($match)-1];
+		}}
+		if (isset($fileFields) && count($fileFields)>1){
+			$maxFsFldName=array_search(max($fileFields),$fileFields);
+			$totalFsTag="<input type='hidden' name='MAX_FILE_SIZE' value='".array_sum($fileFields)."' />";
+		}
+
     foreach($table->getFields() as $field){
       $s=null;
       $omni=$field->getProp("omni");
@@ -641,7 +653,9 @@ abstract class MainEngineAbstract implements Signs{
 								in_array($fn,array_keys($this->ops['formDefaults'])))
 							$s.=$this->ops['formDefaults'][$fn];
 					}
-          $s.= $field->getProp("eTag");
+					// for several file fields insert only one MAX_FILE_SIZE
+					if ($field->getProp("isFile") && isset($maxFsFldName)){ if ($fn==$maxFsFldName) $s.=$totalFsTag; } 
+					else $s.= $field->getProp("eTag");
         }
         if ($omni=="multiple1"){
           $s = $field->getProp("prefix1");
