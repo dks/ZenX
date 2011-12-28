@@ -70,6 +70,7 @@ abstract class StorageEngineHtmlForm extends MainEngineAbstract {
         unset($data[$fn."_nv"]);
       }
     }
+		$uploadedData=null;
     foreach($data as $k=>$v) if ($v!="") $uploadedData[$k]=$v;
     foreach($table->getFields() as $field){//file/image handling
 			if ($field->getProp("isFile")){ 
