@@ -828,6 +828,44 @@
 			and {@link MainEngineAbstract::imageResize()}. 
 		</para>
 	</refsect3>
+	<refsect3 id="{@id typeicon}">
+		<title>_ICON</title>
+		<para>Small Picture. Shown as image. In MySQL database only image number is stored. The image file itself is 
+			stored at image folder and named as table name + field name + number. _IMGS type image dimension are:
+			50 x 50 px, maximum file size is 300000 bytes. See also {@link MainEngineAbstract::verifyImageFields()}
+			and {@link MainEngineAbstract::imageResize()}. 
+		</para>
+	</refsect3>
+	<refsect3 id="{@id typedoubleicon}">
+		<title>_DICO</title>
+		<para>Small Picture. Shown as image. In MySQL database only image number is stored. The image file itself is 
+			stored at image folder and named as table name + field name + number. _IMGS type image dimension are:
+			100 x 100 px, maximum file size is 600000 bytes. See also {@link MainEngineAbstract::verifyImageFields()}
+			and {@link MainEngineAbstract::imageResize()}. 
+		</para>
+	</refsect3>
+	<refsect3 id="{@id typefile}">
+		<title>_FILE</title>
+		<para>File. TODO</para>
+	</refsect3>
+	<refsect3 id="{@id typebigfile}">
+		<title>_BFIL</title>
+		<para>Big File. 
+
+			TODO
+
+			If the uploaded file exceeds the php max file size then php end abruptly without a trace of error, that is,
+			it behaves like no file is uploaded and hence no error reported. In this case you may get empty $_FILES and empty $_POST.
+			If this happens, this is probably because the posted file size exceed the post_max_size php ini directive value.
+			You could use something like this to handle it in your form, here it is :
+			&lt;?php
+				// The form isn't misbehavin then...
+				if (empty($_FILES) && empty($_POST) && isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {   
+		    $poidsMax = ini_get('post_max_size');
+		    $oElement->addError("fileoverload", "Your feet is too big, maximum allowed size here is $poidsMax.");
+			} 
+		</para>
+	</refsect3>
 
   <refsect1 id="{@id cssselectors}">
     <title>CSS Selectors List</title>
