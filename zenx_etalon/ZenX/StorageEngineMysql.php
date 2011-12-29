@@ -46,7 +46,9 @@ class StorageEngineMysql extends MainEngineAbstract {
     "_DATE" => "date",
     "_IMGS" => "",
     "_ICON" => "",
-    "_FILE" => ""
+    "_DICO" => "",
+    "_FILE" => "",
+    "_BFIL" => ""
 	);
 	/**
 	 * $storageMultiTypes array contains storage engine specific data types descriptions for "multi" types.
