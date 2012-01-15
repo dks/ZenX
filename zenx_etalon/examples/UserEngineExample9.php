@@ -1,0 +1,10 @@
+<?php
+class UserEngineExample9 extends StorageEngineMysql{
+  function __construct(){
+    parent::__construct("localhost","user","pass","base");
+    $t = new Table("formdata");
+    $t->createField("idn","_KEYS","ID");
+    $t->createField("att","_FILE","Attachment");
+    $this->registerTable($t);
+  }
+}
